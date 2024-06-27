@@ -1,0 +1,654 @@
+{
+  "text": "Se guardo",
+  "decks": [
+    {
+      "cards": [
+        {
+          "name": "Nanami Kento",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Nanami"
+        },
+        {
+          "name": "Nanami Kento",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Nanami"
+        },
+        {
+          "name": "Yuki Tsukumo",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range",
+            "Siege"
+          ],
+          "attack": 7,
+          "effectsName": [
+            "Black hole"
+          ],
+          "img": "Art / Images / Yuki"
+        },
+        {
+          "name": "Yuki Tsukumo",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range",
+            "Siege"
+          ],
+          "attack": 9,
+          "effectsName": [
+            "Black hole"
+          ],
+          "img": "Art / Images / Yuki"
+        },
+        {
+          "name": "Panda",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Panda"
+        },
+        {
+          "name": "Panda",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Panda"
+        },
+        {
+          "name": "Itadori Yuji",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 6,
+          "effectsName": [],
+          "img": "Art / Images / Itadori"
+        },
+        {
+          "name": "Itadori Yuji",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele"
+          ],
+          "attack": 6,
+          "effectsName": [],
+          "img": "Art / Images / Itadori"
+        },
+        {
+          "name": "Cursed energy",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Buff"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Curced energy"
+        },
+        {
+          "name": "Cursed energy",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Buff"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Curced energy"
+        },
+        {
+          "name": "Megumi Fushiguro",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Fushiguro"
+        },
+        {
+          "name": "Megumi Fushiguro",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Fushiguro"
+        },
+        {
+          "name": "Nobara Kugizaki",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Nobara"
+        },
+        {
+          "name": "Maki Zennin",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Range"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Maki"
+        },
+        {
+          "name": "Yuta Okkotsu",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Yuta"
+        },
+        {
+          "name": "Yuta Okkotsu",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Yuta"
+        },
+        {
+          "name": "Nobara Kugizaki",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Range"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Nobara"
+        },
+        {
+          "name": "Hakari Kinji",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 4,
+          "effectsName": [
+            "Luck"
+          ],
+          "img": "Art / Images / Hakari"
+        },
+        {
+          "name": "Hakari Kinji",
+          "type": "..Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 4,
+          "effectsName": [
+            "Luck"
+          ],
+          "img": "Art / Images / Hakari"
+        },
+        {
+          "name": "Infinite void",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Finish game in two rounds"
+          ],
+          "img": "Art / Images / Expansion Gojo"
+        },
+        {
+          "name": "Deadly round",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Decrease attack of the raw"
+          ],
+          "img": "Art / Images / Expansion Hakari"
+        },
+        {
+          "name": "Mutual and true love",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Expansion Yuta"
+        },
+        {
+          "name": "ClearenceSource",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Destroy all climates"
+          ],
+          "img": "Art / Images / Despeje"
+        },
+        {
+          "name": "LureSource",
+          "type": "Special",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Range",
+            "Siege"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Change the position with another card"
+          ],
+          "img": "Art / Images / Señuelo"
+        },
+        {
+          "name": "Gojo Satoru",
+          "type": "Gold",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Range",
+            "Siege"
+          ],
+          "attack": 10,
+          "effectsName": [
+            "Inmunity",
+            "Destroy one raw"
+          ],
+          "img": "Art / Images / Gojo"
+        },
+        {
+          "name": "Maki Zennin",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Maki"
+        }
+      ],
+      "name": "Source"
+    },
+    {
+      "cards": [
+        {
+          "name": "Hanami",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Hanami"
+        },
+        {
+          "name": "Jogo",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Range"
+          ],
+          "attack": 7,
+          "effectsName": [],
+          "img": "Art / Images / Jogo"
+        },
+        {
+          "name": "Jogo",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Range"
+          ],
+          "attack": 7,
+          "effectsName": [],
+          "img": "Art / Images / Jogo"
+        },
+        {
+          "name": "Kenjaku",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Range"
+          ],
+          "attack": 6,
+          "effectsName": [
+            "AttackDuplicate"
+          ],
+          "img": "Art / Images / Kenjaku"
+        },
+        {
+          "name": "Toji Zennin",
+          "type": "...",
+          "description": "Plat",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Toji"
+        },
+        {
+          "name": "Toji Zennin",
+          "type": "...",
+          "description": "Plat",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Toji"
+        },
+        {
+          "name": "Dagon",
+          "type": "...",
+          "description": "Normal",
+          "faction": "Curse",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Dagon"
+        },
+        {
+          "name": "Kashimo Hajime",
+          "type": "...",
+          "description": "Plat",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 7,
+          "effectsName": [
+            "Destroy the weakest"
+          ],
+          "img": "Art / Images / Kashimo"
+        },
+        {
+          "name": "Kashimo Hajime",
+          "type": "...",
+          "description": "Plat",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 7,
+          "effectsName": [
+            "Destroy the weakest"
+          ],
+          "img": "Art / Images / Kashimo"
+        },
+        {
+          "name": "Demonic Reliquary",
+          "type": "...",
+          "description": "Special",
+          "faction": "Curse",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Decrease attack of the raw x2"
+          ],
+          "img": "Art / Images / Expansion Sukuna"
+        },
+        {
+          "name": "Iron Coffin Mountain",
+          "type": "...",
+          "description": "Special",
+          "faction": "Curse",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Decrease attack of the raw"
+          ],
+          "img": "Art / Images / Expansion Jogo"
+        },
+        {
+          "name": "Uzumaki",
+          "type": "...",
+          "description": "Special",
+          "faction": "Curse",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Increases the attack of a row"
+          ],
+          "img": "Art / Images / Uzumaki"
+        },
+        {
+          "name": "Mahoraga",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Mahoraga"
+        },
+        {
+          "name": "Hanami",
+          "type": "Normal",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Hanami"
+        },
+        {
+          "name": "Kenjaku",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Range"
+          ],
+          "attack": 6,
+          "effectsName": [
+            "AttackDuplicate"
+          ],
+          "img": "Art / Images / Kenjaku"
+        },
+        {
+          "name": "Dagon",
+          "type": "...",
+          "description": "Normal",
+          "faction": "Curse",
+          "range": [
+            "Mele"
+          ],
+          "attack": 5,
+          "effectsName": [],
+          "img": "Art / Images / Dagon"
+        },
+        {
+          "name": "ClearenceCurse",
+          "type": "...",
+          "description": "Special",
+          "faction": "Curse",
+          "range": [
+            "Climate"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Destroy all climates"
+          ],
+          "img": "Art / Images / Despeje"
+        },
+        {
+          "name": "LureCurse",
+          "type": "...",
+          "description": "Special",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Range",
+            "Siege"
+          ],
+          "attack": 0,
+          "effectsName": [
+            "Change the position with another card"
+          ],
+          "img": "Art / Images / Señuelo"
+        },
+        {
+          "name": "Ryomen Sukuna",
+          "type": "Gold",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Range",
+            "Siege"
+          ],
+          "attack": 10,
+          "effectsName": [
+            "Inmunity",
+            "Decrease attack of the row"
+          ],
+          "img": "Art / Images / Sukuna"
+        },
+        {
+          "name": "Mahoraga",
+          "type": "Plat",
+          "description": "...",
+          "faction": "Curse",
+          "range": [
+            "Mele",
+            "Siege"
+          ],
+          "attack": 8,
+          "effectsName": [
+            "Inmunity"
+          ],
+          "img": "Art / Images / Mahoraga"
+        }
+      ],
+      "name": "Curse"
+    }
+  ],
+  "effects": []
+}

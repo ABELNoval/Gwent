@@ -1,0 +1,52 @@
+# Unity specific
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Ll]ibrary/
+[SystemVolumeInformation]/
+$RECYCLE.BIN/
+
+# Visual Studio Code specific
+.vscode/
+
+# Rider specific
+.idea/
+
+# macOS specific
+.DS_Store
+
+# User-specific files
+*.userprefs
+
+# Build files
+*.apk
+*.unitypackage
+
+# Visual Studio files
+.vs/
+
+# Unity generated files
+ExportedObj/
+*.svd
+*.pdb
+*.mdb
+*.meta
+*.unityproj
+*.pidb
+*.suo
+*.user
+*.booproj.user
+*.svd
+*.sln
+*.VC.db
+*.pidb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
+Logs/
+AllSkyFree/
+Wooden Chairs/
+TextMesh Pro/
