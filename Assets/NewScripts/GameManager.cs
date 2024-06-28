@@ -1,9 +1,12 @@
 using Console;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    Board board;
+    public GameObject optionsPanel;
     #region Vars
     private System.Random random = new System.Random();
     #endregion
@@ -14,18 +17,9 @@ public class GameManager : MonoBehaviour
     Player player2;
     #endregion
 
-    //Almacen
-    #region Store
-
-    Store store;
-
-    #endregion
 
     //Delegados
     #region Delegates
-    public delegate void Save(Store store);
-    public delegate Store Load();
-    public delegate void StartGame();
     public delegate void SelectDeck(int number);
 
     #endregion
@@ -33,55 +27,36 @@ public class GameManager : MonoBehaviour
     //Eventos
     #region Events
 
-    public event Save save;
-    public event Load load;
-    public event StartGame start;
     public event SelectDeck selectDeck;
+
 
     #endregion
 
     void Start()
     {
+        board = new Board();
+        board.noSelectedDeck += ShowOptioptionsPanel;
         Debug.Log("GameStart");
-        store = load();
-        start += GenerateCards;
-        selectDeck += AssignedDecks;
     }
 
-    //Salvar el juego
-    public void SaveGame()
+    public void ShowOptioptionsPanel()
     {
-        save(store);
+        optionsPanel.SetActive(true);
+    }
+
+    public void CreateDeck()
+    {
+        Guid guid = Guid.NewGuid();
+        Store.AddDeck(new Deck(guid, "Nuevo"));
     }
 
     public void Beginning()
     {
-        player1.GenerateHand();
-        player2.GenerateHand();
-        Debug.Log(player1.hand[0].name);
-        Debug.Log(player2.hand[0].name);
+        board.StartGame();
     }
 
-    public void DropDwon(int index)
+    public void ChangeSelectedDeck(Guid id)
     {
-        selectDeck(index);
-    }
-
-    public void AssignedDecks(int number)
-    {
-        if (number < 0 || number > store.decks.Count)
-        {
-            throw new System.Exception("Error, tu deck no existe");
-        }
-        else
-        {
-            int a = random.Next(0, store.decks.Count);
-            player1 = new Player(store.decks[number]);
-            player2 = new Player(store.decks[a]);
-        }
-    }
-    public void GenerateCards()
-    {
-        //Generar prefabs de cartas y ponerlos en las manos
+        board.SetSelectedDeck(id);
     }
 }

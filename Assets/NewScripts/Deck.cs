@@ -8,12 +8,14 @@ namespace Console
     [Serializable]
     public class Deck
     {
+        public Guid id;
         private System.Random random = new System.Random();
         public List<Cards> cards = new List<Cards>();
         public string name { get; set; }
 
-        public Deck(string name)
+        public Deck(Guid id, string name)
         {
+            this.id = id;
             this.name = name;
         }
 

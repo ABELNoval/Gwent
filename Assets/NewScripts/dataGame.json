@@ -1,7 +1,8 @@
 {
-  "text": "Se guardo",
   "decks": [
     {
+      "id": "b7b06643-0ad5-41dd-94ab-68ece81c75d2",
+      "name": "Source",
       "cards": [
         {
           "name": "Nanami Kento",
@@ -360,10 +361,11 @@
           ],
           "img": "Art / Images / Maki"
         }
-      ],
-      "name": "Source"
+      ]
     },
     {
+      "id": "26157bfb-f071-46fb-89ca-35a0dd3a1ab3",
+      "name": "Curse",
       "cards": [
         {
           "name": "Hanami",
@@ -646,8 +648,7 @@
           ],
           "img": "Art / Images / Mahoraga"
         }
-      ],
-      "name": "Curse"
+      ]
     }
   ],
   "effects": []
