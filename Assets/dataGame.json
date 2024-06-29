@@ -14,7 +14,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Nanami"
+          "img": "Art/Images/Nanami"
         },
         {
           "name": "Nanami Kento",
@@ -26,7 +26,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Nanami"
+          "img": "Art/Images/Nanami"
         },
         {
           "name": "Yuki Tsukumo",
@@ -41,7 +41,7 @@
           "effectsName": [
             "Black hole"
           ],
-          "img": "Art / Images / Yuki"
+          "img": "Art/Images/Yuki"
         },
         {
           "name": "Yuki Tsukumo",
@@ -56,7 +56,7 @@
           "effectsName": [
             "Black hole"
           ],
-          "img": "Art / Images / Yuki"
+          "img": "Art/Images/Yuki"
         },
         {
           "name": "Panda",
@@ -68,7 +68,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Panda"
+          "img": "Art/Images/Panda"
         },
         {
           "name": "Panda",
@@ -80,7 +80,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Panda"
+          "img": "Art/Images/Panda"
         },
         {
           "name": "Itadori Yuji",
@@ -92,7 +92,7 @@
           ],
           "attack": 6,
           "effectsName": [],
-          "img": "Art / Images / Itadori"
+          "img": "Art/Image/Itadori"
         },
         {
           "name": "Itadori Yuji",
@@ -104,7 +104,7 @@
           ],
           "attack": 6,
           "effectsName": [],
-          "img": "Art / Images / Itadori"
+          "img": "Art/Images/Itadori"
         },
         {
           "name": "Cursed energy",
@@ -118,7 +118,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Curced energy"
+          "img": "Art/Images/Energia Maldita(potenciador)"
         },
         {
           "name": "Cursed energy",
@@ -132,7 +132,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Curced energy"
+          "img": "Art/Images/Energia Maldita(potenciador)"
         },
         {
           "name": "Megumi Fushiguro",
@@ -144,7 +144,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Fushiguro"
+          "img": "Art/Images/Megumi"
         },
         {
           "name": "Megumi Fushiguro",
@@ -156,7 +156,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Fushiguro"
+          "img": "Art/Images/Megumi"
         },
         {
           "name": "Nobara Kugizaki",
@@ -168,7 +168,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Nobara"
+          "img": "Art/Images/Nobara"
         },
         {
           "name": "Maki Zennin",
@@ -183,7 +183,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Maki"
+          "img": "Art/Images/Maki"
         },
         {
           "name": "Yuta Okkotsu",
@@ -198,7 +198,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Yuta"
+          "img": "Art/Images/Yuta"
         },
         {
           "name": "Yuta Okkotsu",
@@ -213,7 +213,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Yuta"
+          "img": "Art/Images/Yuta"
         },
         {
           "name": "Nobara Kugizaki",
@@ -225,7 +225,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Nobara"
+          "img": "Art/Images/Nobara"
         },
         {
           "name": "Hakari Kinji",
@@ -240,7 +240,7 @@
           "effectsName": [
             "Luck"
           ],
-          "img": "Art / Images / Hakari"
+          "img": "Art/Images/Hakari"
         },
         {
           "name": "Hakari Kinji",
@@ -255,7 +255,7 @@
           "effectsName": [
             "Luck"
           ],
-          "img": "Art / Images / Hakari"
+          "img": "Art/Images/Hakari"
         },
         {
           "name": "Infinite void",
@@ -269,7 +269,7 @@
           "effectsName": [
             "Finish game in two rounds"
           ],
-          "img": "Art / Images / Expansion Gojo"
+          "img": "Art/Images/Expansion de Gojo"
         },
         {
           "name": "Deadly round",
@@ -283,7 +283,7 @@
           "effectsName": [
             "Decrease attack of the raw"
           ],
-          "img": "Art / Images / Expansion Hakari"
+          "img": "Art/Images/Expansion de Hakari"
         },
         {
           "name": "Mutual and true love",
@@ -297,7 +297,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Expansion Yuta"
+          "img": "Art/Images/Expansion de Yuta"
         },
         {
           "name": "ClearenceSource",
@@ -311,7 +311,7 @@
           "effectsName": [
             "Destroy all climates"
           ],
-          "img": "Art / Images / Despeje"
+          "img": "Art/Images/Impacto Externo"
         },
         {
           "name": "LureSource",
@@ -327,7 +327,7 @@
           "effectsName": [
             "Change the position with another card"
           ],
-          "img": "Art / Images / Señuelo"
+          "img": "Art/Images/Buggi Buggi"
         },
         {
           "name": "Gojo Satoru",
@@ -344,7 +344,7 @@
             "Inmunity",
             "Destroy one raw"
           ],
-          "img": "Art / Images / Gojo"
+          "img": "Art/Images/Gojo"
         },
         {
           "name": "Maki Zennin",
@@ -359,7 +359,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Maki"
+          "img": "Art/Images/Maki"
         }
       ]
     },
@@ -377,7 +377,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Hanami"
+          "img": "Art/Images/Hanami"
         },
         {
           "name": "Jogo",
@@ -389,7 +389,7 @@
           ],
           "attack": 7,
           "effectsName": [],
-          "img": "Art / Images / Jogo"
+          "img": "Art/Images/Jogo"
         },
         {
           "name": "Jogo",
@@ -401,7 +401,7 @@
           ],
           "attack": 7,
           "effectsName": [],
-          "img": "Art / Images / Jogo"
+          "img": "Art/Images/Jogo"
         },
         {
           "name": "Kenjaku",
@@ -416,7 +416,7 @@
           "effectsName": [
             "AttackDuplicate"
           ],
-          "img": "Art / Images / Kenjaku"
+          "img": "Art/Images/Kenjaku"
         },
         {
           "name": "Toji Zennin",
@@ -431,7 +431,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Toji"
+          "img": "Art/Images/Toji"
         },
         {
           "name": "Toji Zennin",
@@ -446,7 +446,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Toji"
+          "img": "Art/Images/Toji"
         },
         {
           "name": "Dagon",
@@ -458,7 +458,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Dagon"
+          "img": "Art/Images/Dagon"
         },
         {
           "name": "Kashimo Hajime",
@@ -473,7 +473,7 @@
           "effectsName": [
             "Destroy the weakest"
           ],
-          "img": "Art / Images / Kashimo"
+          "img": "Art/Images/Kashimo"
         },
         {
           "name": "Kashimo Hajime",
@@ -488,12 +488,12 @@
           "effectsName": [
             "Destroy the weakest"
           ],
-          "img": "Art / Images / Kashimo"
+          "img": "Art/Images/Kashimo"
         },
         {
           "name": "Demonic Reliquary",
-          "type": "...",
-          "description": "Special",
+          "type": "Special",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Climate"
@@ -502,12 +502,12 @@
           "effectsName": [
             "Decrease attack of the raw x2"
           ],
-          "img": "Art / Images / Expansion Sukuna"
+          "img": "Art/Images/Expansion de Sukuna"
         },
         {
           "name": "Iron Coffin Mountain",
-          "type": "...",
-          "description": "Special",
+          "type": "Special",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Climate"
@@ -516,12 +516,12 @@
           "effectsName": [
             "Decrease attack of the raw"
           ],
-          "img": "Art / Images / Expansion Jogo"
+          "img": "Art/Images/Expansion de Jogo"
         },
         {
           "name": "Uzumaki",
-          "type": "...",
-          "description": "Special",
+          "type": "Special",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Climate"
@@ -530,7 +530,7 @@
           "effectsName": [
             "Increases the attack of a row"
           ],
-          "img": "Art / Images / Uzumaki"
+          "img": "Art/Images/Uzumaki"
         },
         {
           "name": "Mahoraga",
@@ -545,7 +545,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Mahoraga"
+          "img": "Art/Images/Mahoraga"
         },
         {
           "name": "Hanami",
@@ -557,7 +557,7 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Hanami"
+          "img": "Art/Images/Hanami"
         },
         {
           "name": "Kenjaku",
@@ -572,7 +572,7 @@
           "effectsName": [
             "AttackDuplicate"
           ],
-          "img": "Art / Images / Kenjaku"
+          "img": "Art/Images/Kenjaku"
         },
         {
           "name": "Dagon",
@@ -584,12 +584,12 @@
           ],
           "attack": 5,
           "effectsName": [],
-          "img": "Art / Images / Dagon"
+          "img": "Art/Images/Dagon"
         },
         {
           "name": "ClearenceCurse",
-          "type": "...",
-          "description": "Special",
+          "type": "Special",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Climate"
@@ -598,12 +598,12 @@
           "effectsName": [
             "Destroy all climates"
           ],
-          "img": "Art / Images / Despeje"
+          "img": "Art/Images/Impacto Externo"
         },
         {
           "name": "LureCurse",
-          "type": "...",
-          "description": "Special",
+          "type": "Specia",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Mele",
@@ -614,7 +614,7 @@
           "effectsName": [
             "Change the position with another card"
           ],
-          "img": "Art / Images / Señuelo"
+          "img": "Art/Images/Buggi Buggi"
         },
         {
           "name": "Ryomen Sukuna",
@@ -631,7 +631,7 @@
             "Inmunity",
             "Decrease attack of the row"
           ],
-          "img": "Art / Images / Sukuna"
+          "img": "Art/Images/Sukuna"
         },
         {
           "name": "Mahoraga",
@@ -646,7 +646,7 @@
           "effectsName": [
             "Inmunity"
           ],
-          "img": "Art / Images / Mahoraga"
+          "img": "Art/Images/Mahoraga"
         }
       ]
     }

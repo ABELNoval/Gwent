@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PanelController : MonoBehaviour
 {
-    private App app;
+    /*private App app;
 
     //Inicia el juego
     private void Start()
@@ -14,5 +14,5 @@ public class PanelController : MonoBehaviour
     private void OnMouseDown()
     {
         app.PlayCardUI(gameObject);
-    }
+    }*/
 }

@@ -6801,49 +6801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e3cd3eb7a137347880c0371dff8148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioCards: {fileID: 1502850078}
-  player1BossPanel: {fileID: 576593287}
-  player2BossPanel: {fileID: 1095271391}
-  player1BossCard: {fileID: 5734895187209866823, guid: fe81c3a0c7d155f4fb7e341f94b4d94e, type: 3}
-  player2BossCard: {fileID: 4893673871733395194, guid: 95dd5d7a0401154409bc506600d4cac7, type: 3}
-  passPanel: {fileID: 727664813}
-  video: {fileID: 72360262}
-  audioButton: {fileID: 286360270}
-  panelAfterTheGame: {fileID: 981702388}
-  gamePanelsInBoard: []
-  gamePanelsInHands: []
-  deselectCard: {fileID: 1239656973}
-  panelInfo: {fileID: 272514485}
-  bossCardPanelInfo: {fileID: 0}
-  player1HandSecundaryPanel: {fileID: 1756510424}
-  player2HandSecundaryPanel: {fileID: 62611633}
-  player1MelePanel: {fileID: 1575882116}
-  player1RangePanel: {fileID: 214382824}
-  player1SiegePanel: {fileID: 74853183}
-  player1Buff1Panel: {fileID: 1327415744}
-  player1Buff2Panel: {fileID: 153016501}
-  player1Buff3Panel: {fileID: 812723845}
-  player1CementaryPanel: {fileID: 918063721}
-  player2MelePanel: {fileID: 161720269}
-  player2RangePanel: {fileID: 1713323647}
-  player2SiegePanel: {fileID: 1969716385}
-  player2Buff1Panel: {fileID: 391504697}
-  player2Buff2Panel: {fileID: 958539454}
-  player2Buff3Panel: {fileID: 1667725308}
-  player2CementaryPanel: {fileID: 1030613501}
-  expansionPanel: {fileID: 2061841460}
-  player1Camera: {fileID: 963194225}
-  player2Camera: {fileID: 1495802789}
-  player1Cards: {fileID: 3063536662100656508, guid: 9442f65b7902e4640b030f13eeacf9dc, type: 3}
-  player2Cards: {fileID: 2311955407859120533, guid: fff8bd1ff6439aa4f88f11bf086e9022, type: 3}
-  player1HandPanel: {fileID: 680494699}
-  player2HandPanel: {fileID: 1774870908}
-  emptyCard: {fileID: 6519572299078810911, guid: 2b85c13288a10a24d9861179b08891d7, type: 3}
-  player1Points: {fileID: 1533540074}
-  player2Points: {fileID: 1441435032}
-  winnerPanel: {fileID: 157985028}
-  winnerText: {fileID: 747441101}
-  activePanels: []
 --- !u!114 &381745631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6905,6 +6862,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a8179e9e3ceaf49abbdb654084a440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyCard: {fileID: 6519572299078810911, guid: 2b85c13288a10a24d9861179b08891d7, type: 3}
+  player1CardsPrefab: {fileID: 3063536662100656508, guid: 9442f65b7902e4640b030f13eeacf9dc, type: 3}
+  player2CardsPrefab: {fileID: 2311955407859120533, guid: fff8bd1ff6439aa4f88f11bf086e9022, type: 3}
+  player1HandPanel: {fileID: 680494699}
+  player2HandPanel: {fileID: 1774870908}
+  player1SecundaryHand: {fileID: 1756510424}
+  player2SecundaryHand: {fileID: 62611633}
   optionsPanel: {fileID: 2146020497}
 --- !u!114 &381745638
 MonoBehaviour:
@@ -22186,18 +22150,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 381745630}
-        m_TargetAssemblyTypeName: App, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

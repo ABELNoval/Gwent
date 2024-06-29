@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    private App app;
+    /*private App app;
 
 
     //Inicio del juego
@@ -45,6 +45,6 @@ public class CardManager : MonoBehaviour
             return;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, gameObject.transform.position.z + 1f);
-    }
+    }*/
 
 }

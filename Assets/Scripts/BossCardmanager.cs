@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BossCardmanager : MonoBehaviour
 {
-    private App app;
+    /*private App app;
     public Card card;
-    
+
     public void SetupCard(Card card)
     {
         this.card = card;
@@ -24,5 +24,5 @@ public class BossCardmanager : MonoBehaviour
     private void OnMouseOver()
     {
         app.ViewCardInfo(card);
-    }
+    }*/
 }

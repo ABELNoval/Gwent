@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ExpansionEffect : MonoBehaviour
 {
-    private App app;
+    /*private App app;
     void Start()
     {
-       app = FindFirstObjectByType<App>(); 
+       app = FindFirstObjectByType<App>();
     }
 
     private void OnMouseDown()
     {
         app.ActiveExpansionEffect(gameObject);
-    }
+    }*/
 }

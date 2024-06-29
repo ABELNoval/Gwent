@@ -6,13 +6,13 @@ using UnityEngine.Rendering;
 
 public class CardIsSelectedWithAnEffect : MonoBehaviour
 {
-    private App app;
-    private void Start()
-    {
-        app = FindFirstObjectByType<App>();
-    }
-    private void OnMouseDown()
-    {
-        app.ApplyLureEffect(gameObject);
-    }
+    /* private App app;
+     private void Start()
+     {
+         app = FindFirstObjectByType<App>();
+     }
+     private void OnMouseDown()
+     {
+         app.ApplyLureEffect(gameObject);
+     }*/
 }

@@ -10,7 +10,7 @@ namespace Console
     [Serializable]
     public static class Store
     {
-        public const string file = "/dataGame.json";
+        public const string file = "dataGame.json";
         public static List<Deck> decks { get; private set; }
         public static List<Effect> effects { get; private set; }
         public delegate void ChangeDecks();
@@ -34,7 +34,7 @@ namespace Console
 
         private static void LoadFromJSON()
         {
-            string path = Application.persistentDataPath + file;
+            string path = Path.Combine(Application.dataPath, file);
             Debug.Log($"{path}");
             if (File.Exists(path))
             {
@@ -54,7 +54,7 @@ namespace Console
 
         private static void SaveFromJSON()
         {
-            string path = Application.dataPath + file;
+            string path = Path.Combine(Application.dataPath, file);
             StoreData storeData = new StoreData
             {
                 decks = decks,
