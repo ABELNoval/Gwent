@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Console;
 using UnityEngine;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject cardsInfoPanel;
     public GameObject emptyCard;
     public GameObject player1CardsPrefab;
     public GameObject player2CardsPrefab;
@@ -58,4 +60,30 @@ public class GameManager : MonoBehaviour
             GameObject player2SecundaryCard = Instantiate(emptyCard, player2SecundaryHand.transform);
         }
     }
+
+    public void GenerateInfo(CardUi cardUi)
+    {
+        PanelCardInformation panelCardInformation = cardsInfoPanel.GetComponent<PanelCardInformation>();
+        panelCardInformation.CreateCardPanelInfo(cardUi.card);
+        cardsInfoPanel.SetActive(true);
+    }
+
+    public void ClickCard(GameObject card)
+    {
+        CardUi cardUi = card.GetComponent<CardUi>();
+        foreach (string pos in cardUi.card.range)
+        {
+            TargetPanel(pos);
+        }
+    }
+
+    private void TargetPanel(string pos)
+    {
+        //GameObject panel = FindPanel(pos);
+    }
+
+    /*private GameObject FindPanel(string pos)
+    {
+
+    }*/
 }

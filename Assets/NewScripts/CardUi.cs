@@ -14,8 +14,7 @@ public class CardUi : MonoBehaviour
     public void SetupCard(Cards card)
     {
         this.card = card;
-        this.title.text = card.name;
-        Debug.Log(card.img);
-        this.image.texture = Resources.Load<Sprite>(card.img).texture;
+        title.text = card.name;
+        image.texture = Resources.Load<Sprite>(card.img).texture;
     }
 }

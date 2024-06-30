@@ -6862,6 +6862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a8179e9e3ceaf49abbdb654084a440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardsInfoPanel: {fileID: 272514485}
   emptyCard: {fileID: 6519572299078810911, guid: 2b85c13288a10a24d9861179b08891d7, type: 3}
   player1CardsPrefab: {fileID: 3063536662100656508, guid: 9442f65b7902e4640b030f13eeacf9dc, type: 3}
   player2CardsPrefab: {fileID: 2311955407859120533, guid: fff8bd1ff6439aa4f88f11bf086e9022, type: 3}

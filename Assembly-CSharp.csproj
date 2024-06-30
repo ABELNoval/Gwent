@@ -95,9 +95,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\NewScripts\Store.cs" />
     <Compile Include="Assets\NewScripts\Player.cs" />
-    <Compile Include="Assets\Scripts\CardManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-    <Compile Include="Assets\Scripts\PanelCardInformation.cs" />
     <Compile Include="Assets\BackEnd\Players.cs" />
     <Compile Include="Assets\Scripts\App.cs" />
     <Compile Include="Assets\NewScripts\Parse.cs" />
@@ -118,12 +116,13 @@
     <Compile Include="Assets\Scripts\CinematicController.cs" />
     <Compile Include="Assets\Scripts\InfoGame.cs" />
     <Compile Include="Assets\Scripts\CardIsSelectedWithAnEffect.cs" />
+    <Compile Include="Assets\NewScripts\PanelCardInformation.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\NewScripts\Field.cs" />
     <Compile Include="Assets\NewScripts\Effect.cs" />
-    <Compile Include="Assets\Scripts\CardUi.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\NewScripts\CardManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
@@ -131,6 +130,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
+    <Compile Include="Assets\NewScripts\CardUi.cs" />
     <Compile Include="Assets\BackEnd\CardCollection.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
