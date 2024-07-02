@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 74853188}
   m_Layer: 5
   m_Name: PanelAsedioPlayer1
-  m_TagString: Siege
+  m_TagString: player1Siege
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1726,7 +1726,7 @@ GameObject:
   - component: {fileID: 153016507}
   m_Layer: 5
   m_Name: PanelAumento2Player1
-  m_TagString: BuffRange
+  m_TagString: player1Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2309,7 +2309,7 @@ GameObject:
   - component: {fileID: 161720274}
   m_Layer: 5
   m_Name: PanelMelePlayer2
-  m_TagString: Mele
+  m_TagString: player2Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3238,7 +3238,7 @@ GameObject:
   - component: {fileID: 214382829}
   m_Layer: 5
   m_Name: PanelRangoPlayer1
-  m_TagString: Range
+  m_TagString: player1Range
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6862,6 +6862,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a8179e9e3ceaf49abbdb654084a440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedCard: {fileID: 0}
+  boardPanels:
+  - {fileID: 1327415744}
+  - {fileID: 153016501}
+  - {fileID: 812723845}
+  - {fileID: 1575882116}
+  - {fileID: 214382824}
+  - {fileID: 74853183}
+  - {fileID: 391504697}
+  - {fileID: 958539454}
+  - {fileID: 1667725308}
+  - {fileID: 161720269}
+  - {fileID: 1713323647}
+  - {fileID: 1969716385}
+  - {fileID: 2061841460}
   cardsInfoPanel: {fileID: 272514485}
   emptyCard: {fileID: 6519572299078810911, guid: 2b85c13288a10a24d9861179b08891d7, type: 3}
   player1CardsPrefab: {fileID: 3063536662100656508, guid: 9442f65b7902e4640b030f13eeacf9dc, type: 3}
@@ -6899,7 +6914,7 @@ GameObject:
   - component: {fileID: 391504703}
   m_Layer: 5
   m_Name: PanelAumento1Player2
-  m_TagString: BuffMele
+  m_TagString: player2Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11405,7 +11420,7 @@ GameObject:
   - component: {fileID: 812723851}
   m_Layer: 5
   m_Name: PanelAumento3Player1
-  m_TagString: BuffSiege
+  m_TagString: player1Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13776,7 +13791,7 @@ GameObject:
   - component: {fileID: 958539460}
   m_Layer: 5
   m_Name: PanelAumento2Player2
-  m_TagString: BuffRange
+  m_TagString: player2Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18977,7 +18992,7 @@ GameObject:
   - component: {fileID: 1327415750}
   m_Layer: 5
   m_Name: PanelAumento1Player1
-  m_TagString: BuffMele
+  m_TagString: player1Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23775,7 +23790,7 @@ GameObject:
   - component: {fileID: 1575882121}
   m_Layer: 5
   m_Name: PanelMelePlayer1
-  m_TagString: Mele
+  m_TagString: player1Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24268,7 +24283,7 @@ GameObject:
   - component: {fileID: 1667725314}
   m_Layer: 5
   m_Name: PanelAumento3Player2
-  m_TagString: BuffSiege
+  m_TagString: player2Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24740,7 +24755,7 @@ GameObject:
   - component: {fileID: 1713323652}
   m_Layer: 5
   m_Name: PanelRangoPlayer2
-  m_TagString: Range
+  m_TagString: player2Range
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27987,7 +28002,7 @@ GameObject:
   - component: {fileID: 1969716390}
   m_Layer: 5
   m_Name: PanelAsedioPlayer2
-  m_TagString: Siege
+  m_TagString: player2Siege
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28582,7 +28597,7 @@ GameObject:
   - component: {fileID: 2061841465}
   m_Layer: 5
   m_Name: PanelExpansion
-  m_TagString: Expansion
+  m_TagString: Climate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

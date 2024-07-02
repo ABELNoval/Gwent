@@ -7,11 +7,11 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 {
     public enum BoardPosition
     {
-        Mele,
+        Melee,
         Range,
         Siege,
         Expansion,
-        BuffMele,
+        BuffMelee,
         BuffRange,
         BuffSiege,
         Cementery
@@ -19,7 +19,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
     public enum EffectPosition
     {
-        Mele,
+        Melee,
         Range,
         Siege
     }
@@ -49,28 +49,28 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
     {
         public List<BoardEffect> effects = new List<BoardEffect>();
         //Zonas del tablero.
-        public List<Card> meleCards = new List<Card>();
+        public List<Card> MeleeCards = new List<Card>();
         public List<Card> siegeCards = new List<Card>();
         public List<Card> rangeCards = new List<Card>();
-        public List<Card> buffMeleCards = new List<Card>();
+        public List<Card> buffMeleeCards = new List<Card>();
         public List<Card> buffRangeCards = new List<Card>();
         public List<Card> buffSiegeCards = new List<Card>();
         public List<Card> expansionCards = new List<Card>();
         public List<Card> cementeryCards = new List<Card>();
 
-        public void  AddCementeryCard(Card card)
+        public void AddCementeryCard(Card card)
         {
             cementeryCards.Add(card);
         }
-        
-        public void AddMeleCard(Card card)
+
+        public void AddMeleeCard(Card card)
         {
             if (card.typeOfCard != TypeOfCard.GoldCard)
             {
-                List<BoardEffect> boardEffects = effects.FindAll(e => e.effectPosition == EffectPosition.Mele);
+                List<BoardEffect> boardEffects = effects.FindAll(e => e.effectPosition == EffectPosition.Melee);
                 ApplyEffectOnCard(boardEffects, card);
             }
-            meleCards.Add(card);
+            MeleeCards.Add(card);
         }
 
         public void AddRangeCard(Card card)
@@ -98,9 +98,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             expansionCards.Add(card);
         }
 
-        public void AddBuffMeleCard(Card card)
+        public void AddBuffMeleeCard(Card card)
         {
-            buffMeleCards.Add(card);
+            buffMeleeCards.Add(card);
         }
 
         public void AddBuffRangeCard(Card card)
@@ -115,15 +115,15 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
         public int GetBoardPoints()
         {
-            return GetMelePoints() + GetRangePoints() + GetSiegePoints();
+            return GetMeleePoints() + GetRangePoints() + GetSiegePoints();
         }
 
-        private int GetMelePoints()
+        private int GetMeleePoints()
         {
             int point = 0;
-            for (int i = 0; i < meleCards.Count; i++) 
+            for (int i = 0; i < MeleeCards.Count; i++)
             {
-                point += meleCards[i].currentPower;
+                point += MeleeCards[i].currentPower;
             }
             return point;
         }
@@ -131,7 +131,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
         private int GetRangePoints()
         {
             int point = 0;
-            for (int i = 0; i < rangeCards.Count; i++) 
+            for (int i = 0; i < rangeCards.Count; i++)
             {
                 point += rangeCards[i].currentPower;
             }
@@ -147,14 +147,14 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             }
             return point;
         }
-    
+
         public void RemoveCards()
         {
             int i = 0;
-            while (i < meleCards.Count)
+            while (i < MeleeCards.Count)
             {
-                AddCementeryCard(meleCards[i]);
-                meleCards.Remove(meleCards[i]);
+                AddCementeryCard(MeleeCards[i]);
+                MeleeCards.Remove(MeleeCards[i]);
             }
 
             while (i < rangeCards.Count)
@@ -169,19 +169,19 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
                 siegeCards.Remove(siegeCards[i]);
             }
 
-            while( i < buffMeleCards.Count )
+            while (i < buffMeleeCards.Count)
             {
-                AddCementeryCard(buffMeleCards[i]);
-                buffMeleCards.Remove(buffMeleCards[i]);
+                AddCementeryCard(buffMeleeCards[i]);
+                buffMeleeCards.Remove(buffMeleeCards[i]);
             }
 
-            while( i < buffRangeCards.Count )
+            while (i < buffRangeCards.Count)
             {
                 AddCementeryCard(buffRangeCards[i]);
                 buffRangeCards.Remove(buffRangeCards[i]);
             }
 
-            while( i < buffSiegeCards.Count )
+            while (i < buffSiegeCards.Count)
             {
                 AddCementeryCard(buffSiegeCards[i]);
                 buffSiegeCards.Remove(buffSiegeCards[i]);
@@ -193,13 +193,13 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
                 expansionCards.Remove(expansionCards[i]);
             }
         }
-    
+
         public int GetCardCount(BoardPosition cardPos)
         {
-            if (cardPos == BoardPosition.Mele)
+            if (cardPos == BoardPosition.Melee)
             {
-                Debug.Log("Mele count: " + meleCards.Count);
-                return meleCards.Count;
+                Debug.Log("Melee count: " + MeleeCards.Count);
+                return MeleeCards.Count;
             }
             if (cardPos == BoardPosition.Range)
             {
@@ -211,17 +211,17 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             }
             return 0;
         }
-    
+
         public void ChangesCards(Guid cardId)
         {
             int i = 0;
-            while (i < meleCards.Count && cardId != meleCards[i].id)
+            while (i < MeleeCards.Count && cardId != MeleeCards[i].id)
             {
                 i++;
             }
-            if (i < meleCards.Count)
+            if (i < MeleeCards.Count)
             {
-                meleCards.RemoveAt(i);
+                MeleeCards.RemoveAt(i);
                 return;
             }
 
@@ -245,10 +245,10 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
                 return;
             }
         }
-    
+
         public Card GetCard(Guid cardId)
         {
-            Card foundCard = meleCards.Find(c => c.id == cardId);
+            Card foundCard = MeleeCards.Find(c => c.id == cardId);
             if (foundCard != null)
             {
                 return foundCard;
@@ -265,14 +265,14 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             }
             return null;
         }
-    
+
         public void IncreasePowerBy(EffectPosition effectPosition, int cant)
         {
-            if (effectPosition == EffectPosition.Mele)
+            if (effectPosition == EffectPosition.Melee)
             {
-                foreach (Card card in meleCards)
+                foreach (Card card in MeleeCards)
                 {
-                    if(card.typeOfCard != TypeOfCard.GoldCard)
+                    if (card.typeOfCard != TypeOfCard.GoldCard)
                     {
                         card.currentPower += cant;
                     }
@@ -284,7 +284,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             {
                 foreach (Card card in rangeCards)
                 {
-                    if(card.typeOfCard != TypeOfCard.GoldCard)
+                    if (card.typeOfCard != TypeOfCard.GoldCard)
                     {
                         card.currentPower += cant;
                     }
@@ -296,7 +296,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             {
                 foreach (Card card in siegeCards)
                 {
-                    if(card.typeOfCard != TypeOfCard.GoldCard)
+                    if (card.typeOfCard != TypeOfCard.GoldCard)
                     {
                         card.currentPower += cant;
                     }
@@ -304,7 +304,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
                 return;
             }
         }
-    
+
         public Card GetWeakCard()
         {
             List<Card> cards = GetAllCards();
@@ -315,12 +315,12 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             int minIndex = 0;
             for (int i = 0; i < cards.Count; i++)
             {
-                if(cards[i].currentPower < cards[minIndex].currentPower && cards[i].typeOfCard != TypeOfCard.GoldCard)
+                if (cards[i].currentPower < cards[minIndex].currentPower && cards[i].typeOfCard != TypeOfCard.GoldCard)
                 {
                     minIndex = i;
                 }
             }
-            
+
             return cards[minIndex];
         }
 
@@ -332,7 +332,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
         private List<Card> GetAllCards()
         {
-            return meleCards.Concat(rangeCards).Concat(siegeCards).ToList();
+            return MeleeCards.Concat(rangeCards).Concat(siegeCards).ToList();
         }
 
         public Card GetMaxCard()
@@ -345,27 +345,27 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             int maxIndex = 0;
             for (int i = 0; i < cards.Count; i++)
             {
-                if(cards[i].currentPower > cards[maxIndex].currentPower && cards[i].typeOfCard != TypeOfCard.GoldCard)
+                if (cards[i].currentPower > cards[maxIndex].currentPower && cards[i].typeOfCard != TypeOfCard.GoldCard)
                 {
                     maxIndex = i;
                 }
             }
             return cards[maxIndex];
         }
-        
+
         public void RemoveCard(Guid cardId)
         {
-            RemoveMeleCard(cardId);
+            RemoveMeleeCard(cardId);
             RemoveRangeCard(cardId);
             RemoveSiegeCard(cardId);
         }
-        
-        private void RemoveMeleCard(Guid cardId)
+
+        private void RemoveMeleeCard(Guid cardId)
         {
-            Card card = meleCards.Find(x => x.id == cardId);
+            Card card = MeleeCards.Find(x => x.id == cardId);
             if (card != null)
             {
-                meleCards.Remove(card);
+                MeleeCards.Remove(card);
                 AddCementeryCard(card);
             }
         }
@@ -396,38 +396,38 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             {
                 switch (boardEffect.boardEffectType)
                 {
-                    case BoardEffectType.Buff :
-                    {
-                        card.currentPower += 2;
-                        break;
-                    }
+                    case BoardEffectType.Buff:
+                        {
+                            card.currentPower += 2;
+                            break;
+                        }
                     case BoardEffectType.ExpansionYuta:
                     case BoardEffectType.ExpansionSukuna:
-                    {
-                        card.currentPower -= 2;
-                        break;
-                    }
+                        {
+                            card.currentPower -= 2;
+                            break;
+                        }
                     case BoardEffectType.ExpansionMahito:
                     case BoardEffectType.ExpansionJogo:
                     case BoardEffectType.ExpansionHakari:
-                    {
-                        card.currentPower -= 1;
-                        break;
-                    }
+                        {
+                            card.currentPower -= 1;
+                            break;
+                        }
                 }
             }
         }
-    
+
         public void RemoveExpansionEffects()
         {
             int i = 0;
-            while(i < effects.Count)
+            while (i < effects.Count)
             {
                 if (effects[i].boardEffectType == BoardEffectType.ExpansionMahito)
                 {
-                    if (effects[i].effectPosition == EffectPosition.Mele)
+                    if (effects[i].effectPosition == EffectPosition.Melee)
                     {
-                        IncreasePowerBy(EffectPosition.Mele, 1);
+                        IncreasePowerBy(EffectPosition.Melee, 1);
                     }
                     if (effects[i].effectPosition == EffectPosition.Range)
                     {
@@ -443,9 +443,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
                 if (effects[i].boardEffectType == BoardEffectType.ExpansionHakari)
                 {
-                    if (effects[i].effectPosition == EffectPosition.Mele)
+                    if (effects[i].effectPosition == EffectPosition.Melee)
                     {
-                        IncreasePowerBy(EffectPosition.Mele, 1);
+                        IncreasePowerBy(EffectPosition.Melee, 1);
                     }
                     if (effects[i].effectPosition == EffectPosition.Range)
                     {
@@ -461,9 +461,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
                 if (effects[i].boardEffectType == BoardEffectType.ExpansionYuta)
                 {
-                    if (effects[i].effectPosition == EffectPosition.Mele)
+                    if (effects[i].effectPosition == EffectPosition.Melee)
                     {
-                        IncreasePowerBy(EffectPosition.Mele, 2);
+                        IncreasePowerBy(EffectPosition.Melee, 2);
                     }
                     if (effects[i].effectPosition == EffectPosition.Range)
                     {
@@ -479,9 +479,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
                 if (effects[i].boardEffectType == BoardEffectType.ExpansionSukuna)
                 {
-                    if (effects[i].effectPosition == EffectPosition.Mele)
+                    if (effects[i].effectPosition == EffectPosition.Melee)
                     {
-                        IncreasePowerBy(EffectPosition.Mele, 2);
+                        IncreasePowerBy(EffectPosition.Melee, 2);
                     }
                     if (effects[i].effectPosition == EffectPosition.Range)
                     {
@@ -497,9 +497,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 
                 if (effects[i].boardEffectType == BoardEffectType.ExpansionJogo)
                 {
-                    if (effects[i].effectPosition == EffectPosition.Mele)
+                    if (effects[i].effectPosition == EffectPosition.Melee)
                     {
-                        IncreasePowerBy(EffectPosition.Mele, 1);
+                        IncreasePowerBy(EffectPosition.Melee, 1);
                     }
                     if (effects[i].effectPosition == EffectPosition.Range)
                     {

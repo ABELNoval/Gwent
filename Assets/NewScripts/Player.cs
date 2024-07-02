@@ -10,7 +10,7 @@ namespace Console
     {
         public Deck deck;
         public List<Cards> hand;
-        public Guid id = new Guid();
+        public Guid id = Guid.NewGuid();
         //public Field field;
         public Player(Deck deck)
         {

@@ -6,11 +6,11 @@ namespace Console
     public delegate void PlayCard(GameObject card);
     public enum FieldPosition
     {
-        Mele,
+        Melee,
         Range,
         Siege,
         Graveyard,
-        BuffMele,
+        BuffMelee,
         BuffRange,
         BuffSiege,
         Climate
@@ -18,20 +18,20 @@ namespace Console
     public class Field
     {
 
-        List<GameObject> mele = new List<GameObject>();
+        List<GameObject> Melee = new List<GameObject>();
         List<GameObject> range = new List<GameObject>();
         List<GameObject> siege = new List<GameObject>();
         List<GameObject> graveyard = new List<GameObject>();
         List<GameObject> climate = new List<GameObject>();
-        List<GameObject> buffMele = new List<GameObject>();
+        List<GameObject> buffMelee = new List<GameObject>();
         List<GameObject> buffRange = new List<GameObject>();
         List<GameObject> buffSiege = new List<GameObject>();
 
         public void AddCard(GameObject card, FieldPosition fieldPosition)
         {
-            if (fieldPosition == FieldPosition.Mele)
+            if (fieldPosition == FieldPosition.Melee)
             {
-                AddMeleCard(card);
+                AddMeleeCard(card);
                 return;
             }
             if (fieldPosition == FieldPosition.Range)
@@ -55,9 +55,9 @@ namespace Console
                 return;
             }
         }
-        public void AddMeleCard(GameObject card)
+        public void AddMeleeCard(GameObject card)
         {
-            mele.Add(card);
+            Melee.Add(card);
         }
         public void AddSiegeCard(GameObject card)
         {

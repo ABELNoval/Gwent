@@ -11,8 +11,9 @@ public class Board
     public delegate void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand);
     public event NoSelectedDeck noSelectedDeck;
     public event InstantiateHands instantiateHands;
-    Player player1;
-    Player player2;
+    public Player player1;
+    public Player player2;
+    public Player activePlayer;
     Deck selectedDeck;
 
     public void StartGame()
@@ -23,6 +24,7 @@ public class Board
         }
         Debug.Log("Juego listo para empezar");
         GeneratePlayers();
+        activePlayer = player1;
     }
 
     public void SetSelectedDeck(Guid id)
@@ -45,5 +47,10 @@ public class Board
         player2.GenerateHand();
         Debug.Log($"{player1.hand[0].name} y {player2.hand[0].name}");
         instantiateHands(player1.hand, player2.hand);
+    }
+
+    public void PlayCard(Cards card)
+    {
+
     }
 }

@@ -10,7 +10,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -22,7 +22,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -64,7 +64,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -76,7 +76,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -88,7 +88,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 6,
           "effectsName": [],
@@ -100,7 +100,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 6,
           "effectsName": [],
@@ -176,7 +176,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Range"
           ],
           "attack": 8,
@@ -191,7 +191,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -206,7 +206,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -233,7 +233,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 4,
@@ -248,7 +248,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 4,
@@ -319,7 +319,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Range",
             "Siege"
           ],
@@ -335,7 +335,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Range",
             "Siege"
           ],
@@ -352,7 +352,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -373,7 +373,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -409,7 +409,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Range"
           ],
           "attack": 6,
@@ -424,7 +424,7 @@
           "description": "Plat",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -439,7 +439,7 @@
           "description": "Plat",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -454,7 +454,7 @@
           "description": "Normal",
           "faction": "Curse",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -466,7 +466,7 @@
           "description": "Plat",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 7,
@@ -481,7 +481,7 @@
           "description": "Plat",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 7,
@@ -538,7 +538,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,
@@ -553,7 +553,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -565,7 +565,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Range"
           ],
           "attack": 6,
@@ -580,7 +580,7 @@
           "description": "Normal",
           "faction": "Curse",
           "range": [
-            "Mele"
+            "Melee"
           ],
           "attack": 5,
           "effectsName": [],
@@ -606,7 +606,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Range",
             "Siege"
           ],
@@ -622,7 +622,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Range",
             "Siege"
           ],
@@ -639,7 +639,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Mele",
+            "Melee",
             "Siege"
           ],
           "attack": 8,

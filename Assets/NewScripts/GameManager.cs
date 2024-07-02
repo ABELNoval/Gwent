@@ -3,9 +3,13 @@ using Console;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject selectedCard;
+    public List<GameObject> boardPanels;
     public GameObject cardsInfoPanel;
     public GameObject emptyCard;
     public GameObject player1CardsPrefab;
@@ -19,10 +23,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        selectedCard = new GameObject();
         board = new Board();
         board.noSelectedDeck += ShowOptioptionsPanel;
         board.instantiateHands += InstantiateHands;
-        Debug.Log("GameStart");
+        UnityEngine.Debug.Log("GameStart");
     }
 
     public void ShowOptioptionsPanel()
@@ -70,20 +75,87 @@ public class GameManager : MonoBehaviour
 
     public void ClickCard(GameObject card)
     {
+        selectedCard = card;
         CardUi cardUi = card.GetComponent<CardUi>();
-        foreach (string pos in cardUi.card.range)
+        if (cardUi.card.range[0] == "Climate")
         {
-            TargetPanel(pos);
+            Image img = boardPanels[boardPanels.Count - 1].GetComponent<Image>();
+            img.sprite = Resources.Load<Sprite>("Art/Images/Panel");
+            boardPanels[boardPanels.Count - 1].AddComponent<PanelController>();
+        }
+        else
+        {
+            if (board.activePlayer == board.player1)
+            {
+                for (int i = 0; i < cardUi.card.range.Count; i++)
+                {
+                    SelectPanels("player1" + cardUi.card.range[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cardUi.card.range.Count; i++)
+                {
+                    SelectPanels("player2" + cardUi.card.range[i]);
+                }
+            }
         }
     }
 
-    private void TargetPanel(string pos)
+    private void SelectPanels(string panelTag)
     {
-        //GameObject panel = FindPanel(pos);
+        foreach (GameObject panel in boardPanels)
+        {
+            if (panel.tag == panelTag)
+            {
+                panel.AddComponent<PanelController>();
+                Image img = panel.GetComponent<Image>();
+                img.sprite = Resources.Load<Sprite>("Art/Images/Panel");
+            }
+        }
     }
 
-    /*private GameObject FindPanel(string pos)
+    public void PlayCard(GameObject panel)
     {
+        board.PlayCard(selectedCard.GetComponent<CardUi>().card);
+        ChangesCardsConfig(panel);
+        selectedCard.transform.SetParent(panel.transform, false);
+        DeselectPanels();
+    }
 
-    }*/
+    private void DeselectPanels()
+    {
+        foreach (GameObject panel in boardPanels)
+        {
+            Destroy(panel.GetComponent<PanelController>());
+            Image img = panel.GetComponent<Image>();
+            img.sprite = null;
+        }
+    }
+
+    public void ChangesCardsConfig(GameObject panel)
+    {
+        int cantCard = 1;
+        if (panel.tag != "player1Buff" && panel.tag != "player2Buff")
+        {
+            cantCard = (panel.tag == "Climate") ? 4 : 11;
+        }
+        Image[] images = selectedCard.GetComponentsInChildren<Image>();
+        TextMeshProUGUI name = selectedCard.GetComponentInChildren<TextMeshProUGUI>();
+        RectTransform rectTransformLayout = panel.GetComponent<RectTransform>();
+        RectTransform rectTransform = selectedCard.GetComponent<RectTransform>();
+        BoxCollider boxCollider = selectedCard.GetComponent<BoxCollider>();
+        float width = rectTransformLayout.rect.width / cantCard;
+        float height = rectTransformLayout.rect.height;
+        Vector2 cardSize = rectTransform.sizeDelta;
+        foreach (Image image in images)
+        {
+            image.enabled = false;
+        }
+        name.enabled = false;
+        cardSize.x = width;
+        cardSize.y = height;
+        rectTransform.sizeDelta = cardSize;
+        boxCollider.size = new Vector3(cardSize.x, cardSize.y, boxCollider.size.z);
+    }
 }

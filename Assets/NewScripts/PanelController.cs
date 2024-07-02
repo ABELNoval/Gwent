@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class PanelController : MonoBehaviour
 {
-    /*private App app;
+    private GameManager gameManager;
 
     //Inicia el juego
     private void Start()
     {
-        app = FindFirstObjectByType<App>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     //Click sobre un panel
     private void OnMouseDown()
     {
-        app.PlayCardUI(gameObject);
-    }*/
+        gameManager.PlayCard(gameObject);
+    }
 }

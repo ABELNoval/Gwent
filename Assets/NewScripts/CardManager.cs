@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     //Click sobre la carta
     private void OnMouseDown()
     {
+        Debug.Log("click");
         gameManager.ClickCard(gameObject);
     }
 

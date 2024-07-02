@@ -4,14 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Siege
-  - BuffRange
-  - Mele
-  - Range
-  - BuffMele
-  - BuffSiege
-  - cementery
-  - Expansion
+  - player1Melee
+  - player2Melee
+  - player1Range
+  - player2Range
+  - player1Siege
+  - player2Siege
+  - player1Buff
+  - player2Buff
+  - Climate
   layers:
   - Default
   - TransparentFX

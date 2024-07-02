@@ -28,14 +28,14 @@ public class App : MonoBehaviour
      public GameObject bossCardPanelInfo;
      public GameObject player1HandSecundaryPanel;
      public GameObject player2HandSecundaryPanel;
-     public GameObject player1MelePanel;
+     public GameObject player1MeleePanel;
      public GameObject player1RangePanel;
      public GameObject player1SiegePanel;
      public GameObject player1Buff1Panel;
      public GameObject player1Buff2Panel;
      public GameObject player1Buff3Panel;
      public GameObject player1CementaryPanel;
-     public GameObject player2MelePanel;
+     public GameObject player2MeleePanel;
      public GameObject player2RangePanel;
      public GameObject player2SiegePanel;
      public GameObject player2Buff1Panel;
@@ -62,13 +62,13 @@ public class App : MonoBehaviour
      {
          game = new Game();
          Debug.Log("GameStart");
-         gamePanelsInBoard.Add(player1MelePanel);
+         gamePanelsInBoard.Add(player1MeleePanel);
          gamePanelsInBoard.Add(player1RangePanel);
          gamePanelsInBoard.Add(player1SiegePanel);
          gamePanelsInBoard.Add(player1Buff1Panel);
          gamePanelsInBoard.Add(player1Buff2Panel);
          gamePanelsInBoard.Add(player1Buff3Panel);
-         gamePanelsInBoard.Add(player2MelePanel);
+         gamePanelsInBoard.Add(player2MeleePanel);
          gamePanelsInBoard.Add(player2RangePanel);
          gamePanelsInBoard.Add(player2SiegePanel);
          gamePanelsInBoard.Add(player2Buff1Panel);
@@ -146,21 +146,21 @@ public class App : MonoBehaviour
      //Marcar los paneles donde se puede jugar la carta
      public void SelectPanelToPlay(Card card)
      {
-         SelectMelePaneltoPlay(card);
+         SelectMeleePaneltoPlay(card);
          SelectRangePaneltoPlay(card);
          SelectSiegePaneltoPlay(card);
          SelectExpansionPaneltoPlay(card);
          SelectBuffPaneltoPlay(card);
      }
 
-     //Marcar el panel mele
-     public void SelectMelePaneltoPlay(Card card)
+     //Marcar el panel Melee
+     public void SelectMeleePaneltoPlay(Card card)
      {
-         if (card.IsMele())
+         if (card.IsMelee())
          {
-             GameObject melePanel = (game.activePlayer == game.player1) ? player1MelePanel : player2MelePanel;
-             GenerateImageToPanel(melePanel);
-             activePanels.Add(melePanel);
+             GameObject MeleePanel = (game.activePlayer == game.player1) ? player1MeleePanel : player2MeleePanel;
+             GenerateImageToPanel(MeleePanel);
+             activePanels.Add(MeleePanel);
          }
      }
 
@@ -291,7 +291,7 @@ public class App : MonoBehaviour
      public void ChangesCardsConfig(GameObject panel, GameObject card)
      {
          int cantCard = 1;
-         if (panel.tag != "BuffMele" && panel.tag != "BuffRange" && panel.tag != "BuffSiege")
+         if (panel.tag != "BuffMelee" && panel.tag != "BuffRange" && panel.tag != "BuffSiege")
          {
              cantCard = (panel.tag == "Expansion") ? 4 : 11;
          }
@@ -662,10 +662,10 @@ public class App : MonoBehaviour
 
      private void RemoveTheCardIsSelectedWithAnEffect()
      {
-         RemoveTheCardIsSelectedWithAnEffectInPanel(player1MelePanel);
+         RemoveTheCardIsSelectedWithAnEffectInPanel(player1MeleePanel);
          RemoveTheCardIsSelectedWithAnEffectInPanel(player1RangePanel);
          RemoveTheCardIsSelectedWithAnEffectInPanel(player1SiegePanel);
-         RemoveTheCardIsSelectedWithAnEffectInPanel(player2MelePanel);
+         RemoveTheCardIsSelectedWithAnEffectInPanel(player2MeleePanel);
          RemoveTheCardIsSelectedWithAnEffectInPanel(player2RangePanel);
          RemoveTheCardIsSelectedWithAnEffectInPanel(player2SiegePanel);
      }
@@ -686,9 +686,9 @@ public class App : MonoBehaviour
 
      private EffectPosition GetEffectPosition(GameObject panel)
      {
-         if (panel.CompareTag("BuffMele") || panel.CompareTag("Mele"))
+         if (panel.CompareTag("BuffMelee") || panel.CompareTag("Melee"))
          {
-             return EffectPosition.Mele;
+             return EffectPosition.Melee;
          }
 
          if (panel.CompareTag("BuffRange") || panel.CompareTag("Range"))
@@ -700,10 +700,10 @@ public class App : MonoBehaviour
 
      private void RemoveCardUi(Card card)
      {
-         RemoveCardUiInPanel(card, player1MelePanel);
+         RemoveCardUiInPanel(card, player1MeleePanel);
          RemoveCardUiInPanel(card, player1RangePanel);
          RemoveCardUiInPanel(card, player1SiegePanel);
-         RemoveCardUiInPanel(card, player2MelePanel);
+         RemoveCardUiInPanel(card, player2MeleePanel);
          RemoveCardUiInPanel(card, player2RangePanel);
          RemoveCardUiInPanel(card, player2SiegePanel);
      }
@@ -728,46 +728,46 @@ public class App : MonoBehaviour
 
      private void SelectPanelsToApplyEffect()
      {
-         Image player1MeleImage = player1MelePanel.GetComponentInChildren<Image>();
-         player1MeleImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
+         Image player1MeleeImage = player1MeleePanel.GetComponentInChildren<Image>();
+         player1MeleeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
          Image player1RangeImage = player1RangePanel.GetComponentInChildren<Image>();
          player1RangeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
          Image player1SiegeImage = player1SiegePanel.GetComponentInChildren<Image>();
          player1SiegeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
-         Image player2MeleImage = player2MelePanel.GetComponentInChildren<Image>();
-         player2MeleImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
+         Image player2MeleeImage = player2MeleePanel.GetComponentInChildren<Image>();
+         player2MeleeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
          Image player2RangeImage = player2RangePanel.GetComponentInChildren<Image>();
          player2RangeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
          Image player2SiegeImage = player2SiegePanel.GetComponentInChildren<Image>();
          player2SiegeImage.sprite = Resources.Load<Sprite>("Art/Images/Panel");
 
-         player1MelePanel.AddComponent<ExpansionEffect>();
+         player1MeleePanel.AddComponent<ExpansionEffect>();
          player1RangePanel.AddComponent<ExpansionEffect>();
          player1SiegePanel.AddComponent<ExpansionEffect>();
-         player2MelePanel.AddComponent<ExpansionEffect>();
+         player2MeleePanel.AddComponent<ExpansionEffect>();
          player2RangePanel.AddComponent<ExpansionEffect>();
          player2SiegePanel.AddComponent<ExpansionEffect>();
      }
 
      public void ActiveExpansionEffect(GameObject panel)
      {
-         Image player1MeleImage = player1MelePanel.GetComponentInChildren<Image>();
-         player1MeleImage.sprite = null;
+         Image player1MeleeImage = player1MeleePanel.GetComponentInChildren<Image>();
+         player1MeleeImage.sprite = null;
          Image player1RangeImage = player1RangePanel.GetComponentInChildren<Image>();
          player1RangeImage.sprite = null;
          Image player1SiegeImage = player1SiegePanel.GetComponentInChildren<Image>();
          player1SiegeImage.sprite = null;
-         Image player2MeleImage = player2MelePanel.GetComponentInChildren<Image>();
-         player2MeleImage.sprite = null;
+         Image player2MeleeImage = player2MeleePanel.GetComponentInChildren<Image>();
+         player2MeleeImage.sprite = null;
          Image player2RangeImage = player2RangePanel.GetComponentInChildren<Image>();
          player2RangeImage.sprite = null;
          Image player2SiegeImage = player2SiegePanel.GetComponentInChildren<Image>();
          player2SiegeImage.sprite = null;
 
-         Destroy(player1MelePanel.GetComponent<ExpansionEffect>());
+         Destroy(player1MeleePanel.GetComponent<ExpansionEffect>());
          Destroy(player1RangePanel.GetComponent<ExpansionEffect>());
          Destroy(player1SiegePanel.GetComponent<ExpansionEffect>());
-         Destroy(player2MelePanel.GetComponent<ExpansionEffect>());
+         Destroy(player2MeleePanel.GetComponent<ExpansionEffect>());
          Destroy(player2RangePanel.GetComponent<ExpansionEffect>());
          Destroy(player2SiegePanel.GetComponent<ExpansionEffect>());
 

@@ -53,9 +53,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
         {
             Card card = activePlayer.hand.Find(c => c.id == cardId);
             activePlayer.hand.Remove(card);
-            if (boardPosition == BoardPosition.Mele)
+            if (boardPosition == BoardPosition.Melee)
             {
-                PlayMeleCard(card);
+                PlayMeleeCard(card);
             }
 
             if (boardPosition == BoardPosition.Range)
@@ -73,9 +73,9 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
                 PlayExpansionCard(card);
             }
 
-            if (boardPosition == BoardPosition.BuffMele)
+            if (boardPosition == BoardPosition.BuffMelee)
             {
-                PlayBuffMeleCard(card);
+                PlayBuffMeleeCard(card);
             }
 
             if (boardPosition == BoardPosition.BuffRange)
@@ -99,14 +99,14 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             activePlayer = (activePlayer == player1) ? player2 : player1;
         }
 
-        public void PlayMeleCard(Card card)
+        public void PlayMeleeCard(Card card)
         {
             if (activePlayer == player1)
             {
-                player1Board.AddMeleCard(card);
+                player1Board.AddMeleeCard(card);
                 return;
             }
-            player2Board.AddMeleCard(card);
+            player2Board.AddMeleeCard(card);
         }
 
         public void PlayRangeCard(Card card)
@@ -139,14 +139,14 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
             player2Board.AddExpansionCard(card);
         }
 
-        public void PlayBuffMeleCard(Card card)
+        public void PlayBuffMeleeCard(Card card)
         {
             if (activePlayer == player1)
             {
-                player1Board.AddBuffMeleCard(card);
+                player1Board.AddBuffMeleeCard(card);
                 return;
             }
-            player2Board.AddBuffMeleCard(card);
+            player2Board.AddBuffMeleeCard(card);
         }
 
         public void PlayBuffRangeCard(Card card)
