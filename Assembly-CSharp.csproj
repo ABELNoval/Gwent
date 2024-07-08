@@ -86,12 +86,12 @@
     <Compile Include="Assets\BackEnd\Board.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\BackEnd\TypeOfEffects.cs" />
+    <Compile Include="Assets\NewScripts\Selector.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\DayCicle\DayAndNigth.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\NewScripts\Expresions.cs" />
-    <Compile Include="Assets\NewScripts\Target.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\NewScripts\Store.cs" />
     <Compile Include="Assets\NewScripts\Player.cs" />

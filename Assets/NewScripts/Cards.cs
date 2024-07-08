@@ -30,7 +30,7 @@ namespace Console
             this.effectsName = effectsName;
             this.img = img;
         }
-        public void OnActivation(List<(Effect, Target<Cards>)> effects, Context context)
+        public void OnActivation(List<(Effect, Selector)> effects, Context context)
         {
             /*if (effects[0].Item2.IsAPosActivation() || effects[0].Item2 == null)
             {

@@ -13,14 +13,16 @@ namespace Console
         otherField,
         parent
     }
-    public class Target<T>
+    public class Selector
     {
-        public List<Font> source;
+        public Font source;
         public bool single;
-        public Predicate<T> predicate;
-        public bool IsAPosActivation()
+        public Predicate<Cards> predicate;
+
+        public Selector(Font source, Predicate<Cards> predicate)
         {
-            return source.Contains(Font.parent);
+            this.source = source;
+            this.predicate = predicate;
         }
     }
 }

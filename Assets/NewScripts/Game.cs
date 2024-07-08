@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class Game
 {
-
+    Context context;
     System.Random random = new System.Random();
     public delegate void NoSelectedDeck();
     public delegate void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand);
+    public delegate void PassTurn();
     public event NoSelectedDeck noSelectedDeck;
     public event InstantiateHands instantiateHands;
+    public event PassTurn passTurn;
     public Player player1;
     public Player player2;
     public Player activePlayer;
@@ -26,6 +28,7 @@ public class Game
         Debug.Log("Juego listo para empezar");
         GeneratePlayers();
         activePlayer = player1;
+        context = new Context(new List<Cards>(), activePlayer.id);
     }
 
     public void SetSelectedDeck(Guid id)
@@ -52,10 +55,34 @@ public class Game
 
     public void PlayCard(Cards card, GameObject panel)
     {
-        /*switch(panel)
+        activePlayer.field.SendButtom(card);
+        context.board.Add(card);
+        ActiveEffect();
+        ChangesActivePlayer();
+        passTurn();
+    }
+
+    private void ChangesActivePlayer()
+    {
+        if (IsPlayer1Playing())
         {
-            case
-        }*/
-        //activePlayer.field.AddCard(card, );
+            activePlayer = player2;
+            context.triggerPlayer = player2.id;
+        }
+        else
+        {
+            activePlayer = player1;
+            context.triggerPlayer = player1.id;
+        }
+    }
+
+    public bool IsPlayer1Playing()
+    {
+        return activePlayer == player1 ? true : false;
+    }
+
+    private void ActiveEffect()
+    {
+
     }
 }

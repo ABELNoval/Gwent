@@ -8,6 +8,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject player1Camera;
+    public GameObject player2Camera;
     public GameObject selectedCard;
     public List<GameObject> boardPanels;
     public GameObject cardsInfoPanel;
@@ -18,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject player2HandPanel;
     public GameObject player1SecundaryHand;
     public GameObject player2SecundaryHand;
-    Game game;
+    public Game game;
     public GameObject optionsPanel;
 
     void Start()
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
         game = new Game();
         game.noSelectedDeck += ShowOptioptionsPanel;
         game.instantiateHands += InstantiateHands;
+        game.passTurn += PassTurn;
         UnityEngine.Debug.Log("GameStart");
     }
 
@@ -161,9 +164,23 @@ public class GameManager : MonoBehaviour
 
     private void PassTurn()
     {
-        if (game.activePlayer == game.player1)
+        if (!game.IsPlayer1Playing())
         {
-
+            player1Camera.SetActive(false);
+            player1HandPanel.SetActive(false);
+            player1SecundaryHand.SetActive(true);
+            player2Camera.SetActive(true);
+            player2HandPanel.SetActive(true);
+            player2SecundaryHand.SetActive(false);
+        }
+        else
+        {
+            player1Camera.SetActive(true);
+            player1HandPanel.SetActive(true);
+            player1SecundaryHand.SetActive(false);
+            player2Camera.SetActive(false);
+            player2HandPanel.SetActive(false);
+            player2SecundaryHand.SetActive(true);
         }
     }
 }

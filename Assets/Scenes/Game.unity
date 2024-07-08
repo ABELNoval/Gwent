@@ -6862,6 +6862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a8179e9e3ceaf49abbdb654084a440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player1Camera: {fileID: 963194225}
+  player2Camera: {fileID: 1495802789}
   selectedCard: {fileID: 0}
   boardPanels:
   - {fileID: 1327415744}

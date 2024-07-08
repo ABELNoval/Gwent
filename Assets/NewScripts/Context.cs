@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd;
 
@@ -5,10 +6,10 @@ namespace Console
 {
     public class Context
     {
-        public int triggerPlayer { get; set; }
+        public Guid triggerPlayer { get; set; }
         public List<Cards> board { get; set; }
 
-        public Context(List<Cards> board, int triggerPlayer)
+        public Context(List<Cards> board, Guid triggerPlayer)
         {
             this.board = board;
             this.triggerPlayer = triggerPlayer;
