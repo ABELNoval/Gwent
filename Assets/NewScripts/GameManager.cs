@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Diagnostics;
 using Console;
 using UnityEngine;
@@ -5,11 +6,14 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI player1Points;
     public TextMeshProUGUI player2Points;
+    public GameObject declaration;
     public GameObject player1Camera;
     public GameObject player2Camera;
     public GameObject selectedCard;
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour
         game.instantiateHands += InstantiateHands;
         game.passTurn += PassTurn;
         game.updatePoints += UpdatePoints;
+        game.draw += InstantiateHands;
         UnityEngine.Debug.Log("GameStart");
     }
 
@@ -167,8 +172,10 @@ public class GameManager : MonoBehaviour
 
     private void PassTurn()
     {
+        game.ChangesActivePlayer();
         if (!game.IsPlayer1Playing())
         {
+            Debug.Log($"{game.IsPlayer1Playing()}");
             player1Camera.SetActive(false);
             player1HandPanel.SetActive(false);
             player1SecundaryHand.SetActive(true);
@@ -191,5 +198,78 @@ public class GameManager : MonoBehaviour
     {
         this.player1Points.text = player1Points.ToString();
         this.player2Points.text = player2Points.ToString();
+    }
+
+    public void StopPlaying()
+    {
+        if (game.player1IsPlaying && game.player2IsPlaying)
+        {
+            if (game.IsPlayer1Playing())
+            {
+                game.player1IsPlaying = false;
+            }
+            else
+            {
+                game.player2IsPlaying = false;
+                Debug.Log($"{game.player2IsPlaying} {game.player1IsPlaying}");
+            }
+            PassTurn();
+        }
+        else
+        {
+            game.FinishRound();
+            FinishRound();
+        }
+    }
+
+    private void FinishRound()
+    {
+        game.player1IsPlaying = true;
+        game.player2IsPlaying = true;
+        StartCoroutine(GetWinner());
+        ClearBoard();
+        game.DrawCards(2);
+    }
+
+    private void ClearBoard()
+    {
+        foreach (GameObject panel in boardPanels)
+        {
+            int i = 0;
+            while (i < panel.transform.childCount)
+            {
+                if (panel.transform.GetChild(0) != null)
+                {
+                    Destroy(panel.transform.GetChild(0).gameObject);
+                }
+                i++;
+            }
+        }
+    }
+
+    private IEnumerator GetWinner()
+    {
+        declaration.SetActive(true);
+        if (game.player1Points > game.player2Points)
+        {
+            declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player1 won the round";
+            game.player1Wons++;
+        }
+        else
+        {
+            if (game.player1Points != game.player2Points)
+            {
+                declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player2 won the round";
+                game.player2Wons++;
+            }
+            else
+            {
+                declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Draw";
+                game.player1Wons++;
+                game.player2Wons++;
+            }
+        }
+        yield return new WaitForSeconds(2f);
+        declaration.SetActive(false);
     }
 }

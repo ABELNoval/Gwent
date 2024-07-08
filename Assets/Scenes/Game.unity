@@ -6864,6 +6864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Points: {fileID: 1533540074}
   player2Points: {fileID: 1441435032}
+  declaration: {fileID: 157985028}
   player1Camera: {fileID: 963194225}
   player2Camera: {fileID: 1495802789}
   selectedCard: {fileID: 0}
@@ -28334,9 +28335,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745630}
-        m_TargetAssemblyTypeName: App, Assembly-CSharp
-        m_MethodName: StopPlayForThisRound
+      - m_Target: {fileID: 381745637}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StopPlaying
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
