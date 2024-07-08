@@ -8,6 +8,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI player1Points;
+    public TextMeshProUGUI player2Points;
     public GameObject player1Camera;
     public GameObject player2Camera;
     public GameObject selectedCard;
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         game.noSelectedDeck += ShowOptioptionsPanel;
         game.instantiateHands += InstantiateHands;
         game.passTurn += PassTurn;
+        game.updatePoints += UpdatePoints;
         UnityEngine.Debug.Log("GameStart");
     }
 
@@ -182,5 +185,11 @@ public class GameManager : MonoBehaviour
             player2HandPanel.SetActive(false);
             player2SecundaryHand.SetActive(true);
         }
+    }
+
+    private void UpdatePoints(int player1Points, int player2Points)
+    {
+        this.player1Points.text = player1Points.ToString();
+        this.player2Points.text = player2Points.ToString();
     }
 }

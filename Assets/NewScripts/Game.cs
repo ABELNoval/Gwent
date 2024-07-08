@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class Game
 {
+    int player2Points;
+    int player1Points;
     Context context;
     System.Random random = new System.Random();
     public delegate void NoSelectedDeck();
     public delegate void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand);
+    public delegate void UpdatePlayersPoints(int player1Points, int player2Points);
     public delegate void PassTurn();
     public event NoSelectedDeck noSelectedDeck;
     public event InstantiateHands instantiateHands;
     public event PassTurn passTurn;
+    public event UpdatePlayersPoints updatePoints;
     public Player player1;
     public Player player2;
     public Player activePlayer;
@@ -21,6 +25,8 @@ public class Game
 
     public void StartGame()
     {
+        player1Points = 0;
+        player2Points = 0;
         if (selectedDeck == null)
         {
             noSelectedDeck();
@@ -59,6 +65,7 @@ public class Game
         context.board.Add(card);
         ActiveEffect();
         ChangesActivePlayer();
+        UpdatePoints();
         passTurn();
     }
 
@@ -84,5 +91,12 @@ public class Game
     private void ActiveEffect()
     {
 
+    }
+
+    public void UpdatePoints()
+    {
+        player1Points = player1.field.GetPoints();
+        player2Points = player2.field.GetPoints();
+        updatePoints(player1Points, player2Points);
     }
 }

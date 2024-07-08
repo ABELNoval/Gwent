@@ -71,5 +71,15 @@ namespace Console
             cards.RemoveAt(0);
             return card;
         }
+
+        public int GetPoints()
+        {
+            int points = 0;
+            foreach (Cards card in cards)
+            {
+                points += card.attack;
+            }
+            return points;
+        }
     }
 }
