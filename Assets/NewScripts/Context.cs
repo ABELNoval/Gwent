@@ -28,5 +28,10 @@ namespace Console
         {
             return player.field;
         }
+
+        public Graveyard GraveyardOfPlayer(Player player)
+        {
+            return player.graveyard;
+        }
     }
 }

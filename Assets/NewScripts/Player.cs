@@ -8,6 +8,7 @@ namespace Console
 {
     public class Player
     {
+        public Graveyard graveyard;
         public Deck deck;
         public Hand hand;
         public Guid id;
