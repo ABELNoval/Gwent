@@ -66,10 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\NewScripts\Context.cs" />
-    <Compile Include="Assets\NewScripts\Token.cs" />
-    <Compile Include="Assets\NewScripts\Board.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\NewScripts\BackEnd\Compilator\Parse.cs" />
     <Compile Include="Assets\BackEnd\TypeCard.cs" />
     <Compile Include="Assets\NewScripts\Debugs.cs" />
     <Compile Include="Assets\Scripts\BossCardmanager.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\BackEnd\Players.cs" />
     <Compile Include="Assets\Scripts\App.cs" />
-    <Compile Include="Assets\NewScripts\Parse.cs" />
     <Compile Include="Assets\NewScripts\Cards.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -108,8 +106,8 @@
     <Compile Include="Assets\Scripts\ExpansionEffect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\NewScripts\Lexer.cs" />
     <Compile Include="Assets\NewScripts\GameManager.cs" />
+    <Compile Include="Assets\NewScripts\BackEnd\Compilator\Token.cs" />
     <Compile Include="Assets\NewScripts\DropDownHandler.cs" />
     <Compile Include="Assets\Scripts\PanelBossCardInformation.cs" />
     <Compile Include="Assets\BackEnd\Herencia Card.cs" />
@@ -122,6 +120,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\NewScripts\Field.cs" />
     <Compile Include="Assets\NewScripts\Effect.cs" />
+    <Compile Include="Assets\NewScripts\Game.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\NewScripts\CardManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -138,6 +137,8 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\NewScripts\BackEnd\Compilator\Lexer.cs" />
+    <Compile Include="Assets\NewScripts\BackEnd\Hand.cs" />
     <Compile Include="Assets\Scripts\OptionsMenu\OptionsMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
   </ItemGroup>

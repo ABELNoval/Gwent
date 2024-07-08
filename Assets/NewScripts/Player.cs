@@ -9,12 +9,15 @@ namespace Console
     public class Player
     {
         public Deck deck;
-        public List<Cards> hand;
-        public Guid id = Guid.NewGuid();
-        //public Field field;
+        public Hand hand;
+        public Guid id;
+        public Field field;
         public Player(Deck deck)
         {
             this.deck = deck;
+            id = Guid.NewGuid();
+            field = new Field();
+            SaveIdInTheCards();
         }
 
         public void GenerateHand()
@@ -22,5 +25,9 @@ namespace Console
             hand = deck.GenerateHand();
         }
 
+        private void SaveIdInTheCards()
+        {
+            deck.SaveID(id);
+        }
     }
 }

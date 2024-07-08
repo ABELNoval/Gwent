@@ -5,23 +5,28 @@ namespace Console
 {
     public class Context
     {
-        public int playerTrigger { get; set; }
+        public int triggerPlayer { get; set; }
         public List<Cards> board { get; set; }
-        public List<Cards> handOfPlayer { get; set; }
-        public List<Cards> graveyardOfPlayer { get; set; }
-        public List<Cards> deckOfPlayer { get; set; }
-        public List<Cards> fieldOfPlayer { get; set; }
 
-        public Context(List<Cards> board, int playerTrigger, List<Cards> handOfPlayer, List<Cards> graveyardOfPlayer, List<Cards> deckOfPplayer, List<Cards> fieldOfPlayer)
+        public Context(List<Cards> board, int triggerPlayer)
         {
             this.board = board;
-            this.playerTrigger = playerTrigger;
-            this.graveyardOfPlayer = graveyardOfPlayer;
-            this.handOfPlayer = handOfPlayer;
-            this.fieldOfPlayer = fieldOfPlayer;
-            this.deckOfPlayer = deckOfPplayer;
+            this.triggerPlayer = triggerPlayer;
         }
 
+        public Hand HandOfPlayer(Player player)
+        {
+            return player.hand;
+        }
 
+        public Deck DeckOfPlayer(Player player)
+        {
+            return player.deck;
+        }
+
+        public Field FieldOfPlayer(Player player)
+        {
+            return player.field;
+        }
     }
 }

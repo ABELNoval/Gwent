@@ -18,15 +18,15 @@ public class GameManager : MonoBehaviour
     public GameObject player2HandPanel;
     public GameObject player1SecundaryHand;
     public GameObject player2SecundaryHand;
-    Board board;
+    Game game;
     public GameObject optionsPanel;
 
     void Start()
     {
         selectedCard = new GameObject();
-        board = new Board();
-        board.noSelectedDeck += ShowOptioptionsPanel;
-        board.instantiateHands += InstantiateHands;
+        game = new Game();
+        game.noSelectedDeck += ShowOptioptionsPanel;
+        game.instantiateHands += InstantiateHands;
         UnityEngine.Debug.Log("GameStart");
     }
 
@@ -43,12 +43,12 @@ public class GameManager : MonoBehaviour
 
     public void Beginning()
     {
-        board.StartGame();
+        game.StartGame();
     }
 
     public void ChangeSelectedDeck(Guid id)
     {
-        board.SetSelectedDeck(id);
+        game.SetSelectedDeck(id);
     }
 
     public void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand)
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (board.activePlayer == board.player1)
+            if (game.activePlayer == game.player1)
             {
                 for (int i = 0; i < cardUi.card.range.Count; i++)
                 {
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayCard(GameObject panel)
     {
-        board.PlayCard(selectedCard.GetComponent<CardUi>().card);
+        game.PlayCard(selectedCard.GetComponent<CardUi>().card, panel);
         ChangesCardsConfig(panel);
         selectedCard.transform.SetParent(panel.transform, false);
         DeselectPanels();
@@ -157,5 +157,13 @@ public class GameManager : MonoBehaviour
         cardSize.y = height;
         rectTransform.sizeDelta = cardSize;
         boxCollider.size = new Vector3(cardSize.x, cardSize.y, boxCollider.size.z);
+    }
+
+    private void PassTurn()
+    {
+        if (game.activePlayer == game.player1)
+        {
+
+        }
     }
 }

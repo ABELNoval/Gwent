@@ -1,26 +1,16 @@
 using System;
 using System.Collections.Generic;
-using Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd;
-using UnityEngine;
 
 namespace Console
 {
-    public delegate void PlayCard(GameObject card);
-    public enum FieldPosition
+    public class Hand
     {
-        Melee,
-        Range,
-        Siege,
-        Graveyard,
-        BuffMelee,
-        BuffRange,
-        BuffSiege,
-        Climate
-    }
-    public class Field
-    {
-        System.Random random = new System.Random();
-        List<Cards> cards = new List<Cards>();
+        System.Random random = new Random();
+        public List<Cards> cards;
+        public Hand(List<Cards> cards)
+        {
+            this.cards = cards;
+        }
 
         public void SendButtom(Cards card)
         {
