@@ -44,6 +44,7 @@ public class Game
         GeneratePlayers();
         activePlayer = player1;
         context = new Context(new List<Cards>(), activePlayer.id);
+        context.findPlayer += FindPlayer;
     }
 
     public void SetSelectedDeck(Guid id)
@@ -81,6 +82,7 @@ public class Game
 
     public void PlayCard(Cards card, GameObject panel)
     {
+        activePlayer.hand.Remove(card);
         activePlayer.field.SendButtom(card);
         context.board.Add(card);
         ActiveEffect();
@@ -185,13 +187,37 @@ public class Game
         for (int i = 0; i < cant; i++)
         {
             Cards card1 = player1.deck.DrawCard();
-            player1Cards.Add(card1);
-            player1.hand.SendButtom(card1);
             Cards card2 = player2.deck.DrawCard();
-            player2Cards.Add(card2);
-            player2.hand.SendButtom(card2);
+            if (player1.hand.cards.Count < 10)
+            {
+                player1Cards.Add(card1);
+                player1.hand.SendButtom(card1);
+            }
+            else
+            {
+                player1.graveyard.SendButtom(card1);
+            }
+
+            if (player2.hand.cards.Count < 10)
+            {
+                player2Cards.Add(card2);
+                player2.hand.SendButtom(card2);
+            }
+            else
+            {
+                player2.graveyard.SendButtom(card2);
+            }
+
         }
         draw(player1Cards, player2Cards);
     }
 
+    private Player FindPlayer(Guid id)
+    {
+        if (player1.id == id)
+        {
+            return player1;
+        }
+        return player2;
+    }
 }

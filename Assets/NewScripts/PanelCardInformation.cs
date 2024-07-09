@@ -39,10 +39,10 @@ public class PanelCardInformation : MonoBehaviour
     private string Effect()
     {
         string effects = "Effects: ";
-        foreach (string eff in card.effectsName)
+        /*foreach (string eff in card.effectsName)
         {
             effects += eff + " ";
-        }
+        }*/
         return effects;
     }
 }

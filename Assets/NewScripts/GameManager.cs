@@ -66,16 +66,23 @@ public class GameManager : MonoBehaviour
 
     public void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand)
     {
-        for (int i = 0; i < player1Hand.Count; i++)
+        for (int i = 0; i < player1Hand.Count || i < player2Hand.Count; i++)
         {
-            GameObject cardObj = Instantiate(player1CardsPrefab, player1HandPanel.transform);
-            CardUi cardUi = cardObj.GetComponent<CardUi>();
-            cardUi.SetupCard(player1Hand[i]);
-            GameObject cardObjEnemy = Instantiate(player2CardsPrefab, player2HandPanel.transform);
-            CardUi cardUiEnemy = cardObjEnemy.GetComponent<CardUi>();
-            cardUiEnemy.SetupCard(player2Hand[i]);
-            GameObject player1SecundaryCard = Instantiate(emptyCard, player1SecundaryHand.transform);
-            GameObject player2SecundaryCard = Instantiate(emptyCard, player2SecundaryHand.transform);
+            if (player1Hand.Count > i)
+            {
+                GameObject cardObj = Instantiate(player1CardsPrefab, player1HandPanel.transform);
+                CardUi cardUi = cardObj.GetComponent<CardUi>();
+                cardUi.SetupCard(player1Hand[i]);
+                GameObject player1SecundaryCard = Instantiate(emptyCard, player1SecundaryHand.transform);
+            }
+
+            if (player2Hand.Count > i)
+            {
+                GameObject cardObjEnemy = Instantiate(player2CardsPrefab, player2HandPanel.transform);
+                CardUi cardUiEnemy = cardObjEnemy.GetComponent<CardUi>();
+                cardUiEnemy.SetupCard(player2Hand[i]);
+                GameObject player2SecundaryCard = Instantiate(emptyCard, player2SecundaryHand.transform);
+            }
         }
     }
 
@@ -130,6 +137,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayCard(GameObject panel)
     {
+        RemoveEmptyCard();
         game.PlayCard(selectedCard.GetComponent<CardUi>().card, panel);
         ChangesCardsConfig(panel);
         selectedCard.transform.SetParent(panel.transform, false);
@@ -143,6 +151,18 @@ public class GameManager : MonoBehaviour
             Destroy(panel.GetComponent<PanelController>());
             Image img = panel.GetComponent<Image>();
             img.sprite = null;
+        }
+    }
+
+    private void RemoveEmptyCard()
+    {
+        if (game.IsPlayer1Playing())
+        {
+            Destroy(player1SecundaryHand.transform.GetChild(0).gameObject);
+        }
+        else
+        {
+            Destroy(player2SecundaryHand.transform.GetChild(0).gameObject);
         }
     }
 

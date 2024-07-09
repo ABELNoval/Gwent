@@ -16,10 +16,10 @@ namespace Console
         public string faction { get; set; }
         public List<string> range { get; set; }
         public int attack { get; set; }
-        public List<string> effectsName { get; set; }
         public string img { get; set; }
+        public List<OnActivation> onActivation { get; set; }
 
-        public Cards(string name, string type, string description, string faction, List<string> range, int attack, List<string> effectsName, string img)
+        public Cards(string name, string type, string description, string faction, List<string> range, int attack, string img, List<OnActivation> onActivation)
         {
             this.name = name;
             this.type = type;
@@ -27,19 +27,23 @@ namespace Console
             this.range = range;
             this.faction = faction;
             this.attack = attack;
-            this.effectsName = effectsName;
             this.img = img;
+            this.onActivation = onActivation;
         }
-        public void OnActivation(List<(Effect, Selector)> effects, Context context)
+
+    }
+
+    public class OnActivation
+    {
+        public string effect;
+        public Selector selector;
+        public OnActivation posAction;
+
+        public OnActivation(string effect, Selector selector, OnActivation posAction)
         {
-            /*if (effects[0].Item2.IsAPosActivation() || effects[0].Item2 == null)
-            {
-                throw new Exception("Ese efecto anda como tu, sin padres");
-            }
-            for (int i = 0; i < effects.Count; i++)
-            {
-                effects[i].Item1.Activation(effects[i].Item2, context);
-            }*/
+            this.effect = effect;
+            this.selector = selector;
+            this.posAction = posAction;
         }
     }
 }
