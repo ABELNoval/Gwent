@@ -16,13 +16,14 @@ namespace Console
 
         public void Push(Cards card)
         {
-            List<Cards> listResult = new List<Cards>();
+
+            /*List<Cards> listResult = new List<Cards>();
             listResult.Add(card);
             foreach (Cards c in cards)
             {
                 listResult.Add(c);
             }
-            cards = listResult;
+            cards = listResult;*/
         }
 
         public void Remove(Cards card)

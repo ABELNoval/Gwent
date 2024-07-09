@@ -6864,6 +6864,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Points: {fileID: 1533540074}
   player2Points: {fileID: 1441435032}
+  finalVideo: {fileID: 1032892112}
+  boardObject: {fileID: 653352759}
   declaration: {fileID: 157985028}
   player1Camera: {fileID: 963194225}
   player2Camera: {fileID: 1495802789}

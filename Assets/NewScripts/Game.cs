@@ -26,8 +26,8 @@ public class Game
     public Player player1;
     public Player player2;
     public Player activePlayer;
-    public int player1Wons;
-    public int player2Wons;
+    public int player1Wins;
+    public int player2Wins;
     Deck selectedDeck;
 
     public void StartGame()
@@ -55,8 +55,19 @@ public class Game
     public void GeneratePlayers()
     {
         int index = random.Next(0, Store.decks.Count);
-        player1 = new Player(selectedDeck);
-        player2 = new Player(Store.decks[index]);
+        Deck player1Deck = new Deck(selectedDeck.id, selectedDeck.name);
+        foreach (Cards cards in selectedDeck.cards)
+        {
+            player1Deck.SendButtom(cards);
+        }
+
+        Deck player2Deck = new Deck(Store.decks[index].id, Store.decks[index].name);
+        foreach (Cards cards in Store.decks[index].cards)
+        {
+            player2Deck.SendButtom(cards);
+        }
+        player1 = new Player(player1Deck);
+        player2 = new Player(player2Deck);
         GenerateHands();
     }
 
@@ -108,9 +119,63 @@ public class Game
         updatePoints(player1Points, player2Points);
     }
 
+    public void StopPlaying()
+    {
+        if (IsPlayer1Playing())
+        {
+            player2.isPlaying = false;
+            return;
+        }
+        player1.isPlaying = false;
+    }
+
+    public void RefrechBoard()
+    {
+        ClearCards(null);
+        UpdatePoints();
+        DrawCards(2);
+    }
+
     public void FinishRound()
     {
 
+    }
+
+    private void ClearCards(Predicate<Cards> predicate)
+    {
+        int i = 0;
+        int j = 0;
+        if (predicate == null)
+        {
+            while (i < player1.field.cards.Count)
+            {
+                Cards card = player1.field.Pop();
+                Debug.Log($"{card.name}");
+                player1.graveyard.Push(card);
+            }
+
+            while (j < player2.field.cards.Count)
+            {
+                Cards card = player2.field.Pop();
+                player2.graveyard.Push(card);
+            }
+        }
+        else
+        {
+            List<Cards> cards1 = player1.field.Find(predicate);
+            foreach (Cards card in cards1)
+            {
+                player1.field.Remove(card);
+                player1.graveyard.Push(card);
+            }
+
+            List<Cards> cards2 = player2.field.Find(predicate);
+            foreach (Cards card in cards2)
+            {
+                player2.field.Remove(card);
+                player2.graveyard.Push(card);
+            }
+        }
     }
 
     public void DrawCards(int cant)
@@ -119,11 +184,14 @@ public class Game
         List<Cards> player2Cards = new List<Cards>();
         for (int i = 0; i < cant; i++)
         {
-            player1.deck.DrawCard();
-            player1Cards.Add(player1.deck.cards[player1.deck.cards.Count - 1]);
-            player2.deck.DrawCard();
-            player2Cards.Add(player2.deck.cards[player2.deck.cards.Count - 1]);
+            Cards card1 = player1.deck.DrawCard();
+            player1Cards.Add(card1);
+            player1.hand.SendButtom(card1);
+            Cards card2 = player2.deck.DrawCard();
+            player2Cards.Add(card2);
+            player2.hand.SendButtom(card2);
         }
         draw(player1Cards, player2Cards);
     }
+
 }

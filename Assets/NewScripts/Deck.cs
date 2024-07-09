@@ -49,8 +49,9 @@ namespace Console
 
         public Cards DrawCard()
         {
+            Debug.Log($"{cards.Count}");
             Cards card = cards[0];
-            cards.RemoveAt(0);
+            cards.Remove(card);
             return card;
         }
 

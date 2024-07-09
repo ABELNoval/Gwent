@@ -8,7 +8,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
 {
     public class Game
     {
-        public List<TypeOfEffects> player1ActivesEffeccts;
+        /*public List<TypeOfEffects> player1ActivesEffeccts;
         public List<TypeOfEffects> player2ActivesEffeccts;
         public Player winnerOfTheCurrentRound;
         public Board player1Board;
@@ -462,6 +462,6 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
         {
             player1Board.RemoveExpansionEffects();
             player2Board.RemoveExpansionEffects();
-        }
+        }*/
     }
 }

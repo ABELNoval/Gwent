@@ -8,6 +8,7 @@ namespace Console
 {
     public class Player
     {
+        public bool isPlaying;
         public Graveyard graveyard;
         public Deck deck;
         public Hand hand;
@@ -15,6 +16,8 @@ namespace Console
         public Field field;
         public Player(Deck deck)
         {
+            graveyard = new Graveyard();
+            isPlaying = true;
             this.deck = deck;
             id = Guid.NewGuid();
             field = new Field();

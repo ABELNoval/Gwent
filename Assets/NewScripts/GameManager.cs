@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI player1Points;
     public TextMeshProUGUI player2Points;
+    public GameObject finalVideo;
+    public GameObject boardObject;
     public GameObject declaration;
     public GameObject player1Camera;
     public GameObject player2Camera;
@@ -172,104 +174,119 @@ public class GameManager : MonoBehaviour
 
     private void PassTurn()
     {
-        game.ChangesActivePlayer();
-        if (!game.IsPlayer1Playing())
+        //selectedCard = null;
+        if (game.player1.isPlaying && game.player2.isPlaying)
         {
-            Debug.Log($"{game.IsPlayer1Playing()}");
-            player1Camera.SetActive(false);
-            player1HandPanel.SetActive(false);
-            player1SecundaryHand.SetActive(true);
-            player2Camera.SetActive(true);
-            player2HandPanel.SetActive(true);
-            player2SecundaryHand.SetActive(false);
-        }
-        else
-        {
-            player1Camera.SetActive(true);
-            player1HandPanel.SetActive(true);
-            player1SecundaryHand.SetActive(false);
-            player2Camera.SetActive(false);
-            player2HandPanel.SetActive(false);
-            player2SecundaryHand.SetActive(true);
+            game.ChangesActivePlayer();
+            Debug.Log("PassTurn");
+            player1Camera.SetActive(game.activePlayer == game.player1);
+            player2Camera.SetActive(game.activePlayer == game.player2);
+            player1HandPanel.SetActive(game.activePlayer == game.player1);
+            player2HandPanel.SetActive(game.activePlayer == game.player2);
+            player1SecundaryHand.SetActive(game.activePlayer == game.player2);
+            player2SecundaryHand.SetActive(game.activePlayer == game.player1);
         }
     }
 
     private void UpdatePoints(int player1Points, int player2Points)
     {
-        this.player1Points.text = player1Points.ToString();
-        this.player2Points.text = player2Points.ToString();
+        this.player1Points.text = "Player1: " + player1Points.ToString();
+        this.player2Points.text = "Player2: " + player2Points.ToString();
     }
 
     public void StopPlaying()
     {
-        if (game.player1IsPlaying && game.player2IsPlaying)
+        if (!game.player1.isPlaying || !game.player2.isPlaying)
         {
-            if (game.IsPlayer1Playing())
-            {
-                game.player1IsPlaying = false;
-            }
-            else
-            {
-                game.player2IsPlaying = false;
-                Debug.Log($"{game.player2IsPlaying} {game.player1IsPlaying}");
-            }
-            PassTurn();
-        }
-        else
-        {
-            game.FinishRound();
+            game.ChangesActivePlayer();
+            game.StopPlaying();
             FinishRound();
+            if (game.player1Wins < 2 && game.player2Wins < 2)
+            {
+                StartNewRound();
+                return;
+            }
+            FinishGame();
+            return;
         }
+        PassTurn();
+        game.StopPlaying();
     }
 
     private void FinishRound()
     {
-        game.player1IsPlaying = true;
-        game.player2IsPlaying = true;
-        StartCoroutine(GetWinner());
+        StartCoroutine(GetTheWinnerOfTheRound());
+        game.RefrechBoard();
         ClearBoard();
-        game.DrawCards(2);
+    }
+
+    private void FinishGame()
+    {
+        ClearBoard();
+        StartCoroutine(GetTheWinnerOfTheGame());
+        boardObject.SetActive(false);
+        finalVideo.SetActive(true);
     }
 
     private void ClearBoard()
     {
         foreach (GameObject panel in boardPanels)
         {
-            int i = 0;
-            while (i < panel.transform.childCount)
+            for (int i = panel.transform.childCount - 1; i >= 0; i--)
             {
-                if (panel.transform.GetChild(0) != null)
-                {
-                    Destroy(panel.transform.GetChild(0).gameObject);
-                }
-                i++;
+                Destroy(panel.transform.GetChild(i).gameObject);
             }
         }
     }
 
-    private IEnumerator GetWinner()
+    private IEnumerator GetTheWinnerOfTheRound()
     {
         declaration.SetActive(true);
         if (game.player1Points > game.player2Points)
         {
             declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player1 won the round";
-            game.player1Wons++;
+            game.player1Wins++;
+            game.activePlayer = game.player2;
         }
         else
         {
             if (game.player1Points != game.player2Points)
             {
                 declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player2 won the round";
-                game.player2Wons++;
+                game.player2Wins++;
+                game.activePlayer = game.player1;
             }
             else
             {
                 declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Draw";
-                game.player1Wons++;
-                game.player2Wons++;
+                game.player1Wins++;
+                game.player2Wins++;
             }
         }
         yield return new WaitForSeconds(2f);
         declaration.SetActive(false);
+    }
+
+    private IEnumerator GetTheWinnerOfTheGame()
+    {
+        declaration.SetActive(true);
+        if (game.player1Wins > game.player2Wins)
+        {
+            declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player1 won the game";
+        }
+        else
+        {
+            declaration.GetComponentInChildren<TextMeshProUGUI>().text = "Player2 won the game";
+        }
+        yield return new WaitForSeconds(2f);
+        declaration.SetActive(false);
+    }
+
+    public void StartNewRound()
+    {
+        game.player1.isPlaying = true;
+        game.player2.isPlaying = true;
+        //game.DrawCards(2);
+        PassTurn();
     }
 }

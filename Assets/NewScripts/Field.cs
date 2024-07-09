@@ -20,7 +20,7 @@ namespace Console
     public class Field
     {
         System.Random random = new System.Random();
-        List<Cards> cards = new List<Cards>();
+        public List<Cards> cards = new List<Cards>();
 
         public void SendButtom(Cards card)
         {
@@ -68,7 +68,7 @@ namespace Console
         public Cards Pop()
         {
             Cards card = cards[0];
-            cards.RemoveAt(0);
+            cards.Remove(card);
             return card;
         }
 
