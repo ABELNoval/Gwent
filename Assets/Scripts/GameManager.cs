@@ -45,11 +45,12 @@ public class GameManager : MonoBehaviour
     {
         selectedCard = new GameObject();
         game = new Game();
-        game.noSelectedDeck += ShowOptioptionsPanel;
+        game.invalidDeck += InvalidDeck;
         game.instantiateHands += InstantiateHands;
         game.passTurn += PassTurn;
         game.updatePoints += UpdatePoints;
         game.draw += InstantiateHands;
+        game.start += ChangesToGame;
         Debug.Log("GameStart");
     }
 
@@ -136,11 +137,6 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public void ShowOptioptionsPanel()
-    {
-        ChangesToOptions();
-    }
-
     private void InstantiateAllCardsOfTheDeck(Deck deck)
     {
         foreach (var card in deck.cards)
@@ -155,20 +151,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RemoveInstantiateCards()
+    {
+        foreach (Transform child in panelWithAllCards.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void SaveChanges()
+    {
+
+    }
+
+    private void InvalidDeck()
+    {
+        mainMenu.SetActive(false);
+        errorNotification.SetActive(true);
+        TextMeshProUGUI text = errorNotification.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        text.text = "Tu deck no cumple con los requisitos para ser usado. Seleccione otro o ajuste el ya seleccionado";
+    }
+
     public void StartGame()
     {
-        if (game.invalidDeck)
-        {
-            mainMenu.SetActive(false);
-            errorNotification.SetActive(true);
-            TextMeshProUGUI text = errorNotification.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
-            text.text = "Tu deck no cumple con los requisitos para ser usado. Seleccione otro o ajuste el ya seleccionado";
-        }
-        else
-        {
-            ChangesToGame();
-            game.StartGame();
-        }
+        game.StartGame();
     }
 
 

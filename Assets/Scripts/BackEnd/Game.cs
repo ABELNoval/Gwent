@@ -11,15 +11,17 @@ public class Game
     public int player1Points;
     Context context;
     System.Random random = new System.Random();
-    public delegate void NoSelectedDeck();
+    public delegate void InvalidDeck();
     public delegate void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand);
+    public delegate void Start();
     public delegate void Draw(List<Cards> player1Cards, List<Cards> player2cards);
     public delegate void UpdatePlayersPoints(int player1Points, int player2Points);
     public delegate void PassTurn();
-    public event NoSelectedDeck noSelectedDeck;
+    public event InvalidDeck invalidDeck;
     public event InstantiateHands instantiateHands;
     public event PassTurn passTurn;
     public event Draw draw;
+    public event Start start;
     public event UpdatePlayersPoints updatePoints;
     public Player player1;
     public Player player2;
@@ -27,47 +29,44 @@ public class Game
     public int player1Wins;
     public int player2Wins;
     public Deck selectedDeck { get; private set; }
-    public bool invalidDeck;
+
 
     public void StartGame()
     {
-        invalidDeck = false;
-        player1IsPlaying = true;
-        player2IsPlaying = true;
-        player1Points = 0;
-        player2Points = 0;
-        if (selectedDeck == null)
+        if (!IsAValidDeck(selectedDeck))
         {
-            noSelectedDeck();
+            invalidDeck();
         }
-        Debug.Log("Juego listo para empezar");
-        GeneratePlayers();
-        activePlayer = player1;
-        context = new Context(new List<Cards>(), activePlayer.id);
-        context.findPlayer += FindPlayer;
+        else
+        {
+            player1IsPlaying = true;
+            player2IsPlaying = true;
+            player1Points = 0;
+            player2Points = 0;
+            Debug.Log("Juego listo para empezar");
+            GeneratePlayers();
+            activePlayer = player1;
+            context = new Context(new List<Cards>(), activePlayer.id);
+            context.findPlayer += FindPlayer;
+            start();
+        }
     }
 
 
     public void SetSelectedDeck(Guid id)
     {
-        if (IsAValidDeck(Store.GetDeck(id)))
-        {
-            invalidDeck = false;
-            selectedDeck = Store.GetDeck(id);
-            Debug.Log($"{selectedDeck.cards[0].name}");
-        }
-        else
-        {
-            Debug.Log("Tu deck no es valido");
-            invalidDeck = true;
-        }
+        selectedDeck = Store.GetDeck(id);
     }
 
     private bool IsAValidDeck(Deck deck)
     {
-        if (deck.cards.Count >= 25 && GoldCardCant(deck) == 1 && SilverCardCant(deck) <= 8)
+        if (deck != null)
         {
-            return true;
+            if (deck.cards.Count >= 25 && GoldCardCant(deck) == 1 && SilverCardCant(deck) <= 8)
+            {
+                return true;
+            }
+            return false;
         }
         return false;
     }
