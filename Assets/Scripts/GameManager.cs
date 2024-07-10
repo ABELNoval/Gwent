@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
         {
             ChangesToCreateDeck();
             InstantiateAllCardsOfTheDeck(game.selectedDeck);
-            deckManager = new DeckManager(game.selectedDeck.cards.Count, game.GoldCardCant(game.selectedDeck), game.SilverCardCant(game.selectedDeck), createDeck);
+            deckManager = new DeckManager(game.selectedDeck.cards.Count, game.GoldCardCant(game.selectedDeck), game.SilverCardCant(game.selectedDeck), createDeck, game.selectedDeck.name);
         }
         else
         {
