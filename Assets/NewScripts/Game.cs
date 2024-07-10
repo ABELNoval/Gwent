@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Console;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Game
 {
@@ -29,9 +30,11 @@ public class Game
     public int player1Wins;
     public int player2Wins;
     Deck selectedDeck;
+    public bool invalidDeck;
 
     public void StartGame()
     {
+        invalidDeck = false;
         player1IsPlaying = true;
         player2IsPlaying = true;
         player1Points = 0;
@@ -49,8 +52,40 @@ public class Game
 
     public void SetSelectedDeck(Guid id)
     {
-        selectedDeck = Store.GetDeck(id);
-        Debug.Log($"{selectedDeck.cards[0].name}");
+        if (IsAValidDeck(Store.GetDeck(id)))
+        {
+            invalidDeck = false;
+            selectedDeck = Store.GetDeck(id);
+            Debug.Log($"{selectedDeck.cards[0].name}");
+        }
+        else
+        {
+            Debug.Log("Tu deck no es valido");
+            invalidDeck = true;
+        }
+    }
+
+    private bool IsAValidDeck(Deck deck)
+    {
+        if (deck.cards.Count >= 25 && GoldCardCant(deck) == 1 && SilverCardCant(deck) <= 8)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private int GoldCardCant(Deck deck)
+    {
+        List<Cards> goldCards = new List<Cards>();
+        goldCards = deck.Find(card => card.type == "Gold");
+        return goldCards.Count;
+    }
+
+    private int SilverCardCant(Deck deck)
+    {
+        List<Cards> goldCards = new List<Cards>();
+        goldCards = deck.Find(card => card.type == "Silver");
+        return goldCards.Count;
     }
 
     public void GeneratePlayers()

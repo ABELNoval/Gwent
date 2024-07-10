@@ -30,7 +30,7 @@
         },
         {
           "name": "Yuki Tsukumo",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -45,7 +45,7 @@
         },
         {
           "name": "Yuki Tsukumo",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -172,7 +172,7 @@
         },
         {
           "name": "Maki Zennin",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -187,7 +187,7 @@
         },
         {
           "name": "Yuta Okkotsu",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -202,7 +202,7 @@
         },
         {
           "name": "Yuta Okkotsu",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -229,7 +229,7 @@
         },
         {
           "name": "Hakari Kinji",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -244,7 +244,7 @@
         },
         {
           "name": "Hakari Kinji",
-          "type": "..Plat",
+          "type": "..Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -348,7 +348,7 @@
         },
         {
           "name": "Maki Zennin",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Source",
           "range": [
@@ -405,7 +405,7 @@
         },
         {
           "name": "Kenjaku",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Curse",
           "range": [
@@ -420,8 +420,8 @@
         },
         {
           "name": "Toji Zennin",
-          "type": "...",
-          "description": "Plat",
+          "type": "Silver",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Melee",
@@ -435,8 +435,8 @@
         },
         {
           "name": "Toji Zennin",
-          "type": "...",
-          "description": "Plat",
+          "type": "Silver",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Melee",
@@ -462,8 +462,8 @@
         },
         {
           "name": "Kashimo Hajime",
-          "type": "...",
-          "description": "Plat",
+          "type": "Silver",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Melee",
@@ -477,8 +477,8 @@
         },
         {
           "name": "Kashimo Hajime",
-          "type": "...",
-          "description": "Plat",
+          "type": "Silver",
+          "description": "...",
           "faction": "Curse",
           "range": [
             "Melee",
@@ -534,7 +534,7 @@
         },
         {
           "name": "Mahoraga",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Curse",
           "range": [
@@ -561,7 +561,7 @@
         },
         {
           "name": "Kenjaku",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Curse",
           "range": [
@@ -635,7 +635,7 @@
         },
         {
           "name": "Mahoraga",
-          "type": "Plat",
+          "type": "Silver",
           "description": "...",
           "faction": "Curse",
           "range": [

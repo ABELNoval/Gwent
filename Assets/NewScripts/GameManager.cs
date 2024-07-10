@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Debug = UnityEngine.Debug;
+using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class GameManager : MonoBehaviour
     public GameObject player2SecundaryHand;
     public Game game;
     public GameObject optionsPanel;
+    public GameObject errorNotification;
+    public GameObject mainMenu;
+    public GameObject optionsMenu;
+    public GameObject board;
+    public GameObject videoObj;
+    public new AudioSource audio;
 
     void Start()
     {
@@ -40,12 +47,12 @@ public class GameManager : MonoBehaviour
         game.passTurn += PassTurn;
         game.updatePoints += UpdatePoints;
         game.draw += InstantiateHands;
-        UnityEngine.Debug.Log("GameStart");
+        Debug.Log("GameStart");
     }
 
     public void ShowOptioptionsPanel()
     {
-        optionsPanel.SetActive(true);
+        ChangesToOptions();
     }
 
     public void CreateDeck()
@@ -54,9 +61,43 @@ public class GameManager : MonoBehaviour
         Store.AddDeck(new Deck(guid, "Nuevo"));
     }
 
-    public void Beginning()
+    public void StartGame()
     {
-        game.StartGame();
+        if (game.invalidDeck)
+        {
+            mainMenu.SetActive(false);
+            errorNotification.SetActive(true);
+            TextMeshProUGUI text = errorNotification.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+            text.text = "Tu deck no cumple con los requisitos para ser usado. Seleccione otro o ajuste el ya seleccionado";
+        }
+        else
+        {
+            ChangesToGame();
+            game.StartGame();
+        }
+    }
+
+    //Cambiar al menu de opciones( OptionsButton )
+    public void ChangesToOptions()
+    {
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+
+    //Comenzar el juego( StartButton )
+    public void ChangesToGame()
+    {
+        videoObj.SetActive(false);
+        videoObj.GetComponent<VideoPlayer>().Stop();
+        audio.Stop();
+        mainMenu.SetActive(false);
+        board.SetActive(true);
+    }
+
+    //Salir del juego( QuitButton )
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void ChangeSelectedDeck(Guid id)

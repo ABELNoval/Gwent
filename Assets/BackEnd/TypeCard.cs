@@ -4,7 +4,7 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
     {
         SpecialCard,
         GoldCard,
-        PlatCard,
+        SilverCard,
         BossCard,
         ComunCard
     }

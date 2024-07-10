@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu
 {
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject game;
+
 
     //Cambiar al menu de opciones( OptionsButton )
     public void ChangesToOptions()
@@ -12,7 +13,7 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
-    
+
     //Comenzar el juego( StartButton )
     public void ChangesToGame()
     {

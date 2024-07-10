@@ -82,6 +82,7 @@
     <Compile Include="Assets\NewScripts\PanelController.cs" />
     <Compile Include="Assets\BackEnd\Deck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\NewScripts\BackEnd\MainMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\BackEnd\Board.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Assets\NewScripts\BackEnd\DropDownItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
     <Compile Include="Assets\NewScripts\CardUi.cs" />
     <Compile Include="Assets\NewScripts\BackEnd\Graveyard.cs" />
     <Compile Include="Assets\BackEnd\CardCollection.cs" />

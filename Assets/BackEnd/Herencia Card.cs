@@ -94,12 +94,12 @@ namespace Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd
         }
     }
 
-    public class PlatCard : Card
+    public class SilverCard : Card
     {
         public TypeOfEffects typeOfEffects;
         public string claseBase;
         public string effectBase;
-        public PlatCard(string name, string description, Sprite artwork, CardPos cardPos, TypeOfCard type, string clase, string effect, int power, TypeOfEffects typeOfEffects) : base(name, description, artwork, cardPos, type, power)
+        public SilverCard(string name, string description, Sprite artwork, CardPos cardPos, TypeOfCard type, string clase, string effect, int power, TypeOfEffects typeOfEffects) : base(name, description, artwork, cardPos, type, power)
         {
             this.typeOfEffects = typeOfEffects;
             claseBase = clase;
