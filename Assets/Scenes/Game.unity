@@ -6744,12 +6744,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9f33ea98d495042bb648a08ace991c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuOptions: {fileID: 2146020497}
-  mainMenu: {fileID: 29574766}
-  curse: {fileID: 0}
-  sorcerer: {fileID: 0}
-  cont: 0
-  audioMixer: {fileID: 24100000, guid: 977645c3442751b4cb1a3c8b744a7645, type: 2}
 --- !u!224 &381745624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6830,6 +6824,7 @@ MonoBehaviour:
   board: {fileID: 653352759}
   videoObj: {fileID: 1119352218}
   audio: {fileID: 687920413}
+  audioMixer: {fileID: 24100000, guid: 977645c3442751b4cb1a3c8b744a7645, type: 2}
 --- !u!114 &381745638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11871,33 +11866,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745622}
-        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
-        m_MethodName: ChangesToMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: App, Assembly-CSharp
-        m_MethodName: AudioPlay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 381745637}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SaveGame
+        m_MethodName: ChangesToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12412,21 +12383,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745622}
-        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+      - m_Target: {fileID: 381745637}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: FullscreenBool
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: App, Assembly-CSharp
-        m_MethodName: AudioPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20090,15 +20049,15 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745622}
-        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+      - m_Target: {fileID: 381745637}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: VolumMusic
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: -20
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

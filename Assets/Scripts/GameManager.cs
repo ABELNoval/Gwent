@@ -7,6 +7,7 @@ using TMPro;
 using System.Collections;
 using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     public GameObject board;
     public GameObject videoObj;
     public new AudioSource audio;
+    [SerializeField] private AudioMixer audioMixer;
 
     void Start()
     {
@@ -47,6 +49,63 @@ public class GameManager : MonoBehaviour
         game.draw += InstantiateHands;
         Debug.Log("GameStart");
     }
+
+    #region MainMenu
+
+    //Cambiar al menu de opciones( OptionsButton )
+    public void ChangesToOptions()
+    {
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+
+    //Comenzar el juego( StartButton )
+    public void ChangesToGame()
+    {
+        videoObj.SetActive(false);
+        videoObj.GetComponent<VideoPlayer>().Stop();
+        audio.Stop();
+        mainMenu.SetActive(false);
+        board.SetActive(true);
+    }
+
+    //Salir del juego( QuitButton )
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    #endregion
+
+    #region OptionsMenu
+
+    //Ajuste de pantalla( Fullscreen )
+    public void FullscreenBool()
+    {
+        if (Screen.fullScreen == false)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+    }
+
+    //Ajuste del volumen de la musica
+    public void VolumMusic(float volum)
+    {
+        audioMixer.SetFloat("Volum(music)", volum);
+    }
+
+    //Volver al menu principal( BackButton )
+    public void ChangesToMainMenu()
+    {
+        mainMenu.SetActive(true);
+        optionsMenu.SetActive(false);
+    }
+
+    #endregion
 
     public void ShowOptioptionsPanel()
     {
@@ -75,28 +134,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //Cambiar al menu de opciones( OptionsButton )
-    public void ChangesToOptions()
-    {
-        mainMenu.SetActive(false);
-        optionsMenu.SetActive(true);
-    }
-
-    //Comenzar el juego( StartButton )
-    public void ChangesToGame()
-    {
-        videoObj.SetActive(false);
-        videoObj.GetComponent<VideoPlayer>().Stop();
-        audio.Stop();
-        mainMenu.SetActive(false);
-        board.SetActive(true);
-    }
-
-    //Salir del juego( QuitButton )
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 
     public void ChangeSelectedDeck(Guid id)
     {
