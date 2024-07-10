@@ -35,8 +35,11 @@ public class GameManager : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject board;
     public GameObject videoObj;
+    public GameObject panelWithAllCards;
     public new AudioSource audio;
     [SerializeField] private AudioMixer audioMixer;
+    DeckManager deckManager;
+    public GameObject createDeck;
 
     void Start()
     {
@@ -105,6 +108,32 @@ public class GameManager : MonoBehaviour
         optionsMenu.SetActive(false);
     }
 
+    public void ChangesToCreateDeck()
+    {
+        optionsMenu.SetActive(false);
+        createDeck.SetActive(true);
+    }
+
+    public void CreateDeck()
+    {
+        Guid guid = Guid.NewGuid();
+        Store.AddDeck(new Deck(guid, "Nuevo"));
+    }
+
+    public void EditDeck()
+    {
+        if (game.selectedDeck != null)
+        {
+            ChangesToCreateDeck();
+            InstantiateAllCardsOfTheDeck(game.selectedDeck);
+            deckManager = new DeckManager(game.selectedDeck.cards.Count, game.GoldCardCant(game.selectedDeck), game.SilverCardCant(game.selectedDeck), createDeck);
+        }
+        else
+        {
+            Debug.Log("No hay un deck seleccionado");
+        }
+    }
+
     #endregion
 
     public void ShowOptioptionsPanel()
@@ -112,10 +141,18 @@ public class GameManager : MonoBehaviour
         ChangesToOptions();
     }
 
-    public void CreateDeck()
+    private void InstantiateAllCardsOfTheDeck(Deck deck)
     {
-        Guid guid = Guid.NewGuid();
-        Store.AddDeck(new Deck(guid, "Nuevo"));
+        foreach (var card in deck.cards)
+        {
+            GameObject cardObj = Instantiate(player1CardsPrefab, panelWithAllCards.transform);
+            Vector2 scale = cardObj.transform.localScale;
+            scale.x = 10f;
+            scale.y = 30f;
+            cardObj.transform.localScale = scale;
+            CardUi cardUi = cardObj.GetComponent<CardUi>();
+            cardUi.SetupCard(card);
+        }
     }
 
     public void StartGame()

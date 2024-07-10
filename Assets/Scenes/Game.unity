@@ -6725,6 +6725,7 @@ GameObject:
   - component: {fileID: 381745634}
   - component: {fileID: 381745637}
   - component: {fileID: 381745638}
+  - component: {fileID: 381745639}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6823,8 +6824,10 @@ MonoBehaviour:
   optionsMenu: {fileID: 2146020497}
   board: {fileID: 653352759}
   videoObj: {fileID: 1119352218}
+  panelWithAllCards: {fileID: 1314848026}
   audio: {fileID: 687920413}
   audioMixer: {fileID: 24100000, guid: 977645c3442751b4cb1a3c8b744a7645, type: 2}
+  createDeck: {fileID: 1160777176}
 --- !u!114 &381745638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6838,6 +6841,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 1216701781}
+--- !u!114 &381745639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381745620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46bc0c74f6334134fb56c6f6f9b90f27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &391504697
 GameObject:
   m_ObjectHideFlags: 0
@@ -11950,7 +11965,7 @@ GameObject:
   - component: {fileID: 822473617}
   - component: {fileID: 822473616}
   m_Layer: 5
-  m_Name: PlatCards
+  m_Name: SilverCards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16377,13 +16392,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1314848027}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 1
-  m_ScrollSensitivity: 15
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 917379714}
   m_HorizontalScrollbar: {fileID: 846936349}
   m_VerticalScrollbar: {fileID: 1095214023}
@@ -18947,15 +18962,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 116
+    m_Left: 113
     m_Right: 114
     m_Top: 196
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 19, y: 10}
-  m_Spacing: {x: 202.81, y: 345.8}
+  m_CellSize: {x: 19.2, y: 10}
+  m_Spacing: {x: 202.93, y: 345.8}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &1314848029
@@ -21670,22 +21685,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1160777176}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2146020497}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 381745637}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: EditDeck
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

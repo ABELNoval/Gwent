@@ -26,7 +26,7 @@ public class Game
     public Player activePlayer;
     public int player1Wins;
     public int player2Wins;
-    Deck selectedDeck;
+    public Deck selectedDeck { get; private set; }
     public bool invalidDeck;
 
     public void StartGame()
@@ -46,6 +46,7 @@ public class Game
         context = new Context(new List<Cards>(), activePlayer.id);
         context.findPlayer += FindPlayer;
     }
+
 
     public void SetSelectedDeck(Guid id)
     {
@@ -71,14 +72,14 @@ public class Game
         return false;
     }
 
-    private int GoldCardCant(Deck deck)
+    public int GoldCardCant(Deck deck)
     {
         List<Cards> goldCards = new List<Cards>();
         goldCards = deck.Find(card => card.type == "Gold");
         return goldCards.Count;
     }
 
-    private int SilverCardCant(Deck deck)
+    public int SilverCardCant(Deck deck)
     {
         List<Cards> goldCards = new List<Cards>();
         goldCards = deck.Find(card => card.type == "Silver");
