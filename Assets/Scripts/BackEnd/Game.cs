@@ -88,6 +88,15 @@ public class Game
     public void GeneratePlayers()
     {
         int index = random.Next(0, Store.decks.Count);
+        if (!IsAValidDeck(Store.decks[index]))
+        {
+            int i = index;
+            while (i == index)
+            {
+                i = random.Next(0, Store.decks.Count);
+            }
+            index = i;
+        }
         Deck player1Deck = new Deck(selectedDeck.id, selectedDeck.name);
         foreach (Cards cards in selectedDeck.cards)
         {
