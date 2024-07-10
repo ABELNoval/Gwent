@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Console;
-using Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DropDownHandler : MonoBehaviour
 {

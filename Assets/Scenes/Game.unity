@@ -215,7 +215,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 381745630}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: App, Assembly-CSharp
         m_MethodName: AudioPlay
         m_Mode: 1
@@ -4938,7 +4938,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745632}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InfoGame, Assembly-CSharp
         m_MethodName: Active
         m_Mode: 1
@@ -6722,10 +6722,6 @@ GameObject:
   m_Component:
   - component: {fileID: 381745624}
   - component: {fileID: 381745622}
-  - component: {fileID: 381745630}
-  - component: {fileID: 381745631}
-  - component: {fileID: 381745632}
-  - component: {fileID: 381745633}
   - component: {fileID: 381745634}
   - component: {fileID: 381745637}
   - component: {fileID: 381745638}
@@ -6773,55 +6769,6 @@ RectTransform:
   m_AnchoredPosition: {x: -16.695482, y: 23.97154}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &381745630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381745620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95e3cd3eb7a137347880c0371dff8148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &381745631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381745620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d27446bc03ce304791b6d1635a95238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &381745632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381745620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9af4992912766d47813a5383c7ac204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 1365220310}
---- !u!114 &381745633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381745620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22be5658995198b4f8a32160bbc7e0f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &381745634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11936,7 +11883,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 381745630}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: App, Assembly-CSharp
         m_MethodName: AudioPlay
         m_Mode: 1
@@ -12477,7 +12424,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 381745630}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: App, Assembly-CSharp
         m_MethodName: AudioPlay
         m_Mode: 1
@@ -18293,7 +18240,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381745630}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: App, Assembly-CSharp
         m_MethodName: DeselectCard
         m_Mode: 1

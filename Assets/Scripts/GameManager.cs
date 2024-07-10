@@ -1,5 +1,3 @@
-using System.Reflection;
-using System.Diagnostics;
 using Console;
 using UnityEngine;
 using System.Collections.Generic;

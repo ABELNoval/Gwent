@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Console;
-using Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

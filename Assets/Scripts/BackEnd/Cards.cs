@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Jujutsu_Kaisen_Game_Proyect.Assets.BackEnd;
-using UnityEngine;
 
 namespace Console
 {
