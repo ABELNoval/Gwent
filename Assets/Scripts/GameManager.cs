@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     public void CreateDeck()
     {
         Guid guid = Guid.NewGuid();
-        Store.AddDeck(new Deck(guid, "Nuevo"));
+        Store.AddDeck(new Deck(guid, "New Deck"));
     }
 
     public void EditDeck()
@@ -151,7 +151,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RemoveInstantiateCards()
+    public void RemoveExpesifications()
+    {
+        RemoveInstantiateCards();
+        deckManager = new DeckManager(0, 0, 0, createDeck, "New Deck");
+    }
+
+    private void RemoveInstantiateCards()
     {
         foreach (Transform child in panelWithAllCards.transform)
         {

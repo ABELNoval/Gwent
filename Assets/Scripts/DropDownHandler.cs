@@ -22,7 +22,6 @@ public class DropDownHandler : MonoBehaviour
         items = new List<DropDownItem>();
         foreach (var deck in Store.decks)
         {
-
             items.Add(new DropDownItem(deck.id, deck.name));
             Debug.Log($"{deck.id}");
         }
