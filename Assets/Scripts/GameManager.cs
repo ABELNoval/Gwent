@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     DeckManager deckManager;
     public GameObject createDeck;
+    public GameObject savePanel;
 
     void Start()
     {
@@ -59,8 +60,10 @@ public class GameManager : MonoBehaviour
     //Cambiar al menu de opciones( OptionsButton )
     public void ChangesToOptions()
     {
+        createDeck.SetActive(false);
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
+        savePanel.SetActive(false);
     }
 
     //Comenzar el juego( StartButton )
@@ -107,12 +110,16 @@ public class GameManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        createDeck.SetActive(false);
+        savePanel.SetActive(false);
     }
 
     public void ChangesToCreateDeck()
     {
         optionsMenu.SetActive(false);
+        mainMenu.SetActive(false);
         createDeck.SetActive(true);
+        savePanel.SetActive(false);
     }
 
     public void CreateDeck()
@@ -135,8 +142,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #endregion
-
     private void InstantiateAllCardsOfTheDeck(Deck deck)
     {
         foreach (var card in deck.cards)
@@ -151,7 +156,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RemoveExpesifications()
+    #endregion
+
+    #region Create&EditDeck
+
+    public void Return()
+    {
+        savePanel.SetActive(true);
+    }
+
+    private void RemoveExpesifications()
     {
         RemoveInstantiateCards();
         deckManager = new DeckManager(0, 0, 0, createDeck, "New Deck");
@@ -165,9 +179,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SaveChanges()
+    public void Discard()
     {
+        RemoveExpesifications();
+        Load();
+    }
 
+    #endregion
+
+
+    public void SaveChanges()
+    {
+        //Metodo para salvar la informacion
+        Discard();
+    }
+
+    private void Load()
+    {
+        
     }
 
     private void InvalidDeck()
