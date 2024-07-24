@@ -2,9 +2,9 @@
   "decks": [
     {
       "id": "b7b06643-0ad5-41dd-94ab-68ece81c75d2",
-      "name": "Source",
       "cards": [
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Nanami Kento",
           "type": "Normal",
           "description": "...",
@@ -13,10 +13,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Nanami"
+          "img": "Art/Images/Nanami",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Nanami Kento",
           "type": "Normal",
           "description": "...",
@@ -25,10 +26,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Nanami"
+          "img": "Art/Images/Nanami",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Yuki Tsukumo",
           "type": "Silver",
           "description": "...",
@@ -38,12 +40,11 @@
             "Siege"
           ],
           "attack": 7,
-          "effectsName": [
-            "Black hole"
-          ],
-          "img": "Art/Images/Yuki"
+          "img": "Art/Images/Yuki",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Yuki Tsukumo",
           "type": "Silver",
           "description": "...",
@@ -53,12 +54,11 @@
             "Siege"
           ],
           "attack": 9,
-          "effectsName": [
-            "Black hole"
-          ],
-          "img": "Art/Images/Yuki"
+          "img": "Art/Images/Yuki",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Panda",
           "type": "Normal",
           "description": "...",
@@ -67,10 +67,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Panda"
+          "img": "Art/Images/Panda",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Panda",
           "type": "Normal",
           "description": "...",
@@ -79,10 +80,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Panda"
+          "img": "Art/Images/Panda",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Itadori Yuji",
           "type": "Normal",
           "description": "...",
@@ -91,10 +93,11 @@
             "Melee"
           ],
           "attack": 6,
-          "effectsName": [],
-          "img": "Art/Images/Itadori"
+          "img": "Art/Images/Itadori",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Itadori Yuji",
           "type": "Normal",
           "description": "...",
@@ -103,10 +106,11 @@
             "Melee"
           ],
           "attack": 6,
-          "effectsName": [],
-          "img": "Art/Images/Itadori"
+          "img": "Art/Images/Itadori",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Cursed energy",
           "type": "Special",
           "description": "...",
@@ -115,12 +119,11 @@
             "Buff"
           ],
           "attack": 0,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Energia Maldita(potenciador)"
+          "img": "Art/Images/Energia Maldita(potenciador)",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Cursed energy",
           "type": "Special",
           "description": "...",
@@ -129,12 +132,11 @@
             "Buff"
           ],
           "attack": 0,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Energia Maldita(potenciador)"
+          "img": "Art/Images/Energia Maldita(potenciador)",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Megumi Fushiguro",
           "type": "Normal",
           "description": "...",
@@ -143,10 +145,11 @@
             "Range"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Megumi"
+          "img": "Art/Images/Megumi",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Megumi Fushiguro",
           "type": "Normal",
           "description": "...",
@@ -155,10 +158,11 @@
             "Range"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Megumi"
+          "img": "Art/Images/Megumi",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Nobara Kugizaki",
           "type": "Normal",
           "description": "...",
@@ -167,10 +171,11 @@
             "Range"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Nobara"
+          "img": "Art/Images/Nobara",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Maki Zennin",
           "type": "Silver",
           "description": "...",
@@ -180,12 +185,11 @@
             "Range"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Maki"
+          "img": "Art/Images/Maki",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Yuta Okkotsu",
           "type": "Silver",
           "description": "...",
@@ -195,12 +199,11 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Yuta"
+          "img": "Art/Images/Yuta",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Yuta Okkotsu",
           "type": "Silver",
           "description": "...",
@@ -210,12 +213,11 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Yuta"
+          "img": "Art/Images/Yuta",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Nobara Kugizaki",
           "type": "Normal",
           "description": "...",
@@ -224,10 +226,11 @@
             "Range"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Nobara"
+          "img": "Art/Images/Nobara",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Hakari Kinji",
           "type": "Silver",
           "description": "...",
@@ -237,12 +240,11 @@
             "Siege"
           ],
           "attack": 4,
-          "effectsName": [
-            "Luck"
-          ],
-          "img": "Art/Images/Hakari"
+          "img": "Art/Images/Hakari",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Hakari Kinji",
           "type": "Silver",
           "description": "...",
@@ -252,12 +254,11 @@
             "Siege"
           ],
           "attack": 4,
-          "effectsName": [
-            "Luck"
-          ],
-          "img": "Art/Images/Hakari"
+          "img": "Art/Images/Hakari",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Infinite void",
           "type": "Special",
           "description": "...",
@@ -266,12 +267,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Finish game in two rounds"
-          ],
-          "img": "Art/Images/Expansion de Gojo"
+          "img": "Art/Images/Expansion de Gojo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Deadly round",
           "type": "Special",
           "description": "...",
@@ -280,12 +280,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Decrease attack of the raw"
-          ],
-          "img": "Art/Images/Expansion de Hakari"
+          "img": "Art/Images/Expansion de Hakari",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Mutual and true love",
           "type": "Special",
           "description": "...",
@@ -294,12 +293,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Expansion de Yuta"
+          "img": "Art/Images/Expansion de Yuta",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "ClearenceSource",
           "type": "Special",
           "description": "...",
@@ -308,12 +306,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Destroy all climates"
-          ],
-          "img": "Art/Images/Impacto Externo"
+          "img": "Art/Images/Impacto Externo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "LureSource",
           "type": "Special",
           "description": "...",
@@ -324,12 +321,11 @@
             "Siege"
           ],
           "attack": 0,
-          "effectsName": [
-            "Change the position with another card"
-          ],
-          "img": "Art/Images/Buggi Buggi"
+          "img": "Art/Images/Buggi Buggi",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Gojo Satoru",
           "type": "Gold",
           "description": "...",
@@ -340,13 +336,11 @@
             "Siege"
           ],
           "attack": 10,
-          "effectsName": [
-            "Inmunity",
-            "Destroy one raw"
-          ],
-          "img": "Art/Images/Gojo"
+          "img": "Art/Images/Gojo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Maki Zennin",
           "type": "Silver",
           "description": "...",
@@ -356,18 +350,17 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Maki"
+          "img": "Art/Images/Maki",
+          "onActivation": null
         }
-      ]
+      ],
+      "name": "Source"
     },
     {
       "id": "26157bfb-f071-46fb-89ca-35a0dd3a1ab3",
-      "name": "Curse",
       "cards": [
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Hanami",
           "type": "Normal",
           "description": "...",
@@ -376,10 +369,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Hanami"
+          "img": "Art/Images/Hanami",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Jogo",
           "type": "Normal",
           "description": "...",
@@ -388,10 +382,11 @@
             "Range"
           ],
           "attack": 7,
-          "effectsName": [],
-          "img": "Art/Images/Jogo"
+          "img": "Art/Images/Jogo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Jogo",
           "type": "Normal",
           "description": "...",
@@ -400,10 +395,11 @@
             "Range"
           ],
           "attack": 7,
-          "effectsName": [],
-          "img": "Art/Images/Jogo"
+          "img": "Art/Images/Jogo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Kenjaku",
           "type": "Silver",
           "description": "...",
@@ -413,12 +409,11 @@
             "Range"
           ],
           "attack": 6,
-          "effectsName": [
-            "AttackDuplicate"
-          ],
-          "img": "Art/Images/Kenjaku"
+          "img": "Art/Images/Kenjaku",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Toji Zennin",
           "type": "Silver",
           "description": "...",
@@ -428,12 +423,11 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Toji"
+          "img": "Art/Images/Toji",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Toji Zennin",
           "type": "Silver",
           "description": "...",
@@ -443,12 +437,11 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Toji"
+          "img": "Art/Images/Toji",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Dagon",
           "type": "...",
           "description": "Normal",
@@ -457,10 +450,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Dagon"
+          "img": "Art/Images/Dagon",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Kashimo Hajime",
           "type": "Silver",
           "description": "...",
@@ -470,12 +464,11 @@
             "Siege"
           ],
           "attack": 7,
-          "effectsName": [
-            "Destroy the weakest"
-          ],
-          "img": "Art/Images/Kashimo"
+          "img": "Art/Images/Kashimo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Kashimo Hajime",
           "type": "Silver",
           "description": "...",
@@ -485,12 +478,11 @@
             "Siege"
           ],
           "attack": 7,
-          "effectsName": [
-            "Destroy the weakest"
-          ],
-          "img": "Art/Images/Kashimo"
+          "img": "Art/Images/Kashimo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Demonic Reliquary",
           "type": "Special",
           "description": "...",
@@ -499,12 +491,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Decrease attack of the raw x2"
-          ],
-          "img": "Art/Images/Expansion de Sukuna"
+          "img": "Art/Images/Expansion de Sukuna",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Iron Coffin Mountain",
           "type": "Special",
           "description": "...",
@@ -513,12 +504,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Decrease attack of the raw"
-          ],
-          "img": "Art/Images/Expansion de Jogo"
+          "img": "Art/Images/Expansion de Jogo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Uzumaki",
           "type": "Special",
           "description": "...",
@@ -527,12 +517,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Increases the attack of a row"
-          ],
-          "img": "Art/Images/Uzumaki"
+          "img": "Art/Images/Uzumaki",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Mahoraga",
           "type": "Silver",
           "description": "...",
@@ -542,12 +531,11 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Mahoraga"
+          "img": "Art/Images/Mahoraga",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Hanami",
           "type": "Normal",
           "description": "...",
@@ -556,10 +544,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Hanami"
+          "img": "Art/Images/Hanami",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Kenjaku",
           "type": "Silver",
           "description": "...",
@@ -569,12 +558,11 @@
             "Range"
           ],
           "attack": 6,
-          "effectsName": [
-            "AttackDuplicate"
-          ],
-          "img": "Art/Images/Kenjaku"
+          "img": "Art/Images/Kenjaku",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Dagon",
           "type": "...",
           "description": "Normal",
@@ -583,10 +571,11 @@
             "Melee"
           ],
           "attack": 5,
-          "effectsName": [],
-          "img": "Art/Images/Dagon"
+          "img": "Art/Images/Dagon",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "ClearenceCurse",
           "type": "Special",
           "description": "...",
@@ -595,12 +584,11 @@
             "Climate"
           ],
           "attack": 0,
-          "effectsName": [
-            "Destroy all climates"
-          ],
-          "img": "Art/Images/Impacto Externo"
+          "img": "Art/Images/Impacto Externo",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "LureCurse",
           "type": "Specia",
           "description": "...",
@@ -611,12 +599,11 @@
             "Siege"
           ],
           "attack": 0,
-          "effectsName": [
-            "Change the position with another card"
-          ],
-          "img": "Art/Images/Buggi Buggi"
+          "img": "Art/Images/Buggi Buggi",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Ryomen Sukuna",
           "type": "Gold",
           "description": "...",
@@ -627,13 +614,11 @@
             "Siege"
           ],
           "attack": 10,
-          "effectsName": [
-            "Inmunity",
-            "Decrease attack of the row"
-          ],
-          "img": "Art/Images/Sukuna"
+          "img": "Art/Images/Sukuna",
+          "onActivation": null
         },
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Mahoraga",
           "type": "Silver",
           "description": "...",
@@ -643,12 +628,16 @@
             "Siege"
           ],
           "attack": 8,
-          "effectsName": [
-            "Inmunity"
-          ],
-          "img": "Art/Images/Mahoraga"
+          "img": "Art/Images/Mahoraga",
+          "onActivation": null
         }
-      ]
+      ],
+      "name": "Curse​"
+    },
+    {
+      "id": "d0a82c0c-a490-4c7c-8659-68b8a53eca8f",
+      "cards": [],
+      "name": "Prueba"
     }
   ],
   "effects": []

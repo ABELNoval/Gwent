@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     public void CreateDeck()
     {
         Guid guid = Guid.NewGuid();
-        Store.AddDeck(new Deck(guid, "New Deck"));
+        Store.AddOrEditDeck(new Deck(guid, "New Deck"));
     }
 
     public void EditDeck()
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     private void RemoveExpesifications()
     {
-        RemoveInstantiateCards();
+        createDeck.transform.GetChild(0).Find("InputField").GetComponent<TMP_InputField>().text = "";
         deckManager = new DeckManager(0, 0, 0, createDeck, "New Deck");
     }
 
@@ -182,7 +182,6 @@ public class GameManager : MonoBehaviour
     public void Discard()
     {
         RemoveExpesifications();
-        Load();
     }
 
     #endregion
@@ -190,13 +189,14 @@ public class GameManager : MonoBehaviour
 
     public void SaveChanges()
     {
-        //Metodo para salvar la informacion
+        string deckName = createDeck.transform.GetChild(0).Find("InputField").GetComponent<TMP_InputField>().text;
+        Debug.Log(deckName);
+        if (deckName != "")
+        {
+            game.selectedDeck.name = deckName;
+        }
+        Store.AddOrEditDeck(game.selectedDeck);
         Discard();
-    }
-
-    private void Load()
-    {
-        
     }
 
     private void InvalidDeck()

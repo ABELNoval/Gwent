@@ -20,9 +20,19 @@ namespace Console
             LoadFromJSON();
         }
 
-        public static void AddDeck(Deck deck)
+        public static void AddOrEditDeck(Deck deck)
         {
-            decks.Add(deck);
+            Deck deck1 = GetDeck(deck.id);
+            if (deck1 != null)
+            {
+                deck1 = deck;
+            }
+            else
+            {
+                decks.Add(deck);
+            }
+            SaveFromJSON();
+            LoadFromJSON();
             changeDecks();
         }
 
