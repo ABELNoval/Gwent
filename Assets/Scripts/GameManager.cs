@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Save
 
     public void SaveChanges()
     {
@@ -198,6 +199,9 @@ public class GameManager : MonoBehaviour
         Store.AddOrEditDeck(game.selectedDeck);
         Discard();
     }
+
+    #endregion
+
 
     private void InvalidDeck()
     {
