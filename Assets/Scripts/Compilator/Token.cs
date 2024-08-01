@@ -1,70 +1,40 @@
 namespace Console
 {
-    public enum TypeOfToken
+    public enum TokenType
     {
-        unhownToken,
-        numberToken,//number
-        identifierToken,//identifier
-        ifToken,//if
-        elseToken,//else
-        forToken,//for
-        whileToken,//while
-        foreachToken,//foreach
-        intToken,//int
-        stringToken,//string
-        boolToken,//bool
-        floatToken,//float
-        openParenthesisToken,//(
-        closeParenthesisToken,//)
-        openBracketToken,//[
-        closeBracketToken,//]
-        openBraceToken,//{
-        closeBraceToken,//}
-        commaToken,//,
-        dotToken,//.
-        colonToken,//:
-        semicolonToken,//;
-        equalToken,//=
-        plusToken,//+
-        minusToken,//-
-        multiplyToken,// *
-        divideToken,// /
-        percentToken,//%
-        greaterThanToken,//>
-        lessThanToken,//<
-        greaterEqualToken,//>=
-        lessEqualToken,//<=
-        notEqualToken,//!=
-        equalEqualToken,//==
-        notToken,//!
-        andToken,//&&
-        orToken,//|
-        newToken,//new
-        classToken,//class/no
-        publicToken,//public/no
-        privateToken,//private/no
-        staticToken,//static/no
-        voidToken,//void/no
-        returnToken,//return/no
-        breakToken,//break/no
-        continueToken,//continue/no
-        trueToken,//true/no
-        falseToken,//false/no
-        thisToken,//this/no
-        nullToken,//null/no
-        getToken,//get/no
-        setToken,//set/no
+        //Palabras clave del juego
+        card, effect, Name, Params, Action, Type, Power, Faction, Range, OnActivation,
+        Selector, Effect, Amount, Single, Source, Predicate, PosAction,
+
+        //Palabras claves extras
+        for_Token, while_Token, foreach_Token, if_Token, in_Token,
+
+        // Operators (Operadores)
+        Plus, Minus, Multiply, Divide, Assign, Equals, NotEquals, LessThan, GreaterThan, LessThanOrEqual,
+        GreaterThanOrEqual, LogicalAnd, LogicalOr, Not, Dot, Increment, Decrement,
+
+        // Punctuation (Puntuacion)
+        LeftParenthesis, RigthParenthesis, LeftBrace, RightBrace, LeftBracket, RightBracket, Comma, Semicolon, Colon,
+        Quote,
+
+        // Literals (Literales)
+        Number, String, Boolean, CommentLine, CommentBlock,
+
+        // Identifiers (Identificadores)
+        Identifier,
+
+        // End of Input (Fin de entrada)
+        EndOfFile
     }
 
     public class Token
     {
-        public TypeOfToken typeOfToken;
+        public TokenType tokenType;
         public string value;
-        public Token(TypeOfToken typeOfToken, string value)
+        public Token(TokenType tokenType, string value)
         {
-            this.typeOfToken = typeOfToken;
+            this.tokenType = tokenType;
             this.value = value;
         }
-
     }
 }

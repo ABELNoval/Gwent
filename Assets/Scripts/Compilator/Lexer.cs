@@ -1,154 +1,362 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 
 namespace Console
 {
+    // Implementación del lexer
     public class Lexer
     {
         private string input;
         private int position;
-        private int line;
-
-        private static readonly Dictionary<string, TypeOfToken> specialCharacters = new Dictionary<string, TypeOfToken>
-        {
-            {"(", TypeOfToken.openParenthesisToken},
-            {")", TypeOfToken.closeParenthesisToken},
-            { "{", TypeOfToken.openBraceToken},
-            { "}", TypeOfToken.closeBraceToken},
-            { "[", TypeOfToken.openBraceToken},
-            { "]", TypeOfToken.closeBraceToken},
-            { ",", TypeOfToken.commaToken},
-            { ".", TypeOfToken.dotToken},
-            { ";", TypeOfToken.semicolonToken},
-            { ":", TypeOfToken.colonToken},
-            { "+", TypeOfToken.plusToken},
-            { "-", TypeOfToken.minusToken},
-            { "*", TypeOfToken.multiplyToken},
-            { "/", TypeOfToken.divideToken},
-            { "%", TypeOfToken.percentToken},
-            { "&&", TypeOfToken.andToken},
-            { "||", TypeOfToken.orToken},
-            { "!", TypeOfToken.notToken},
-            { "=", TypeOfToken.equalToken},
-            { "<", TypeOfToken.lessThanToken},
-            { ">", TypeOfToken.greaterThanToken},
-            { "<=", TypeOfToken.lessEqualToken},
-            { ">=", TypeOfToken.greaterEqualToken},
-            { "new", TypeOfToken.newToken},
-            { "if", TypeOfToken.ifToken},
-            { "while", TypeOfToken.whileToken},
-            { "else", TypeOfToken.elseToken},
-            { "for", TypeOfToken.forToken},
-            { "foreach", TypeOfToken.foreachToken},
-            { "int", TypeOfToken.intToken},
-            { "string", TypeOfToken.stringToken},
-            { "bool", TypeOfToken.boolToken},
-            {"float", TypeOfToken.floatToken}
-        };
+        private char currentCharacter;
 
         public Lexer(string input)
         {
             this.input = input;
-            position = 0;
+            this.position = 0;
+            currentCharacter = input[position];
         }
 
-        public List<Token> GetTokenList()
+        public List<Token> Analyze()
         {
             List<Token> tokens = new List<Token>();
-            Token token;
+
             while (position < input.Length)
             {
-                token = GetToken();
-                tokens.Add(token);
+                switch (currentCharacter)
+                {
+                    case '{':
+                        tokens.Add(new Token(TokenType.LeftBrace, "{"));
+                        Advance();
+                        break;
+                    case '}':
+                        tokens.Add(new Token(TokenType.RightBrace, "}"));
+                        Advance();
+                        break;
+                    case '(':
+                        tokens.Add(new Token(TokenType.LeftParenthesis, "("));
+                        Advance();
+                        break;
+                    case ')':
+                        tokens.Add(new Token(TokenType.RigthParenthesis, ")"));
+                        Advance();
+                        break;
+                    case '[':
+                        tokens.Add(new Token(TokenType.LeftBracket, "["));
+                        Advance();
+                        break;
+                    case ']':
+                        tokens.Add(new Token(TokenType.RightBracket, "]"));
+                        Advance();
+                        break;
+
+                    case ':':
+                        tokens.Add(new Token(TokenType.Colon, ":"));
+                        Advance();
+                        break;
+                    case ',':
+                        tokens.Add(new Token(TokenType.Comma, ","));
+                        Advance();
+                        break;
+                    case ';':
+                        tokens.Add(new Token(TokenType.Semicolon, ";"));
+                        Advance();
+                        break;
+                    case '.':
+                        tokens.Add(new Token(TokenType.Dot, "."));
+                        Advance();
+                        break;
+
+                    case '+':
+                        if (Peek() == '+')
+                        {
+                            tokens.Add(new Token(TokenType.Increment, "++"));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.Plus, "+"));
+                            Advance();
+                        }
+                        break;
+                    case '-':
+                        if (Peek() == '-')
+                        {
+                            tokens.Add(new Token(TokenType.Decrement, "--"));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.Minus, "-"));
+                            Advance();
+                        }
+                        break;
+                    case '*':
+                        tokens.Add(new Token(TokenType.Multiply, "*"));
+                        Advance();
+                        break;
+                    case '/':
+                        if (Peek() == '/')
+                        {
+                            Advance();
+                            Advance();
+                            string comment = ReadWhile(c => c != '\n');
+                            tokens.Add(new Token(TokenType.CommentLine, comment));
+                        }
+                        else if (Peek() == '*')
+                        {
+                            Advance();
+                            Advance();
+                            string comment = ReadUntil("*/");
+                            tokens.Add(new Token(TokenType.CommentBlock, comment));
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.Divide, "/"));
+                            Advance();
+                        }
+                        break;
+                    case '=':
+                        if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.Equals, "=="));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.Assign, "="));
+                            Advance();
+                        }
+                        break;
+                    case '!':
+                        if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.NotEquals, "!="));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.Not, "!"));
+                            Advance();
+                        }
+                        break;
+                    case '<':
+                        if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.LessThanOrEqual, "<="));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.LessThan, "<"));
+                            Advance();
+                        }
+                        break;
+                    case '>':
+                        if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.GreaterThanOrEqual, ">="));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            tokens.Add(new Token(TokenType.GreaterThan, ">"));
+                            Advance();
+                        }
+                        break;
+                    case '&':
+                        if (Peek() == '&')
+                        {
+                            tokens.Add(new Token(TokenType.LogicalAnd, "&&"));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            throw new Exception($"Unexpected character: {currentCharacter}");
+                        }
+                        break;
+                    case '|':
+                        if (Peek() == '|')
+                        {
+                            tokens.Add(new Token(TokenType.LogicalOr, "||"));
+                            Advance();
+                            Advance();
+                        }
+                        else
+                        {
+                            throw new Exception($"Unexpected character: {currentCharacter}");
+                        }
+                        break;
+                    case '"':
+                        Advance();
+                        string str = ReadWhile(c => c != '"');
+                        tokens.Add(new Token(TokenType.String, str));
+                        Advance();
+                        break;
+
+                    default:
+                        if (char.IsWhiteSpace(currentCharacter))
+                        {
+                            Advance();
+                        }
+                        else if (char.IsDigit(currentCharacter))
+                        {
+                            tokens.Add(new Token(TokenType.Number, ReadNumber()));
+                        }
+                        else if (char.IsLetter(currentCharacter))
+                        {
+                            string palabra = ReadWord();
+                            tokens.Add(IdentifyKeywordOrIdentifier(palabra));
+                        }
+                        else
+                        {
+                            throw new Exception($"Caracter inesperado: {currentCharacter}");
+                        }
+                        break;
+                }
             }
+
+            tokens.Add(new Token(TokenType.EndOfFile, "fin"));
+
             return tokens;
         }
 
-        private Token GetToken()
+        private void Advance()
         {
+            position++;
             if (position >= input.Length)
             {
-                return new Token(TypeOfToken.unhownToken, " ");
+                currentCharacter = '\0'; // Indicador de fin de entrada
             }
-            char current = input[position];
-
-            // Ignorar espacio en blanco
-            if (char.IsWhiteSpace(current))
+            else
             {
-                position++;
-                return GetToken();
+                currentCharacter = input[position];
             }
-
-            // Detectar cuando hay un operador de dos caracteres
-            string twoCharOperator = position < input.Length - 1 ? input.Substring(position, 2) : null;
-
-            // Detectar si el caracter doble es un caracter especial
-            if (twoCharOperator != null && specialCharacters.ContainsKey(twoCharOperator))
-            {
-                position += 2;
-                return new Token(specialCharacters[twoCharOperator], twoCharOperator);
-            }
-
-            // Si no es un caracter doble, definimos el caracter actual como string para verificar si es especial
-            string oneCharOperator = current.ToString();
-
-            // Detectar si ese caracter es especial
-            if (specialCharacters.ContainsKey(oneCharOperator))
-            {
-                position++;
-                return new Token(specialCharacters[oneCharOperator], oneCharOperator);
-            }
-
-            // Detectar si es un numero
-            if (char.IsDigit(current))
-            {
-                return GetNumberToken();
-            }
-
-            // Detectar si es una palabra no especial
-            if (char.IsLetter(current) || current == ' ')
-            {
-                return GetIdentifierToken();
-            }
-
-            position++;
-
-            // Devolver carcater deconocido
-            return new Token(TypeOfToken.unhownToken, current.ToString());
         }
 
-        // Obtener todos los caracteres consecutivos que son digitos
-        private Token GetNumberToken()
+        private char Peek()
         {
-            int start = position;
-            while (position < input.Length && char.IsDigit(input[position]))
-            {
-                position++;
-            }
-
-            string value = input.Substring(start, position - start);
-            if (specialCharacters.ContainsKey(value))
-            {
-                return new Token(specialCharacters[value], value);
-            }
-
-            return new Token(TypeOfToken.numberToken, value);
+            return position + 1 >= input.Length ? '\0' : input[position + 1];
         }
 
-        // Obtener todos los caracteres consecutivos que son letras o digitos(buscando hasta donde llega la variable)
-        private Token GetIdentifierToken()
+        private string ReadNumber()
         {
-            int start = position;
-            while (position < input.Length && (char.IsLetterOrDigit(input[position]) || input[position] == ' '))
+            string numero = string.Empty;
+
+            while (char.IsDigit(currentCharacter))
             {
-                position++;
+                numero += currentCharacter;
+                Advance();
             }
 
-            string value = input.Substring(start, position - start);
-            if (specialCharacters.ContainsKey(value))
+            return numero;
+        }
+
+        private string ReadWord()
+        {
+            string palabra = string.Empty;
+
+            while (char.IsLetter(currentCharacter))
             {
-                return new Token(specialCharacters[value], value);
+                palabra += currentCharacter;
+                Advance();
             }
-            return new Token(TypeOfToken.identifierToken, value);
+
+            return palabra;
+        }
+
+        private string ReadWhile(Func<char, bool> condition)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            while (position < input.Length && condition(currentCharacter))
+            {
+                sb.Append(currentCharacter);
+                Advance();
+            }
+
+            return sb.ToString();
+        }
+
+        private string ReadUntil(string delimiter)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            while (!input.Substring(position).StartsWith(delimiter) && position < input.Length)
+            {
+                sb.Append(currentCharacter);
+                Advance();
+            }
+
+            position += delimiter.Length;
+            currentCharacter = position < input.Length ? input[position] : '\0';
+            return sb.ToString();
+        }
+
+        private Token IdentifyKeywordOrIdentifier(string identifier)
+        {
+            switch (identifier)
+            {
+                case "card":
+                    return new Token(TokenType.card, identifier);
+                case "effect":
+                    return new Token(TokenType.effect, identifier);
+
+                case "Name":
+                    return new Token(TokenType.Name, identifier);
+                case "Power":
+                    return new Token(TokenType.Power, identifier);
+                case "Type":
+                    return new Token(TokenType.Type, identifier);
+                case "Faction":
+                    return new Token(TokenType.Faction, identifier);
+                case "Range":
+                    return new Token(TokenType.Range, identifier);
+                case "OnActivation":
+                    return new Token(TokenType.OnActivation, identifier);
+                case "Effect":
+                    return new Token(TokenType.Effect, identifier);
+                case "Selector":
+                    return new Token(TokenType.Selector, identifier);
+                case "Source":
+                    return new Token(TokenType.Source, identifier);
+                case "Single":
+                    return new Token(TokenType.Single, identifier);
+                case "Predicate":
+                    return new Token(TokenType.Predicate, identifier);
+                case "Amount":
+                    return new Token(TokenType.Amount, identifier);
+                case "Params":
+                    return new Token(TokenType.Params, identifier);
+                case "PosAction":
+                    return new Token(TokenType.PosAction, identifier);
+                case "Action":
+                    return new Token(TokenType.Action, identifier);
+
+                case "for":
+                    return new Token(TokenType.for_Token, identifier);
+                case "while":
+                    return new Token(TokenType.while_Token, identifier);
+                case "if":
+                    return new Token(TokenType.if_Token, identifier);
+                case "foreach":
+                    return new Token(TokenType.foreach_Token, identifier);
+                case "in":
+                    return new Token(TokenType.in_Token, identifier);
+
+                default:
+                    return new Token(TokenType.String, identifier);
+            }
         }
     }
+
 }
