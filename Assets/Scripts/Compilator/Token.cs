@@ -29,11 +29,11 @@ namespace Console
 
     public class Token
     {
-        public TokenType tokenType;
+        public TokenType type;
         public string value;
-        public Token(TokenType tokenType, string value)
+        public Token(TokenType type, string value)
         {
-            this.tokenType = tokenType;
+            this.type = type;
             this.value = value;
         }
     }
