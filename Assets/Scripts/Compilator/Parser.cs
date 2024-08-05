@@ -1,4 +1,3 @@
-using System.Runtime.ExceptionServices;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
@@ -11,46 +10,56 @@ namespace Console
         private int position;
         private int line;
         private Token currentToken;
-        private Dictionary<TokenType, Action> tokenHandlers;
-        private CardNode cardNode;
-        private EffectNode effectNode;
+        private Dictionary<TokenType, Action<ProgramNode>> cardTokenHandlers;
+        private Dictionary<TokenType, Action<ProgramNode>> effectTokenHandlers;
+        private Dictionary<TokenType, Action<ProgramNode>> onActivationTokenHandlers;
+        public ProgramNode currretnNode;
 
         public Parser(List<Token> input)
         {
             this.input = input;
             position = 0;
             currentToken = input[position];
-            cardNode = new CardNode();
-            effectNode = new EffectNode();
-            tokenHandlers = new Dictionary<TokenType, Action>
-            {
+            cardTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>(){
                 {TokenType.Name, HandleName},
+                {TokenType.Type, HandleType},
                 {TokenType.Faction, HandleFaction},
                 {TokenType.Power, HandlePower},
-                {TokenType.Type, HandleType},
                 {TokenType.Range, HandleRange},
                 {TokenType.OnActivation, HandleOnActivation}
             };
+
+            effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>(){
+                {TokenType.Name, HandleName},
+            };
+
+            onActivationTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+
+            };
         }
 
-        public ASTNode Parse()
+
+        #region Parse
+
+        public ProgramNode Parse()
         {
-            ASTNode aSTNode = ParseNode();
+            ProgramNode aSTNode = ParseNode();
 
             // TODO: Implementar semantico
 
             return aSTNode;
         }
 
-        private ASTNode ParseNode()
+        private ProgramNode ParseNode()
         {
             if (Match(TokenType.card))
             {
-                return ParseCard();
+                return ParseNode(new CardNode(), cardTokenHandlers);
             }
             else if (Match(TokenType.effect))
             {
-                return ParseEffect();
+                return ParseNode(new EffectNode(), effectTokenHandlers);
             }
             else
             {
@@ -58,16 +67,16 @@ namespace Console
             }
         }
 
-        private CardNode ParseCard()
+        private ProgramNode ParseNode(ProgramNode node, Dictionary<TokenType, Action<ProgramNode>> dic)
         {
             Expect(TokenType.LeftBrace);
 
-            while (Peek().type != TokenType.EndOfFile)
+            while (Peek().type != TokenType.EndOfFile && Peek().type != TokenType.RightBrace)
             {
-                if (tokenHandlers.TryGetValue(currentToken.type, out Action handle))
+                if (dic.TryGetValue(currentToken.type, out Action<ProgramNode> handler))
                 {
                     Advance();
-                    handle();
+                    handler(node);
                 }
                 else
                 {
@@ -76,101 +85,11 @@ namespace Console
             }
 
             Expect(TokenType.RightBrace);
+            node.Validate();
 
-            return cardNode;
+            return node;
         }
 
-        #region Handle
-
-        private void HandleName()
-        {
-            Expect(TokenType.Colon);
-            string value = ParseString();
-            cardNode.name = value;
-            Match(TokenType.Comma);
-        }
-
-        private void HandleType()
-        {
-            Expect(TokenType.Colon);
-            string value = ParseString();
-            cardNode.type = value;
-            Match(TokenType.Comma);
-        }
-
-        private void HandleFaction()
-        {
-            Expect(TokenType.Colon);
-            string value = ParseString();
-            cardNode.faction = value;
-            Match(TokenType.Comma);
-        }
-
-        private void HandlePower()
-        {
-            Expect(TokenType.Colon);
-            int value = ParseInt();
-            cardNode.power = value;
-            Match(TokenType.Comma);
-        }
-
-        private void HandleRange()
-        {
-            Expect(TokenType.Colon);
-            Expect(TokenType.LeftBracket);
-
-            List<string> range = new List<string>();
-            while (!Match(TokenType.RightBracket))
-            {
-                range.Add(ParseString());
-                Match(TokenType.Comma);
-            }
-            cardNode.range = range;
-            Match(TokenType.Comma);
-        }
-
-        private void HandleOnActivation()
-        {
-            Expect(TokenType.Colon);
-            Expect(TokenType.LeftBracket);
-            OnActivation onActivation = ParseOnActivation();
-            cardNode.onActivation = onActivation;
-            Match(TokenType.Comma);
-        }
-
-        #endregion
-
-        private EffectNode ParseEffect()
-        {
-            return new EffectNode();
-        }
-
-        private OnActivation ParseOnActivation()
-        {
-            return null;
-        }
-
-        private bool Match(TokenType expectedType)
-        {
-            if (currentToken.type == expectedType)
-            {
-                Advance();
-                return true;
-            }
-            return false;
-        }
-
-        private Token Peek()
-        {
-            if (position < input.Count - 1)
-            {
-                return input[position + 1];
-            }
-            else
-            {
-                throw new Exception("Llegaste al limite del input");
-            }
-        }
         private string ParseString()
         {
             if (currentToken.type != TokenType.String)
@@ -196,6 +115,91 @@ namespace Console
 
             Advance();
             return value;
+        }
+
+        #endregion
+
+
+        #region Handle
+
+        private void HandleName(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            string value = ParseString();
+            node.SetName(value);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleType(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            string value = ParseString();
+            node.SetType(value);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleFaction(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            string value = ParseString();
+            node.SetFaction(value);
+            Match(TokenType.Comma);
+        }
+
+        private void HandlePower(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            int value = ParseInt();
+            node.SetPower(value);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleRange(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            Expect(TokenType.LeftBracket);
+
+            while (!Match(TokenType.RightBracket))
+            {
+                node.AddRange(ParseString());
+                Match(TokenType.Comma);
+            }
+
+            Match(TokenType.Comma);
+        }
+
+        private void HandleOnActivation(ProgramNode node)
+        {
+            Expect(TokenType.Colon);
+            Expect(TokenType.LeftBracket);
+            ProgramNode onActivation = ParseNode(new OnActivationNode(), onActivationTokenHandlers);
+            node.SetOnActivation(onActivation as OnActivationNode);
+            Match(TokenType.Comma);
+        }
+
+        #endregion
+
+
+        private bool Match(TokenType expectedType)
+        {
+            if (currentToken.type == expectedType)
+            {
+                Advance();
+                return true;
+            }
+            return false;
+        }
+
+        private Token Peek()
+        {
+            if (position < input.Count - 1)
+            {
+                return input[position + 1];
+            }
+            else
+            {
+                throw new Exception("Llegaste al limite del input");
+            }
         }
 
         private void Advance()

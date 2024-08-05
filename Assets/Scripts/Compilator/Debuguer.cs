@@ -27,8 +27,8 @@ public class Debuguer : MonoBehaviour
         }
 
         Parser parser = new Parser(Tokens);
-        ASTNode aSTNode = parser.Parse();
-        CardNode cardNode = aSTNode as CardNode;
+        ProgramNode node = parser.Parse();
+        CardNode cardNode = node as CardNode;
 
         Debug.Log("------------Parser-------------");
 
