@@ -64,7 +64,7 @@ public class Debuguer : MonoBehaviour
                 }
             }
         ";
-        Lexer lexer = new Lexer(input2);
+        Lexer lexer = new Lexer(input);
         List<Token> Tokens = lexer.Analyze();
 
         Debug.Log("------------Lexer-------------");
@@ -82,13 +82,14 @@ public class Debuguer : MonoBehaviour
         Debug.Log("------------Parser-------------");
 
         Debug.Log($@"
-             Nombre: {cardNode.name}
-             Tipo: {cardNode.type}
-             Faccion: {cardNode.faction}
-             Power: {cardNode.power}
-             Range: [{cardNode.range[0]}, {cardNode.range[1]}]
-             OnActivation: [{cardNode.onActivation.values[0].effectDataNode.name}], {cardNode.onActivation.values[1].effectDataNode.name}]"
+             Nombre: {cardNode.Name}
+             Tipo: {cardNode.Type}
+             Faccion: {cardNode.Faction}
+             Power: {cardNode.Power}
+             Range: [{cardNode.Range[0]}, {cardNode.Range[1]}]
+             OnActivation: [{cardNode.OnActivation.OnActValues[0].EffectData.Name}], {cardNode.OnActivation.OnActValues[1].EffectData.Name}]"
             );
+
     }
 
 }

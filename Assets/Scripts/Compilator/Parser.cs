@@ -120,7 +120,7 @@ namespace Console
             UnityEngine.Debug.Log("Fin");
             Expect(TokenType.RightBrace);
 
-            node.Validate();
+            //node.Validate();
 
             return node;
         }
@@ -179,7 +179,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Name");
             Expect(TokenType.Colon);
-            node.SetName(ParseString());
+            node.SetProperty("Name", ParseString());
             Match(TokenType.Comma);
         }
 
@@ -187,7 +187,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Type");
             Expect(TokenType.Colon);
-            node.SetType(ParseString());
+            node.SetProperty("Type", ParseString());
             Match(TokenType.Comma);
         }
 
@@ -195,7 +195,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Faction");
             Expect(TokenType.Colon);
-            node.SetFaction(ParseString());
+            node.SetProperty("Faction", ParseString());
             Match(TokenType.Comma);
         }
 
@@ -203,7 +203,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Power");
             Expect(TokenType.Colon);
-            node.SetInt(ParseInt());
+            node.SetProperty("Power", ParseInt());
             Match(TokenType.Comma);
         }
 
@@ -215,7 +215,7 @@ namespace Console
 
             while (!Match(TokenType.RightBracket))
             {
-                node.AddRange(ParseString());
+                node.AddProperty("Range", ParseString());
                 Match(TokenType.Comma);
             }
 
@@ -233,13 +233,13 @@ namespace Console
             while (currentToken.type != TokenType.RightBracket)
             {
                 ProgramNode actValueNode = ParseNode(new OnActValueNode(), onActValueTokenHandlers);
-                onActivationNode.AddOnActValue(actValueNode as OnActValueNode);
+                onActivationNode.AddProperty("OnActValues", actValueNode as OnActValueNode);
 
                 Match(TokenType.Comma);
             }
 
             Expect(TokenType.RightBracket);
-            node.SetOnActivation(onActivationNode);
+            node.SetProperty("OnActivation", onActivationNode);
             Match(TokenType.Comma);
         }
 
@@ -247,18 +247,17 @@ namespace Console
         {
             UnityEngine.Debug.Log("EffectData");
             Expect(TokenType.Colon);
-            ProgramNode value = new();
             EffectDataNode val = new();
 
             if (currentToken.type == TokenType.String)
             {
-                val.SetName(ParseString());
-                node.SetEffectDataNode(val);
+                val.SetProperty("Name", ParseString());
+                node.SetProperty("EffetData", val);
             }
             else
             {
-                value = ParseNode(new EffectDataNode(), effectDataTokenHandlers);
-                node.SetEffectDataNode(value as EffectDataNode);
+                ProgramNode value = ParseNode(new EffectDataNode(), effectDataTokenHandlers);
+                node.SetProperty("EffectData", value as EffectDataNode);
             }
 
             Match(TokenType.Comma);
@@ -269,7 +268,7 @@ namespace Console
             UnityEngine.Debug.Log("Selector");
             Expect(TokenType.Colon);
             ProgramNode value = ParseNode(new SelectorNode(), selectorTokenHandler);
-            node.SetSelector(value as SelectorNode);
+            node.SetProperty("Selector", value as SelectorNode);
             Match(TokenType.Comma);
         }
 
@@ -278,7 +277,7 @@ namespace Console
             UnityEngine.Debug.Log("PosAction");
             Expect(TokenType.Colon);
             ProgramNode value = ParseNode(new PosActionNode(), posActionTokenHandler);
-            node.SetPosAction(value as PosActionNode);
+            node.SetProperty("PosAction", value as PosActionNode);
             Match(TokenType.Comma);
         }
 
@@ -286,7 +285,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Source");
             Expect(TokenType.Colon);
-            node.SetSource(ParseString());
+            node.SetProperty("Source", ParseString());
             Match(TokenType.Comma);
         }
 
@@ -294,7 +293,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Single");
             Expect(TokenType.Colon);
-            node.SetSingle(ParseBool());
+            node.SetProperty("Single", ParseBool());
             Match(TokenType.Comma);
         }
 
@@ -302,7 +301,7 @@ namespace Console
         {
             UnityEngine.Debug.Log("Predicate");
             Expect(TokenType.Colon);
-            node.SetPredicate(ParseString());
+            node.SetProperty("Predicate", ParseString());
             Match(TokenType.Comma);
         }
 
@@ -320,7 +319,7 @@ namespace Console
 
             Expect(TokenType.LeftBrace);
 
-            node.SetAction(ParseNode(new ActionNode(), actionTokenHandler) as ActionNode);
+            //node.SetAction(ParseNode(new ActionNode(), actionTokenHandler) as ActionNode);
             Match(TokenType.Comma);
         }
 

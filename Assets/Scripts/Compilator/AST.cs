@@ -14,100 +14,124 @@ namespace Console
 
     public class ProgramNode : ASTNode
     {
-        public virtual void SetName(string value) { }
-        public virtual void SetType(string value) { }
-        public virtual void SetFaction(string value) { }
-        public virtual void AddRange(string value) { }
-        public virtual void SetInt(int value) { }
-        public virtual void SetOnActivation(OnActivationNode value) { }
-        public virtual void SetSelector(SelectorNode value) { }
-        public virtual void SetPosAction(PosActionNode value) { }
-        public virtual void SetEffectDataNode(EffectDataNode value) { }
-        public virtual void SetSource(string value) { }
-        public virtual void SetSingle(bool value) { }
-        public virtual void SetPredicate(string value) { }
-        public virtual void SetAction(ActionNode value) { }
-        public virtual void AddOnActValue(OnActValueNode value) { }
-        public virtual void AddParam(Type value) { }
+        public Dictionary<string, object> properties = new Dictionary<string, object>();
+
+        public void SetProperty(string key, object value)
+        {
+            if (HasProperty(key))
+            {
+                throw new Exception("La propiedad ya existe");
+            }
+            properties[key] = value;
+        }
+
+        public T GetProperty<T>(string key)
+        {
+            if (properties.TryGetValue(key, out var value))
+            {
+                if (value is T)
+                {
+                    return (T)value;
+                }
+                else
+                {
+                    throw new InvalidCastException($"El valor para la clave \"{key}\" no es del tipo esperado. Se esperaba {typeof(T)}, pero se encontró {value.GetType()}.");
+                }
+            }
+            throw new Exception($"La propiedad \"{key}\" no está definida.");
+        }
+
+
+        public void AddProperty<T>(string key, T value)
+        {
+            if (properties.TryGetValue(key, out var listValue))
+            {
+                if (listValue is List<T> list)
+                {
+                    list.Add(value);
+                }
+                else
+                {
+                    throw new Exception($"La propiedad \"{key}\" no es una lista.");
+                }
+            }
+            else
+            {
+                SetProperty(key, new List<T> { value });
+            }
+        }
+
+        private bool HasProperty(string key)
+        {
+            return properties.ContainsKey(key);
+        }
 
         public virtual void Validate() { }
     }
 
     public class CardNode : ProgramNode
     {
-        public string name { get; private set; }
-        public string type { get; private set; }
-        public string faction { get; private set; }
-        public List<string> range { get; private set; } = new List<string>();
-        public int power { get; private set; }
-        public OnActivationNode onActivation { get; private set; }
 
-
-        public override void SetName(string name)
+        public string Name
         {
-            if (this.name != null)
-            {
-                throw new Exception("El nombre ya está definido.");
-            }
-            this.name = name;
+            get => GetProperty<string>("Name");
+            private set => SetProperty("Name", value);
         }
 
-        public override void SetType(string type)
+        public string Type
         {
-            if (this.type != null)
-            {
-                throw new Exception("El tipo ya está definido.");
-            }
-            this.type = type;
+            get => GetProperty<string>("Type");
+            private set => SetProperty("Type", value);
         }
 
-        public override void SetFaction(string faction)
+        public string Faction
         {
-            if (this.faction != null)
-            {
-                throw new Exception("La facción ya está definida.");
-            }
-            this.faction = faction;
+            get => GetProperty<string>("Faction");
+            private set => SetProperty("Faction", value);
         }
 
-        public override void SetInt(int power)
+        public List<string> Range
         {
-            if (this.power != 0)
-            {
-                throw new Exception("El poder ya está definido.");
-            }
-            this.power = power;
+            get => GetProperty<List<string>>("Range");
+            private set => SetProperty("Range", value);
         }
 
-        public override void AddRange(string range)
+        public int Power
         {
-            this.range.Add(range);
+            get => GetProperty<int>("Power");
+            private set => SetProperty("Power", value);
         }
 
-        public override void SetOnActivation(OnActivationNode onActivation)
+        public OnActivationNode OnActivation
         {
-            if (this.onActivation != null)
-            {
-                throw new Exception("El nodo de activación ya está definido.");
-            }
-            this.onActivation = onActivation;
+            get => GetProperty<OnActivationNode>("OnActivation");
+            private set => SetProperty("OnActivation", value);
         }
+
+
+        public void SetName(string name) => Name = name;
+        public void SetType(string type) => Type = type;
+        public void SetFaction(string faction) => Faction = faction;
+        public void SetPower(int power) => Power = power;
+        public void AddRange(string range) => AddProperty("Range", range);
+        public void SetOnActivation(OnActivationNode onActivation) => OnActivation = onActivation;
+
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            if (string.IsNullOrEmpty(type))
+            if (string.IsNullOrEmpty(Type))
             {
                 throw new Exception("Falta el tipo de carta.");
             }
-            if (string.IsNullOrEmpty(faction))
+            if (string.IsNullOrEmpty(Faction))
             {
                 throw new Exception("Falta la facción de la carta.");
             }
-            if (onActivation == null)
+            if (OnActivation == null)
             {
                 throw new Exception("Falta el nodo de activación.");
             }
@@ -116,113 +140,109 @@ namespace Console
 
     public class EffectNode : ProgramNode
     {
-        public string name { get; private set; }
-        public List<Type> parameters { get; private set; }
-        public ActionNode actionNode { get; set; }
 
-        public override void SetAction(ActionNode value)
+        public string Name
         {
-            if (actionNode != null)
-            {
-                throw new Exception("El nodo de acción ya está definido.");
-            }
-            actionNode = value;
+            get => GetProperty<string>("Name");
+            private set => SetProperty("Name", value);
         }
 
-        public override void SetName(string value)
+        public List<Type> Parameters
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new Exception("El nombre ya esta definido");
-            }
-            name = value;
+            get => GetProperty<List<Type>>("Parameters");
+            set => SetProperty("Parameters", value);
         }
 
-        public override void AddParam(Type value)
+        public ActionNode Action
         {
-            parameters.Add(value);
+            get => GetProperty<ActionNode>("Action");
+            set => SetProperty("Action", value);
         }
+
+        public void SetName(string name) => Name = name;
+        public void AddParam(Type param) => AddProperty("Parameters", param);
+        public void SetAction(ActionNode actionNode) => Action = actionNode;
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            if (parameters.Count != 0)
+            if (Parameters.Count > 0)
             {
-                foreach (Type param in parameters)
+                foreach (var param in Parameters)
                 {
                     if (param == null)
                     {
-                        throw new Exception("Un parametro no esta definido");
+                        throw new Exception("No se definio un parametro correctamente");
                     }
                 }
             }
-            actionNode.Validate();
+            if (Action == null)
+            {
+                throw new Exception("Falta el nodo de acción");
+            }
+            else
+            {
+                Action.Validate();
+            }
         }
-
     }
 
     public class OnActivationNode : ProgramNode
     {
-        public List<OnActValueNode> values { get; private set; }
 
-        public OnActivationNode()
+        public List<OnActValueNode> OnActValues
         {
-            values = new List<OnActValueNode>();
+            get => GetProperty<List<OnActValueNode>>("OnActValues");
+            private set => SetProperty("OnActValues", value);
         }
 
-        public override void AddOnActValue(OnActValueNode value)
-        {
-            values.Add(value);
-        }
+        private void AddOnActValue(OnActValueNode onActValue) => AddProperty("OnActValues", onActValue);
 
         public override void Validate()
         {
-            foreach (OnActValueNode value in values)
+            foreach (OnActValueNode onActValue in OnActValues)
             {
-                value.Validate();
+                onActValue.Validate();
             }
         }
     }
 
     public class SelectorNode : ProgramNode
     {
-        public string source { get; private set; }
-        public bool single { get; private set; }
-        public string predicate { get; private set; }
 
-        public override void SetSource(string value)
+        public string Source
         {
-            if (source != null)
-            {
-                throw new Exception("El tipo ya está definido.");
-            }
-            source = value;
+            get => GetProperty<string>("Source");
+            private set => SetProperty("Source", value);
         }
 
-        public override void SetSingle(bool value)
+        public bool Single
         {
-            single = value;
+            get => GetProperty<bool>("Single");
+            private set => SetProperty("Single", value);
         }
 
-        public override void SetPredicate(string value)
+        public string Predicate
         {
-            if (predicate != null)
-            {
-                throw new Exception("El tipo ya está definido.");
-            }
-            predicate = value;
+            get => GetProperty<string>("Predicate");
+            private set => SetProperty("Predicate", value);
         }
+
+        public void SetSource(string source) => Source = source;
+        public void SetSingle(bool single) => Single = single;
+        public void SetPredicate(string predicate) => Predicate = predicate;
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(source))
+            UnityEngine.Debug.Log("Valida");
+            if (string.IsNullOrEmpty(Source))
             {
                 throw new Exception("Falta el source");
             }
-            if (string.IsNullOrEmpty(predicate))
+            if (Predicate == null)
             {
                 throw new Exception("Falta el predicado");
             }
@@ -231,58 +251,49 @@ namespace Console
 
     public class PosActionNode : ProgramNode
     {
-        public string name { get; set; }
-        public SelectorNode selectorNode { get; set; }
 
-        public override void SetName(string value)
+        public string Name
         {
-            if (name != null)
-            {
-                throw new Exception("El nombre ya esta definido");
-            }
-            name = value;
+            get => GetProperty<string>("Name");
+            private set => SetProperty("Name", value);
+        }
+        public SelectorNode Selector
+        {
+            get => GetProperty<SelectorNode>("Selector");
+            private set => SetProperty("Selector", value);
         }
 
-        public override void SetSelector(SelectorNode value)
-        {
-            if (selectorNode != null)
-            {
-                throw new Exception("El nodo del seleccionador ya esta definido");
-            }
-            selectorNode = value;
-        }
+        public void SetName(string name) => Name = name;
+        public void SetSelector(SelectorNode selector) => Selector = selector;
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
+            Selector?.Validate();
         }
     }
 
     public class EffectDataNode : ProgramNode
     {
-        public string name { get; private set; }
-        public int amount { get; private set; }
 
-        public override void SetName(string value)
+        public string Name
         {
-            if (name != null)
-            {
-                throw new Exception("El nombre ya esta definido");
-            }
-            name = value;
+            get => GetProperty<string>("Name");
+            private set => SetProperty("Name", value);
         }
 
-        public override void SetInt(int value)
+        public int Amount
         {
-            amount = value;
+            get => GetProperty<int>("Amount");
+            private set => SetProperty("Amount", value);
         }
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new Exception("Falta el nombre");
             }
@@ -291,44 +302,33 @@ namespace Console
 
     public class OnActValueNode : ProgramNode
     {
-        public SelectorNode selectorNode { get; private set; }
-        public PosActionNode posActionNode { get; private set; }
-        public EffectDataNode effectDataNode { get; private set; }
-
-        public override void SetSelector(SelectorNode value)
+        public SelectorNode Selector
         {
-            if (selectorNode != null)
-            {
-                throw new Exception("El nodo del seleccionador ya esta definido");
-            }
-            selectorNode = value;
+            get => GetProperty<SelectorNode>("Selector");
+            private set => SetProperty("Selector", value);
         }
 
-        public override void SetPosAction(PosActionNode value)
+        public PosActionNode PosAction
         {
-            if (posActionNode != null)
-            {
-                throw new Exception("El nodo de la accion posterior ya esta definido");
-            }
-            posActionNode = value;
+            get => GetProperty<PosActionNode>("PosAction");
+            private set => SetProperty("PosAction", value);
         }
 
-        public override void SetEffectDataNode(EffectDataNode value)
+        public EffectDataNode EffectData
         {
-            UnityEngine.Debug.Log("Paso");
-            if (effectDataNode != null)
-            {
-                throw new Exception("El nodo de la informacion del efecto ya esta denfinido");
-            }
-            effectDataNode = value;
+            get => GetProperty<EffectDataNode>("EffectData");
+            private set => SetProperty("EffectData", value);
         }
+
+        public void SetEffectData(EffectDataNode effectData) => EffectData = effectData;
+        public void SetPosAction(PosActionNode posAction) => PosAction = posAction;
+        public void SetSelector(SelectorNode selector) => Selector = selector;
 
         public override void Validate()
         {
-            UnityEngine.Debug.Log("Valida");
-            selectorNode?.Validate();
-            effectDataNode.Validate();
-            posActionNode?.Validate();
+            Selector?.Validate();
+            EffectData.Validate();
+            PosAction?.Validate();
         }
 
     }
