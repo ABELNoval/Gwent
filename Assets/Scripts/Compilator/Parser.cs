@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System;
-using System.Diagnostics;
-using Unity.VisualScripting;
 
 namespace Console
 {
@@ -17,6 +15,7 @@ namespace Console
         private Dictionary<TokenType, Action<ProgramNode>> onActValueTokenHandlers;
         private Dictionary<TokenType, Action<ProgramNode>> selectorTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> posActionTokenHandler;
+        private Dictionary<TokenType, Action<ProgramNode>> actionTokenHandler;
         public ProgramNode currretnNode;
 
         public Parser(List<Token> input)
@@ -37,6 +36,7 @@ namespace Console
             effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Name, HandleName},
+                {TokenType.Action, HandleAction}
             };
 
             onActValueTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
@@ -63,6 +63,13 @@ namespace Console
             {
                 {TokenType.Name, HandleName},
                 {TokenType.Selector, HandleSelector}
+            };
+
+            actionTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+                {TokenType.Identifier, HandleReflection},
+                {TokenType.Target, HandleReflection},
+                {TokenType.Context, HandleReflection}
             };
         }
 
@@ -297,6 +304,29 @@ namespace Console
             Expect(TokenType.Colon);
             node.SetPredicate(ParseString());
             Match(TokenType.Comma);
+        }
+
+        private void HandleAction(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Action");
+
+            Expect(TokenType.Colon);
+            Expect(TokenType.LeftParenthesis);
+            Expect(TokenType.Target);
+            Expect(TokenType.Comma);
+            Expect(TokenType.Context);
+            Expect(TokenType.RigthParenthesis);
+            Expect(TokenType.Arrow);
+
+            Expect(TokenType.LeftBrace);
+
+            node.SetAction(ParseNode(new ActionNode(), actionTokenHandler) as ActionNode);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleReflection(ProgramNode node)
+        {
+
         }
 
         #endregion

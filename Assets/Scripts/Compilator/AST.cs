@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Console
 {
     public interface ASTNode
     {
+        void Validate();
     }
 
     public class ProgramNode : ASTNode
@@ -24,7 +26,9 @@ namespace Console
         public virtual void SetSource(string value) { }
         public virtual void SetSingle(bool value) { }
         public virtual void SetPredicate(string value) { }
+        public virtual void SetAction(ActionNode value) { }
         public virtual void AddOnActValue(OnActValueNode value) { }
+        public virtual void AddParam(Type value) { }
 
         public virtual void Validate() { }
     }
@@ -113,12 +117,49 @@ namespace Console
     public class EffectNode : ProgramNode
     {
         public string name { get; private set; }
-        protected List<Type> parameters { get; private set; }
-        public void Action(List<Cards> targets, Context context) { }
+        public List<Type> parameters { get; private set; }
+        public ActionNode actionNode { get; set; }
+
+        public override void SetAction(ActionNode value)
+        {
+            if (actionNode != null)
+            {
+                throw new Exception("El nodo de acción ya está definido.");
+            }
+            actionNode = value;
+        }
+
+        public override void SetName(string value)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new Exception("El nombre ya esta definido");
+            }
+            name = value;
+        }
+
+        public override void AddParam(Type value)
+        {
+            parameters.Add(value);
+        }
 
         public override void Validate()
         {
-            base.Validate();
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new Exception("Falta el nombre de la carta.");
+            }
+            if (parameters.Count != 0)
+            {
+                foreach (Type param in parameters)
+                {
+                    if (param == null)
+                    {
+                        throw new Exception("Un parametro no esta definido");
+                    }
+                }
+            }
+            actionNode.Validate();
         }
 
     }
@@ -288,6 +329,17 @@ namespace Console
             selectorNode?.Validate();
             effectDataNode.Validate();
             posActionNode?.Validate();
+        }
+
+    }
+
+    public class ActionNode : ProgramNode
+    {
+
+
+        public override void Validate()
+        {
+            base.Validate();
         }
     }
 }

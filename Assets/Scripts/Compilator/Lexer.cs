@@ -127,6 +127,12 @@ namespace Console
                             Advance();
                             Advance();
                         }
+                        else if (Peek() == '>')
+                        {
+                            tokens.Add(new Token(TokenType.Arrow, "=>"));
+                            Advance();
+                            Advance();
+                        }
                         else
                         {
                             tokens.Add(new Token(TokenType.Assign, "="));
@@ -341,6 +347,10 @@ namespace Console
                     return new Token(TokenType.PosAction, identifier);
                 case "Action":
                     return new Token(TokenType.Action, identifier);
+                case "target":
+                    return new Token(TokenType.Target, identifier);
+                case "context":
+                    return new Token(TokenType.Context, identifier);
 
                 case "for":
                     return new Token(TokenType.for_Token, identifier);
