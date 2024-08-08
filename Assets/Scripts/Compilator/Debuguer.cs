@@ -8,14 +8,63 @@ public class Debuguer : MonoBehaviour
     {
         string input = @"
         card{
-            Name: ""Prueba1"",
+        Name: ""Prueba1"",
             Type: ""Oro"",
             Power: 10,
             Faction: ""Source"",
-            Range: [""Melee"", ""Siege""]
-        }";
+            Range: [""Melee"", ""Siege""],
+            OnActivation:
+            [
+                {
+            Effect:
+                {
+                Name: ""Draw"",
+                        Amount: 5
+                    },
+                    Selector:
+                {
+                Source: ""board"",
+                        Single: false,
+                        Predicate: ""(unit) => unit.Faction == Source"",
+                    },
+                    PosAction:
+                {
+                Name: ""ReturnRoDeck"",
+                        Selector:
+                    {
+                    Source: ""parent"",
+                            Single: false,
+                            Predicate: ""(unit) => unit.Power < 1""
+                        }
+                }
+            },
+                {
+            Effect: ""Kill""
+                }
+            ]
+        }
+        ";
 
-        Lexer lexer = new Lexer(input);
+        string input2 = @"
+            effect
+            {
+                Name: ""Damage"",
+                Params:
+                {
+                    amount: Number
+                },
+                Action: (targets, context) =>
+                {
+                    for target in targets
+                    {
+                        i = 1;
+                        while(i++ < amount)
+                            target.Power -= 1;
+                    };
+                }
+            }
+        ";
+        Lexer lexer = new Lexer(input2);
         List<Token> Tokens = lexer.Analyze();
 
         Debug.Log("------------Lexer-------------");
@@ -32,7 +81,14 @@ public class Debuguer : MonoBehaviour
 
         Debug.Log("------------Parser-------------");
 
-        Debug.Log($"Nombre: {cardNode.name} \n Tipo: {cardNode.type} \n Faccion: {cardNode.faction} \n Power: {cardNode.power} \n Range: [{cardNode.range[0]}, {cardNode.range[1]}]");
+        Debug.Log($@"
+             Nombre: {cardNode.name}
+             Tipo: {cardNode.type}
+             Faccion: {cardNode.faction}
+             Power: {cardNode.power}
+             Range: [{cardNode.range[0]}, {cardNode.range[1]}]
+             OnActivation: [{cardNode.onActivation.values[0].effectDataNode.name}], {cardNode.onActivation.values[1].effectDataNode.name}]"
+            );
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using Unity.VisualScripting;
 
 namespace Console
 {
@@ -12,7 +13,10 @@ namespace Console
         private Token currentToken;
         private Dictionary<TokenType, Action<ProgramNode>> cardTokenHandlers;
         private Dictionary<TokenType, Action<ProgramNode>> effectTokenHandlers;
-        private Dictionary<TokenType, Action<ProgramNode>> onActivationTokenHandlers;
+        private Dictionary<TokenType, Action<ProgramNode>> effectDataTokenHandlers;
+        private Dictionary<TokenType, Action<ProgramNode>> onActValueTokenHandlers;
+        private Dictionary<TokenType, Action<ProgramNode>> selectorTokenHandler;
+        private Dictionary<TokenType, Action<ProgramNode>> posActionTokenHandler;
         public ProgramNode currretnNode;
 
         public Parser(List<Token> input)
@@ -20,7 +24,8 @@ namespace Console
             this.input = input;
             position = 0;
             currentToken = input[position];
-            cardTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>(){
+            cardTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
                 {TokenType.Name, HandleName},
                 {TokenType.Type, HandleType},
                 {TokenType.Faction, HandleFaction},
@@ -29,13 +34,35 @@ namespace Console
                 {TokenType.OnActivation, HandleOnActivation}
             };
 
-            effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>(){
+            effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
                 {TokenType.Name, HandleName},
             };
 
-            onActivationTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
+            onActValueTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
+                {TokenType.Effect, HandleEffectData},
+                {TokenType.Selector, HandleSelector},
+                {TokenType.PosAction, HandlePosAction}
+            };
 
+            effectDataTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+                {TokenType.Name, HandleName},
+                {TokenType.Amount, HandlePower}
+            };
+
+            selectorTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+                {TokenType.Source, HandleSource},
+                {TokenType.Single, HandleSingle},
+                {TokenType.Predicate, HandlePredicate},
+            };
+
+            posActionTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+                {TokenType.Name, HandleName},
+                {TokenType.Selector, HandleSelector}
             };
         }
 
@@ -71,7 +98,7 @@ namespace Console
         {
             Expect(TokenType.LeftBrace);
 
-            while (Peek().type != TokenType.EndOfFile && Peek().type != TokenType.RightBrace)
+            while (currentToken.type != TokenType.EndOfFile && currentToken.type != TokenType.RightBrace)
             {
                 if (dic.TryGetValue(currentToken.type, out Action<ProgramNode> handler))
                 {
@@ -83,8 +110,9 @@ namespace Console
                     throw new Exception("Accion no valida");
                 }
             }
-
+            UnityEngine.Debug.Log("Fin");
             Expect(TokenType.RightBrace);
+
             node.Validate();
 
             return node;
@@ -117,6 +145,24 @@ namespace Console
             return value;
         }
 
+        private bool ParseBool()
+        {
+            if (currentToken.type != TokenType.Boolean)
+            {
+                throw new Exception($"Se esperraba un booleano, pero se encontro {currentToken.type}");
+            }
+            if (currentToken.value == "false")
+            {
+                Advance();
+                return false;
+            }
+            else
+            {
+                Advance();
+                return true;
+            }
+        }
+
         #endregion
 
 
@@ -124,38 +170,39 @@ namespace Console
 
         private void HandleName(ProgramNode node)
         {
+            UnityEngine.Debug.Log("Name");
             Expect(TokenType.Colon);
-            string value = ParseString();
-            node.SetName(value);
+            node.SetName(ParseString());
             Match(TokenType.Comma);
         }
 
         private void HandleType(ProgramNode node)
         {
+            UnityEngine.Debug.Log("Type");
             Expect(TokenType.Colon);
-            string value = ParseString();
-            node.SetType(value);
+            node.SetType(ParseString());
             Match(TokenType.Comma);
         }
 
         private void HandleFaction(ProgramNode node)
         {
+            UnityEngine.Debug.Log("Faction");
             Expect(TokenType.Colon);
-            string value = ParseString();
-            node.SetFaction(value);
+            node.SetFaction(ParseString());
             Match(TokenType.Comma);
         }
 
         private void HandlePower(ProgramNode node)
         {
+            UnityEngine.Debug.Log("Power");
             Expect(TokenType.Colon);
-            int value = ParseInt();
-            node.SetPower(value);
+            node.SetInt(ParseInt());
             Match(TokenType.Comma);
         }
 
         private void HandleRange(ProgramNode node)
         {
+            UnityEngine.Debug.Log("Range");
             Expect(TokenType.Colon);
             Expect(TokenType.LeftBracket);
 
@@ -170,10 +217,85 @@ namespace Console
 
         private void HandleOnActivation(ProgramNode node)
         {
+            UnityEngine.Debug.Log("OnActivation");
             Expect(TokenType.Colon);
             Expect(TokenType.LeftBracket);
-            ProgramNode onActivation = ParseNode(new OnActivationNode(), onActivationTokenHandlers);
-            node.SetOnActivation(onActivation as OnActivationNode);
+
+            OnActivationNode onActivationNode = new OnActivationNode();
+
+            while (currentToken.type != TokenType.RightBracket)
+            {
+                ProgramNode actValueNode = ParseNode(new OnActValueNode(), onActValueTokenHandlers);
+                onActivationNode.AddOnActValue(actValueNode as OnActValueNode);
+
+                Match(TokenType.Comma);
+            }
+
+            Expect(TokenType.RightBracket);
+            node.SetOnActivation(onActivationNode);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleEffectData(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("EffectData");
+            Expect(TokenType.Colon);
+            ProgramNode value = new();
+            EffectDataNode val = new();
+
+            if (currentToken.type == TokenType.String)
+            {
+                val.SetName(ParseString());
+                node.SetEffectDataNode(val);
+            }
+            else
+            {
+                value = ParseNode(new EffectDataNode(), effectDataTokenHandlers);
+                node.SetEffectDataNode(value as EffectDataNode);
+            }
+
+            Match(TokenType.Comma);
+        }
+
+        private void HandleSelector(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Selector");
+            Expect(TokenType.Colon);
+            ProgramNode value = ParseNode(new SelectorNode(), selectorTokenHandler);
+            node.SetSelector(value as SelectorNode);
+            Match(TokenType.Comma);
+        }
+
+        private void HandlePosAction(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("PosAction");
+            Expect(TokenType.Colon);
+            ProgramNode value = ParseNode(new PosActionNode(), posActionTokenHandler);
+            node.SetPosAction(value as PosActionNode);
+            Match(TokenType.Comma);
+        }
+
+        private void HandleSource(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Source");
+            Expect(TokenType.Colon);
+            node.SetSource(ParseString());
+            Match(TokenType.Comma);
+        }
+
+        private void HandleSingle(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Single");
+            Expect(TokenType.Colon);
+            node.SetSingle(ParseBool());
+            Match(TokenType.Comma);
+        }
+
+        private void HandlePredicate(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Predicate");
+            Expect(TokenType.Colon);
+            node.SetPredicate(ParseString());
             Match(TokenType.Comma);
         }
 

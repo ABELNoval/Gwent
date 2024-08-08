@@ -352,6 +352,10 @@ namespace Console
                     return new Token(TokenType.foreach_Token, identifier);
                 case "in":
                     return new Token(TokenType.in_Token, identifier);
+                case "false":
+                    return new Token(TokenType.Boolean, identifier);
+                case "true":
+                    return new Token(TokenType.Boolean, identifier);
 
                 default:
                     return new Token(TokenType.String, identifier);

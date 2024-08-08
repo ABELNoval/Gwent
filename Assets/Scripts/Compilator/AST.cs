@@ -1,5 +1,8 @@
+using System.Net.NetworkInformation;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using System.Diagnostics;
 
 namespace Console
 {
@@ -13,10 +16,16 @@ namespace Console
         public virtual void SetType(string value) { }
         public virtual void SetFaction(string value) { }
         public virtual void AddRange(string value) { }
-        public virtual void SetPower(int value) { }
+        public virtual void SetInt(int value) { }
         public virtual void SetOnActivation(OnActivationNode value) { }
-        public virtual void SetSelector(string value) { }
+        public virtual void SetSelector(SelectorNode value) { }
+        public virtual void SetPosAction(PosActionNode value) { }
+        public virtual void SetEffectDataNode(EffectDataNode value) { }
         public virtual void SetSource(string value) { }
+        public virtual void SetSingle(bool value) { }
+        public virtual void SetPredicate(string value) { }
+        public virtual void AddOnActValue(OnActValueNode value) { }
+
         public virtual void Validate() { }
     }
 
@@ -57,7 +66,7 @@ namespace Console
             this.faction = faction;
         }
 
-        public override void SetPower(int power)
+        public override void SetInt(int power)
         {
             if (this.power != 0)
             {
@@ -94,10 +103,10 @@ namespace Console
             {
                 throw new Exception("Falta la facción de la carta.");
             }
-            /*if (onActivation == null)
+            if (onActivation == null)
             {
                 throw new Exception("Falta el nodo de activación.");
-            }*/
+            }
         }
     }
 
@@ -107,22 +116,178 @@ namespace Console
         protected List<Type> parameters { get; private set; }
         public void Action(List<Cards> targets, Context context) { }
 
+        public override void Validate()
+        {
+            base.Validate();
+        }
+
     }
 
     public class OnActivationNode : ProgramNode
     {
-        public SelectorNode selector { get; set; }
-        public EffectNode effect { get; set; }
-        public PosActionNode posAction { get; set; }
+        public List<OnActValueNode> values { get; private set; }
+
+        public OnActivationNode()
+        {
+            values = new List<OnActValueNode>();
+        }
+
+        public override void AddOnActValue(OnActValueNode value)
+        {
+            values.Add(value);
+        }
+
+        public override void Validate()
+        {
+            foreach (OnActValueNode value in values)
+            {
+                value.Validate();
+            }
+        }
     }
 
     public class SelectorNode : ProgramNode
     {
+        public string source { get; private set; }
+        public bool single { get; private set; }
+        public string predicate { get; private set; }
 
+        public override void SetSource(string value)
+        {
+            if (source != null)
+            {
+                throw new Exception("El tipo ya está definido.");
+            }
+            source = value;
+        }
+
+        public override void SetSingle(bool value)
+        {
+            single = value;
+        }
+
+        public override void SetPredicate(string value)
+        {
+            if (predicate != null)
+            {
+                throw new Exception("El tipo ya está definido.");
+            }
+            predicate = value;
+        }
+
+        public override void Validate()
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                throw new Exception("Falta el source");
+            }
+            if (string.IsNullOrEmpty(predicate))
+            {
+                throw new Exception("Falta el predicado");
+            }
+        }
     }
 
     public class PosActionNode : ProgramNode
     {
+        public string name { get; set; }
+        public SelectorNode selectorNode { get; set; }
 
+        public override void SetName(string value)
+        {
+            if (name != null)
+            {
+                throw new Exception("El nombre ya esta definido");
+            }
+            name = value;
+        }
+
+        public override void SetSelector(SelectorNode value)
+        {
+            if (selectorNode != null)
+            {
+                throw new Exception("El nodo del seleccionador ya esta definido");
+            }
+            selectorNode = value;
+        }
+
+        public override void Validate()
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new Exception("Falta el nombre de la carta.");
+            }
+        }
+    }
+
+    public class EffectDataNode : ProgramNode
+    {
+        public string name { get; private set; }
+        public int amount { get; private set; }
+
+        public override void SetName(string value)
+        {
+            if (name != null)
+            {
+                throw new Exception("El nombre ya esta definido");
+            }
+            name = value;
+        }
+
+        public override void SetInt(int value)
+        {
+            amount = value;
+        }
+
+        public override void Validate()
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new Exception("Falta el nombre");
+            }
+        }
+    }
+
+    public class OnActValueNode : ProgramNode
+    {
+        public SelectorNode selectorNode { get; private set; }
+        public PosActionNode posActionNode { get; private set; }
+        public EffectDataNode effectDataNode { get; private set; }
+
+        public override void SetSelector(SelectorNode value)
+        {
+            if (selectorNode != null)
+            {
+                throw new Exception("El nodo del seleccionador ya esta definido");
+            }
+            selectorNode = value;
+        }
+
+        public override void SetPosAction(PosActionNode value)
+        {
+            if (posActionNode != null)
+            {
+                throw new Exception("El nodo de la accion posterior ya esta definido");
+            }
+            posActionNode = value;
+        }
+
+        public override void SetEffectDataNode(EffectDataNode value)
+        {
+            UnityEngine.Debug.Log("Paso");
+            if (effectDataNode != null)
+            {
+                throw new Exception("El nodo de la informacion del efecto ya esta denfinido");
+            }
+            effectDataNode = value;
+        }
+
+        public override void Validate()
+        {
+            UnityEngine.Debug.Log("Valida");
+            selectorNode?.Validate();
+            effectDataNode.Validate();
+            posActionNode?.Validate();
+        }
     }
 }
