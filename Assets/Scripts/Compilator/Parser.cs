@@ -252,7 +252,7 @@ namespace Console
             if (currentToken.type == TokenType.String)
             {
                 val.SetProperty("Name", ParseString());
-                node.SetProperty("EffetData", val);
+                node.SetProperty("EffectData", val);
             }
             else
             {
