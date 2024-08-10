@@ -1,9 +1,5 @@
-using System.Net.NetworkInformation;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Console
 {
@@ -142,9 +138,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<Type> Parameters
+        public ParameterNode Parameters
         {
-            get => GetProperty<List<Type>>("Parameters");
+            get => GetProperty<ParameterNode>("Parameters");
             set => SetProperty("Parameters", value);
         }
 
@@ -164,15 +160,9 @@ namespace Console
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            if (Parameters.Count > 0)
+            if (Parameters != null)
             {
-                foreach (var param in Parameters)
-                {
-                    if (param == null)
-                    {
-                        throw new Exception("No se definio un parametro correctamente");
-                    }
-                }
+                Parameters.Validate();
             }
             if (Action == null)
             {
@@ -244,6 +234,23 @@ namespace Console
         }
     }
 
+    public class ParameterNode : ProgramNode
+    {
+        public object amount
+        {
+            get => GetProperty<object>("Amount");
+            set => SetProperty("Amount", value);
+        }
+
+        public override void Validate()
+        {
+            if (amount == null)
+            {
+                throw new Exception("Falta el amount");
+            }
+        }
+    }
+
     public class PosActionNode : ProgramNode
     {
 
@@ -280,9 +287,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public int Amount
+        public object Amount
         {
-            get => GetProperty<int>("Amount");
+            get => GetProperty<object>("Amount");
             private set => SetProperty("Amount", value);
         }
 

@@ -18,6 +18,7 @@ namespace Console
         private Dictionary<TokenType, Action<ProgramNode>> selectorTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> posActionTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> actionTokenHandler;
+        private Dictionary<TokenType, Action<ProgramNode>> parametersTokenHandler;
         public ProgramNode currretnNode;
         private List<Token> expressions = new List<Token>();
 
@@ -40,6 +41,7 @@ namespace Console
             effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Name, HandleName},
+                {TokenType.Params, HandleParams},
                 {TokenType.Action, HandleAction}
             };
 
@@ -53,7 +55,7 @@ namespace Console
             effectDataTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Name, HandleName},
-                {TokenType.Amount, HandlePower}
+                {TokenType.Amount, HandleAmount}
             };
 
             selectorTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
@@ -74,6 +76,11 @@ namespace Console
                 {TokenType.Identifier, HandleReflection},
                 {TokenType.Target, HandleReflection},
                 {TokenType.Context, HandleReflection}
+            };
+
+            parametersTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
+            {
+                {TokenType.Amount, HandleAmount}
             };
         }
 
@@ -384,6 +391,38 @@ namespace Console
             UnityEngine.Debug.Log("Predicate");
             Expect(TokenType.Colon);
             node.SetProperty("Predicate", ParseString());
+            Match(TokenType.Comma);
+        }
+
+        private void HandleParams(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Params");
+            Expect(TokenType.Colon);
+            node.SetProperty("Params", ParseNode(new ParameterNode(), parametersTokenHandler));
+            Match(TokenType.Comma);
+        }
+
+        private void HandleAmount(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("Amount");
+            Expect(TokenType.Colon);
+            switch (currentToken.type)
+            {
+                case TokenType.String:
+                    node.SetProperty("Amount", ParseString());
+                    break;
+
+                case TokenType.Number:
+                    node.SetProperty("Amount", ParseInt());
+                    break;
+
+                case TokenType.Boolean:
+                    node.SetProperty("Amount", ParseBool());
+                    break;
+
+                default:
+                    throw new Exception("Tipo inesperado");
+            }
             Match(TokenType.Comma);
         }
 
