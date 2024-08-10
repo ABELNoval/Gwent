@@ -1,18 +1,17 @@
 
-
 using System;
 
 namespace Console
 {
     public class CompilationException : Exception
     {
-        public int line { get; private set; }
-        public string element { get; set; }
+        public int Line { get; private set; }
+        public string Element { get; set; }
 
         public CompilationException(string message, int line, string element) : base(message)
         {
-            this.line = line;
-            this.element = element;
+            Line = line;
+            Element = element;
         }
     }
 

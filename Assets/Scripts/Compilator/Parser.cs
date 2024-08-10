@@ -7,7 +7,9 @@ namespace Console
     {
         private List<Token> input;
         private int position;
+        private int expPosition;
         private int line;
+        private int cantOpenParenthesis;
         private Token currentToken;
         private Dictionary<TokenType, Action<ProgramNode>> cardTokenHandlers;
         private Dictionary<TokenType, Action<ProgramNode>> effectTokenHandlers;
@@ -17,11 +19,13 @@ namespace Console
         private Dictionary<TokenType, Action<ProgramNode>> posActionTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> actionTokenHandler;
         public ProgramNode currretnNode;
+        private List<Token> expressions = new List<Token>();
 
         public Parser(List<Token> input)
         {
             this.input = input;
             position = 0;
+            expPosition = 0;
             currentToken = input[position];
             cardTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
@@ -139,17 +143,15 @@ namespace Console
 
         private int ParseInt()
         {
-            if (currentToken.type != TokenType.Number)
+            while (currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.Comma)
             {
-                throw new Exception($"Se esperaba un número, pero se encontró {currentToken.type}");
-            }
-            if (!int.TryParse(currentToken.value, out int value))
-            {
-                throw new Exception($"Valor de número inválido: {currentToken.value}");
+                expressions.Add(currentToken);
+                Advance();
             }
 
-            Advance();
-            return value;
+            ExpressionNode result = ParseExpression();
+
+            return result.Evaluate();
         }
 
         private bool ParseBool()
@@ -167,6 +169,86 @@ namespace Console
             {
                 Advance();
                 return true;
+            }
+        }
+
+        private ExpressionNode ParseExpression()
+        {
+            ExpressionNode expression = ParseAddAndSubstractExpression();
+            if (cantOpenParenthesis > 0)
+            {
+                cantOpenParenthesis--;
+                expPosition++;
+            }
+            return expression;
+        }
+
+        private ExpressionNode ParseAddAndSubstractExpression()
+        {
+            var left = ParseMultyAndDivExpression();
+
+            while (expPosition < expressions.Count && (expressions[expPosition].type == TokenType.Plus || expressions[expPosition].type == TokenType.Minus))
+            {
+                Token operatorToken = expressions[expPosition];
+                expPosition++;
+
+                var rigth = ParseMultyAndDivExpression();
+                left = new BinaryExpressionNode(left, operatorToken, rigth);
+            }
+
+            return left;
+        }
+
+        private ExpressionNode ParseMultyAndDivExpression()
+        {
+            var left = ParseExponentExpression();
+
+            while (expPosition < expressions.Count && (expressions[expPosition].type == TokenType.Multiply || expressions[expPosition].type == TokenType.Divide))
+            {
+                Token operatorToken = expressions[expPosition];
+                expPosition++;
+
+                var rigth = ParseExponentExpression();
+                left = new BinaryExpressionNode(left, operatorToken, rigth);
+            }
+
+            return left;
+        }
+
+        private ExpressionNode ParseExponentExpression()
+        {
+            var left = ParsePrimaryExpression();
+
+            while (expPosition < expressions.Count && expressions[expPosition].type == TokenType.Exponent)
+            {
+                Token operatorToken = expressions[expPosition];
+                expPosition++;
+
+                var rigth = ParsePrimaryExpression();
+                left = new BinaryExpressionNode(left, operatorToken, rigth);
+            }
+
+            return left;
+        }
+
+        private ExpressionNode ParsePrimaryExpression()
+        {
+            if (expPosition < expressions.Count && expressions[expPosition].type == TokenType.LeftParenthesis)
+            {
+                expPosition++;
+                cantOpenParenthesis++;
+                return ParseExpression();
+            }
+            if (expPosition < expressions.Count && expressions[expPosition].type == TokenType.Number)
+            {
+                int.TryParse(expressions[expPosition].value, out int value);
+                expPosition++;
+                UnityEngine.Debug.Log(value);
+                return new NumberNode(value);
+            }
+            else
+            {
+                throw new Exception("Error");
             }
         }
 

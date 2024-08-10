@@ -10,7 +10,7 @@ namespace Console
         for_Token, while_Token, foreach_Token, if_Token, in_Token,
 
         // Operators (Operadores)
-        Plus, Minus, Multiply, Divide, Assign, Equals, NotEquals, LessThan, GreaterThan, LessThanOrEqual,
+        Plus, Minus, Multiply, Divide, Exponent, Assign, Equals, NotEquals, LessThan, GreaterThan, LessThanOrEqual,
         GreaterThanOrEqual, LogicalAnd, LogicalOr, Not, Dot, Increment, Decrement, Arrow,
 
         // Punctuation (Puntuacion)

@@ -10,7 +10,7 @@ public class Debuguer : MonoBehaviour
         card{
         Name: ""Prueba1"",
             Type: ""Oro"",
-            Power: 10,
+            Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
             Faction: ""Source"",
             Range: [""Melee"", ""Siege""],
             OnActivation:
@@ -45,7 +45,7 @@ public class Debuguer : MonoBehaviour
         }
         ";
 
-        string input2 = @"
+        /*string input2 = @"
             effect
             {
                 Name: ""Damage"",
@@ -63,7 +63,7 @@ public class Debuguer : MonoBehaviour
                     };
                 }
             }
-        ";
+        ";*/
         Lexer lexer = new Lexer(input);
         List<Token> Tokens = lexer.Analyze();
 

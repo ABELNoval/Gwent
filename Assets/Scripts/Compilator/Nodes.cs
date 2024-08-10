@@ -7,12 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Console
 {
-    public interface ASTNode
-    {
-        void Validate();
-    }
-
-    public class ProgramNode : ASTNode
+    public class ProgramNode
     {
         public Dictionary<string, object> properties = new Dictionary<string, object>();
 

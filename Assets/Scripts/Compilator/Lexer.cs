@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 
 namespace Console
@@ -97,6 +96,10 @@ namespace Console
                         break;
                     case '*':
                         tokens.Add(new Token(TokenType.Multiply, "*"));
+                        Advance();
+                        break;
+                    case '^':
+                        tokens.Add(new Token(TokenType.Exponent, "^"));
                         Advance();
                         break;
                     case '/':
