@@ -74,8 +74,8 @@ namespace Console
             actionTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Identifier, HandleReflection},
-                {TokenType.Target, HandleReflection},
-                {TokenType.Context, HandleReflection}
+                {TokenType.for_Token, HandleFor},
+                {TokenType.while_Token, HandleWhile}
             };
 
             parametersTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
@@ -438,10 +438,23 @@ namespace Console
             Expect(TokenType.RigthParenthesis);
             Expect(TokenType.Arrow);
 
-            Expect(TokenType.LeftBrace);
-
-            //node.SetAction(ParseNode(new ActionNode(), actionTokenHandler) as ActionNode);
+            node.SetProperty("Action", ParseNode(new ActionNode(), actionTokenHandler));
             Match(TokenType.Comma);
+        }
+
+        private void HandleWhile(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("While");
+            Expect(TokenType.LeftParenthesis);
+
+            
+
+            Expect(TokenType.RigthParenthesis);
+        }
+
+        private void HandleFor(ProgramNode node)
+        {
+            UnityEngine.Debug.Log("For");
         }
 
         private void HandleReflection(ProgramNode node)
