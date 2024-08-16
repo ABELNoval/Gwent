@@ -45,7 +45,7 @@ public class Debuguer : MonoBehaviour
         }
         ";
 
-        /*string input2 = @"
+        string input2 = @"
             effect
             {
                 Name: ""Damage"",
@@ -63,7 +63,7 @@ public class Debuguer : MonoBehaviour
                     };
                 }
             }
-        ";*/
+        ";
         Lexer lexer = new Lexer(input);
         List<Token> Tokens = lexer.Analyze();
 

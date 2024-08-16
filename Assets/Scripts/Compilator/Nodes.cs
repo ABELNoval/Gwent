@@ -1,3 +1,6 @@
+using System.Runtime.InteropServices;
+using System.Globalization;
+using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
 
@@ -63,33 +66,33 @@ namespace Console
     public class CardNode : ProgramNode
     {
 
-        public string Name
+        public ExpressionNode Name
         {
-            get => GetProperty<string>("Name");
+            get => GetProperty<ExpressionNode>("Name");
             private set => SetProperty("Name", value);
         }
 
-        public string Type
+        public ExpressionNode Type
         {
-            get => GetProperty<string>("Type");
+            get => GetProperty<ExpressionNode>("Type");
             private set => SetProperty("Type", value);
         }
 
-        public string Faction
+        public ExpressionNode Faction
         {
-            get => GetProperty<string>("Faction");
+            get => GetProperty<ExpressionNode>("Faction");
             private set => SetProperty("Faction", value);
         }
 
-        public List<string> Range
+        public List<ExpressionNode> Range
         {
-            get => GetProperty<List<string>>("Range");
+            get => GetProperty<List<ExpressionNode>>("Range");
             private set => SetProperty("Range", value);
         }
 
-        public int Power
+        public ExpressionNode Power
         {
-            get => GetProperty<int>("Power");
+            get => GetProperty<ExpressionNode>("Power");
             private set => SetProperty("Power", value);
         }
 
@@ -100,25 +103,25 @@ namespace Console
         }
 
 
-        public void SetName(string name) => Name = name;
-        public void SetType(string type) => Type = type;
-        public void SetFaction(string faction) => Faction = faction;
-        public void SetPower(int power) => Power = power;
-        public void AddRange(string range) => AddProperty("Range", range);
+        public void SetName(ExpressionNode name) => Name = name;
+        public void SetType(ExpressionNode type) => Type = type;
+        public void SetFaction(ExpressionNode faction) => Faction = faction;
+        public void SetPower(ExpressionNode power) => Power = power;
+        public void AddRange(ExpressionNode range) => AddProperty("Range", range);
         public void SetOnActivation(OnActivationNode onActivation) => OnActivation = onActivation;
 
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (Name == null)
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            if (string.IsNullOrEmpty(Type))
+            if (Type == null)
             {
                 throw new Exception("Falta el tipo de carta.");
             }
-            if (string.IsNullOrEmpty(Faction))
+            if (Faction == null)
             {
                 throw new Exception("Falta la facción de la carta.");
             }
@@ -132,9 +135,9 @@ namespace Console
     public class EffectNode : ProgramNode
     {
 
-        public string Name
+        public ExpressionNode Name
         {
-            get => GetProperty<string>("Name");
+            get => GetProperty<ExpressionNode>("Name");
             private set => SetProperty("Name", value);
         }
 
@@ -150,20 +153,17 @@ namespace Console
             set => SetProperty("Action", value);
         }
 
-        public void SetName(string name) => Name = name;
+        public void SetName(ExpressionNode name) => Name = name;
         public void AddParam(Type param) => AddProperty("Parameters", param);
         public void SetAction(ActionNode actionNode) => Action = actionNode;
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (Name == null)
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            if (Parameters != null)
-            {
-                Parameters.Validate();
-            }
+            Parameters?.Validate();
             if (Action == null)
             {
                 throw new Exception("Falta el nodo de acción");
@@ -184,7 +184,7 @@ namespace Console
             private set => SetProperty("OnActValues", value);
         }
 
-        private void AddOnActValue(OnActValueNode onActValue) => AddProperty("OnActValues", onActValue);
+        public void AddOnActValue(OnActValueNode onActValue) => AddProperty("OnActValues", onActValue);
 
         public override void Validate()
         {
@@ -198,32 +198,32 @@ namespace Console
     public class SelectorNode : ProgramNode
     {
 
-        public string Source
+        public ExpressionNode Source
         {
-            get => GetProperty<string>("Source");
+            get => GetProperty<ExpressionNode>("Source");
             private set => SetProperty("Source", value);
         }
 
-        public bool Single
+        public ExpressionNode Single
         {
-            get => GetProperty<bool>("Single");
+            get => GetProperty<ExpressionNode>("Single");
             private set => SetProperty("Single", value);
         }
 
-        public string Predicate
+        public ExpressionNode Predicate
         {
-            get => GetProperty<string>("Predicate");
+            get => GetProperty<ExpressionNode>("Predicate");
             private set => SetProperty("Predicate", value);
         }
 
-        public void SetSource(string source) => Source = source;
-        public void SetSingle(bool single) => Single = single;
-        public void SetPredicate(string predicate) => Predicate = predicate;
+        public void SetSource(ExpressionNode source) => Source = source;
+        public void SetSingle(ExpressionNode single) => Single = single;
+        public void SetPredicate(ExpressionNode predicate) => Predicate = predicate;
 
         public override void Validate()
         {
             UnityEngine.Debug.Log("Valida");
-            if (string.IsNullOrEmpty(Source))
+            if (Source == null)
             {
                 throw new Exception("Falta el source");
             }
@@ -236,9 +236,9 @@ namespace Console
 
     public class ParameterNode : ProgramNode
     {
-        public object amount
+        public ExpressionNode amount
         {
-            get => GetProperty<object>("Amount");
+            get => GetProperty<ExpressionNode>("Amount");
             set => SetProperty("Amount", value);
         }
 
@@ -254,9 +254,9 @@ namespace Console
     public class PosActionNode : ProgramNode
     {
 
-        public string Name
+        public ExpressionNode Name
         {
-            get => GetProperty<string>("Name");
+            get => GetProperty<ExpressionNode>("Name");
             private set => SetProperty("Name", value);
         }
         public SelectorNode Selector
@@ -265,12 +265,12 @@ namespace Console
             private set => SetProperty("Selector", value);
         }
 
-        public void SetName(string name) => Name = name;
+        public void SetName(ExpressionNode name) => Name = name;
         public void SetSelector(SelectorNode selector) => Selector = selector;
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (Name == null)
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
@@ -281,21 +281,21 @@ namespace Console
     public class EffectDataNode : ProgramNode
     {
 
-        public string Name
+        public ExpressionNode Name
         {
-            get => GetProperty<string>("Name");
+            get => GetProperty<ExpressionNode>("Name");
             private set => SetProperty("Name", value);
         }
 
-        public object Amount
+        public ExpressionNode Amount
         {
-            get => GetProperty<object>("Amount");
+            get => GetProperty<ExpressionNode>("Amount");
             private set => SetProperty("Amount", value);
         }
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (Name == null)
             {
                 throw new Exception("Falta el nombre");
             }
@@ -337,11 +337,20 @@ namespace Console
 
     public class ActionNode : ProgramNode
     {
+        List<ExpressionNode> expressions { get; }
 
+        public ActionNode(List<ExpressionNode> expressions)
+        {
+            this.expressions = expressions;
+        }
 
         public override void Validate()
         {
-            base.Validate();
+            if (expressions.Count == 0)
+            {
+                throw new Exception("Faltan las expresiones");
+            }
         }
     }
+
 }

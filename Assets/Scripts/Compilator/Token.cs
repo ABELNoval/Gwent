@@ -14,7 +14,7 @@ namespace Console
         GreaterThanOrEqual, LogicalAnd, LogicalOr, Not, Dot, Increment, Decrement, Arrow,
 
         // Punctuation (Puntuacion)
-        LeftParenthesis, RigthParenthesis, LeftBrace, RightBrace, LeftBracket, RightBracket, Comma, Semicolon, Colon,
+        LeftParenthesis, RightParenthesis, LeftBrace, RightBrace, LeftBracket, RightBracket, Comma, Semicolon, Colon,
         Quote,
 
         // Literals (Literales)

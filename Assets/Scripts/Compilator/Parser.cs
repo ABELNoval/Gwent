@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Collections.Generic;
 using System;
 
@@ -17,10 +18,9 @@ namespace Console
         private Dictionary<TokenType, Action<ProgramNode>> onActValueTokenHandlers;
         private Dictionary<TokenType, Action<ProgramNode>> selectorTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> posActionTokenHandler;
-        private Dictionary<TokenType, Action<ProgramNode>> actionTokenHandler;
         private Dictionary<TokenType, Action<ProgramNode>> parametersTokenHandler;
         public ProgramNode currretnNode;
-        private List<Token> expressions = new List<Token>();
+        private List<Token> expression;
 
         public Parser(List<Token> input)
         {
@@ -69,13 +69,6 @@ namespace Console
             {
                 {TokenType.Name, HandleName},
                 {TokenType.Selector, HandleSelector}
-            };
-
-            actionTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
-            {
-                {TokenType.Identifier, HandleReflection},
-                {TokenType.for_Token, HandleFor},
-                {TokenType.while_Token, HandleWhile}
             };
 
             parametersTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
@@ -136,71 +129,85 @@ namespace Console
             return node;
         }
 
-        private string ParseString()
-        {
-            if (currentToken.type != TokenType.String)
-            {
-                throw new Exception($"Se esperaba un texto, pero se encontró {currentToken.type}");
-            }
-
-            string value = currentToken.value;
-            Advance();
-            return value;
-        }
-
-        private int ParseInt()
-        {
-            while (currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.Comma)
-            {
-                expressions.Add(currentToken);
-                Advance();
-            }
-
-            ExpressionNode result = ParseExpression();
-
-            return result.Evaluate();
-        }
-
-        private bool ParseBool()
-        {
-            if (currentToken.type != TokenType.Boolean)
-            {
-                throw new Exception($"Se esperraba un booleano, pero se encontro {currentToken.type}");
-            }
-            if (currentToken.value == "false")
-            {
-                Advance();
-                return false;
-            }
-            else
-            {
-                Advance();
-                return true;
-            }
-        }
-
         private ExpressionNode ParseExpression()
         {
-            ExpressionNode expression = ParseAddAndSubstractExpression();
-            if (cantOpenParenthesis > 0)
+            if (Match(TokenType.while_Token))
             {
-                cantOpenParenthesis--;
-                expPosition++;
+                return ParseWhile();
             }
-            return expression;
+            if (Match(TokenType.for_Token))
+            {
+                return ParseFor();
+            }
+            return ParseAssignment();
+        }
+
+        private ExpressionNode ParseAssignment()
+        {
+            var left = ParseConditions();
+            while (expression[expPosition].type == TokenType.Assign)
+            {
+                if (left is not IdentifierNode)
+                {
+                    throw new Exception("El lado izquierdo de una asignación debe ser un identificador.");
+                }
+                expPosition++;
+
+                var right = ParseConditions();
+                left = new AssignamentNode((left as IdentifierNode).value, right);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseConditions()
+        {
+            var left = ParseConditional();
+
+            while (expression[expPosition].type == TokenType.LogicalOr || expression[expPosition].type == TokenType.LogicalAnd)
+            {
+                Token operatorToken = expression[expPosition];
+                expPosition++;
+
+                var right = ParseConditional();
+                left = new BinaryExpressionNode(left, operatorToken, right);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseConditional()
+        {
+            var left = ParseAddAndSubstractExpression();
+
+            while (
+                expression[expPosition].type == TokenType.Equals ||
+                expression[expPosition].type == TokenType.NotEquals ||
+                expression[expPosition].type == TokenType.LessThanOrEqual ||
+                expression[expPosition].type == TokenType.GreaterThanOrEqual ||
+                expression[expPosition].type == TokenType.LessThan ||
+                expression[expPosition].type == TokenType.GreaterThan
+            )
+            {
+                Token operatorType = expression[expPosition];
+                expPosition++;
+
+                var right = ParseAddAndSubstractExpression();
+                left = new BinaryExpressionNode(left, operatorType, right);
+            }
+
+            return left;
         }
 
         private ExpressionNode ParseAddAndSubstractExpression()
         {
             var left = ParseMultyAndDivExpression();
 
-            while (expPosition < expressions.Count && (expressions[expPosition].type == TokenType.Plus || expressions[expPosition].type == TokenType.Minus))
+            while (expPosition < expression.Count && (expression[expPosition].type == TokenType.Plus || expression[expPosition].type == TokenType.Minus))
             {
-                Token operatorToken = expressions[expPosition];
+                Token operatorToken = expression[expPosition];
                 expPosition++;
 
-                var rigth = ParseMultyAndDivExpression();
-                left = new BinaryExpressionNode(left, operatorToken, rigth);
+                var right = ParseMultyAndDivExpression();
+                left = new BinaryExpressionNode(left, operatorToken, right);
             }
 
             return left;
@@ -210,13 +217,13 @@ namespace Console
         {
             var left = ParseExponentExpression();
 
-            while (expPosition < expressions.Count && (expressions[expPosition].type == TokenType.Multiply || expressions[expPosition].type == TokenType.Divide))
+            while (expPosition < expression.Count && (expression[expPosition].type == TokenType.Multiply || expression[expPosition].type == TokenType.Divide))
             {
-                Token operatorToken = expressions[expPosition];
+                Token operatorToken = expression[expPosition];
                 expPosition++;
 
-                var rigth = ParseExponentExpression();
-                left = new BinaryExpressionNode(left, operatorToken, rigth);
+                var right = ParseExponentExpression();
+                left = new BinaryExpressionNode(left, operatorToken, right);
             }
 
             return left;
@@ -226,13 +233,13 @@ namespace Console
         {
             var left = ParsePrimaryExpression();
 
-            while (expPosition < expressions.Count && expressions[expPosition].type == TokenType.Exponent)
+            while (expPosition < expression.Count && expression[expPosition].type == TokenType.Exponent)
             {
-                Token operatorToken = expressions[expPosition];
+                Token operatorToken = expression[expPosition];
                 expPosition++;
 
-                var rigth = ParsePrimaryExpression();
-                left = new BinaryExpressionNode(left, operatorToken, rigth);
+                var right = ParsePrimaryExpression();
+                left = new BinaryExpressionNode(left, operatorToken, right);
             }
 
             return left;
@@ -240,23 +247,151 @@ namespace Console
 
         private ExpressionNode ParsePrimaryExpression()
         {
-            if (expPosition < expressions.Count && expressions[expPosition].type == TokenType.LeftParenthesis)
+            if (expPosition < expression.Count)
             {
-                expPosition++;
-                cantOpenParenthesis++;
-                return ParseExpression();
-            }
-            if (expPosition < expressions.Count && expressions[expPosition].type == TokenType.Number)
-            {
-                int.TryParse(expressions[expPosition].value, out int value);
-                expPosition++;
-                UnityEngine.Debug.Log(value);
-                return new NumberNode(value);
+                Token current = expression[expPosition];
+                switch (current.type)
+                {
+                    case TokenType.Number:
+                        return new LiteralNode(int.Parse(expression[expPosition].value));
+
+                    case TokenType.Identifier:
+                        return ParseIdentifier();
+
+                    case TokenType.LeftParenthesis:
+                        expPosition++;
+                        ExpressionNode exp = ParseExpression();
+                        Expect(TokenType.RightParenthesis);
+                        return exp;
+
+                    case TokenType.Boolean:
+                        return ParseBoolean();
+
+                    case TokenType.String:
+                        return ParseString();
+
+                    default:
+                        throw new Exception("Token indefinido");
+                }
             }
             else
             {
-                throw new Exception("Error");
+                throw new Exception("");
             }
+        }
+
+        private ExpressionNode ParseBoolean()
+        {
+            if (expression[expPosition].type != TokenType.Boolean)
+            {
+                throw new Exception($"Se esperraba un booleano, pero se encontro {currentToken.type}");
+            }
+            return new LiteralNode(expression[expPosition].value == "true");
+        }
+
+        private ExpressionNode ParseString()
+        {
+            if (expression[expPosition].type != TokenType.String)
+            {
+                throw new Exception($"Se esperaba un texto, pero se encontró {currentToken.type}");
+            }
+
+            string value = expression[expPosition].value;
+            expPosition++;
+            return new LiteralNode(value);
+        }
+
+        private ExpressionNode ParseIdentifier()
+        {
+            IdentifierNode node = new(expression[expPosition].value);
+            expPosition++;
+            if (expression[expPosition].type == TokenType.Dot)
+            {
+
+            }
+            //node.AddProperty();
+
+            return node;
+        }
+
+        private ExpressionNode ParseMethodInvocation()
+        {
+            return null;
+        }
+
+        private ExpressionNode ParseIncrementDecrement()
+        {
+            return null;
+        }
+
+        private bool IsLogicalOperator(TokenType value)
+        {
+            return value == TokenType.LogicalAnd || value == TokenType.LogicalOr;
+        }
+
+        private bool IsComparisonOperator(TokenType type)
+        {
+            return type == TokenType.LessThan ||
+            type == TokenType.GreaterThan ||
+            type == TokenType.Equals ||
+            type == TokenType.NotEquals ||
+            type == TokenType.LessThanOrEqual ||
+            type == TokenType.GreaterThanOrEqual;
+        }
+
+        private void GenerateExpression()
+        {
+            expression = new List<Token>();
+
+            while (!Match(TokenType.Comma) && !Match(TokenType.Semicolon) && currentToken.type != TokenType.RightBrace)
+            {
+                expression.Add(currentToken);
+                Advance();
+            }
+        }
+
+        private ExpressionNode ParseWhile()
+        {
+            List<ExpressionNode> body = new();
+            Expect(TokenType.LeftParenthesis);
+            var condition = ParseExpression();
+            Expect(TokenType.RightParenthesis);
+            if (!Match(TokenType.LeftBrace))
+            {
+                body.Add(ParseExpression());
+            }
+            else
+            {
+                while (!Match(TokenType.RightBrace))
+                {
+                    body.Add(ParseExpression());
+                    Expect(TokenType.Semicolon);
+                }
+            }
+            Expect(TokenType.Semicolon);
+            return new WhileNode(condition, body);
+        }
+
+        private ExpressionNode ParseFor()
+        {
+            List<ExpressionNode> body = new();
+            Expect(TokenType.Identifier);
+            Expect(TokenType.in_Token);
+            Expect(TokenType.Target);
+            if (!Match(TokenType.LeftBrace))
+            {
+                body.Add(ParseExpression());
+            }
+            else
+            {
+                while (!Match(TokenType.RightBrace))
+                {
+                    body.Add(ParseExpression());
+                    Expect(TokenType.Semicolon);
+                }
+            }
+            Expect(TokenType.Semicolon);
+            return new ForNode(body);
         }
 
         #endregion
@@ -268,7 +403,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Name");
             Expect(TokenType.Colon);
-            node.SetProperty("Name", ParseString());
+            GenerateExpression();
+            node.SetProperty("Name", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -276,7 +412,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Type");
             Expect(TokenType.Colon);
-            node.SetProperty("Type", ParseString());
+            GenerateExpression();
+            node.SetProperty("Type", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -284,7 +421,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Faction");
             Expect(TokenType.Colon);
-            node.SetProperty("Faction", ParseString());
+            GenerateExpression();
+            node.SetProperty("Faction", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -292,7 +430,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Power");
             Expect(TokenType.Colon);
-            node.SetProperty("Power", ParseInt());
+            GenerateExpression();
+            node.SetProperty("Power", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -304,8 +443,8 @@ namespace Console
 
             while (!Match(TokenType.RightBracket))
             {
-                node.AddProperty("Range", ParseString());
-                Match(TokenType.Comma);
+                GenerateExpression();
+                node.AddProperty("Range", ParseExpression());
             }
 
             Match(TokenType.Comma);
@@ -340,7 +479,8 @@ namespace Console
 
             if (currentToken.type == TokenType.String)
             {
-                val.SetProperty("Name", ParseString());
+                GenerateExpression();
+                val.SetProperty("Name", ParseExpression());
                 node.SetProperty("EffectData", val);
             }
             else
@@ -374,7 +514,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Source");
             Expect(TokenType.Colon);
-            node.SetProperty("Source", ParseString());
+            GenerateExpression();
+            node.SetProperty("Source", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -382,7 +523,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Single");
             Expect(TokenType.Colon);
-            node.SetProperty("Single", ParseBool());
+            GenerateExpression();
+            node.SetProperty("Single", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -390,7 +532,8 @@ namespace Console
         {
             UnityEngine.Debug.Log("Predicate");
             Expect(TokenType.Colon);
-            node.SetProperty("Predicate", ParseString());
+            GenerateExpression();
+            node.SetProperty("Predicate", ParseExpression());
             Match(TokenType.Comma);
         }
 
@@ -406,22 +549,11 @@ namespace Console
         {
             UnityEngine.Debug.Log("Amount");
             Expect(TokenType.Colon);
-            switch (currentToken.type)
+            GenerateExpression();
+            while (currentToken.type != TokenType.RightBrace)
             {
-                case TokenType.String:
-                    node.SetProperty("Amount", ParseString());
-                    break;
-
-                case TokenType.Number:
-                    node.SetProperty("Amount", ParseInt());
-                    break;
-
-                case TokenType.Boolean:
-                    node.SetProperty("Amount", ParseBool());
-                    break;
-
-                default:
-                    throw new Exception("Tipo inesperado");
+                Advance();
+                node.AddProperty("Amount", ParseExpression());
             }
             Match(TokenType.Comma);
         }
@@ -435,31 +567,18 @@ namespace Console
             Expect(TokenType.Target);
             Expect(TokenType.Comma);
             Expect(TokenType.Context);
-            Expect(TokenType.RigthParenthesis);
+            Expect(TokenType.RightParenthesis);
             Expect(TokenType.Arrow);
+            Expect(TokenType.LeftBrace);
 
-            node.SetProperty("Action", ParseNode(new ActionNode(), actionTokenHandler));
+            List<ExpressionNode> expressions = new();
+            while (currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.EndOfFile)
+            {
+                expressions.Add(ParseExpression());
+            }
+
+            node.SetProperty("Action", new ActionNode(expressions));
             Match(TokenType.Comma);
-        }
-
-        private void HandleWhile(ProgramNode node)
-        {
-            UnityEngine.Debug.Log("While");
-            Expect(TokenType.LeftParenthesis);
-
-            
-
-            Expect(TokenType.RigthParenthesis);
-        }
-
-        private void HandleFor(ProgramNode node)
-        {
-            UnityEngine.Debug.Log("For");
-        }
-
-        private void HandleReflection(ProgramNode node)
-        {
-
         }
 
         #endregion

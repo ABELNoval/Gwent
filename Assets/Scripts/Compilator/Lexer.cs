@@ -39,7 +39,7 @@ namespace Console
                         Advance();
                         break;
                     case ')':
-                        tokens.Add(new Token(TokenType.RigthParenthesis, ")"));
+                        tokens.Add(new Token(TokenType.RightParenthesis, ")"));
                         Advance();
                         break;
                     case '[':
