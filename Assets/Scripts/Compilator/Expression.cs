@@ -6,7 +6,7 @@ namespace Console
 
     public abstract class ExpressionNode
     {
-        public abstract object Evaluate();
+        public abstract object Evaluate(Context context, List<Cards> target);
     }
 
     public class BinaryExpressionNode : ExpressionNode
@@ -22,21 +22,21 @@ namespace Console
             this.right = right;
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
             return Operator.type switch
             {
-                TokenType.Plus => (int)left.Evaluate() + (int)right.Evaluate(),
-                TokenType.Minus => (int)left.Evaluate() - (int)right.Evaluate(),
-                TokenType.Multiply => (int)left.Evaluate() * (int)right.Evaluate(),
-                TokenType.Divide => (int)left.Evaluate() / (int)right.Evaluate(),
-                TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(), (int)right.Evaluate()),
-                TokenType.Equals => (bool)left.Evaluate() == (bool)right.Evaluate(),
-                TokenType.NotEquals => (bool)left.Evaluate() != (bool)right.Evaluate(),
-                TokenType.LessThan => (int)left.Evaluate() < (int)right.Evaluate(),
-                TokenType.GreaterThan => (int)left.Evaluate() > (int)right.Evaluate(),
-                TokenType.LessThanOrEqual => (int)left.Evaluate() <= (int)right.Evaluate(),
-                TokenType.GreaterThanOrEqual => (int)left.Evaluate() >= (int)right.Evaluate(),
+                TokenType.Plus => (int)left.Evaluate(context, target) + (int)right.Evaluate(context, target),
+                TokenType.Minus => (int)left.Evaluate(context, target) - (int)right.Evaluate(context, target),
+                TokenType.Multiply => (int)left.Evaluate(context, target) * (int)right.Evaluate(context, target),
+                TokenType.Divide => (int)left.Evaluate(context, target) / (int)right.Evaluate(context, target),
+                TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(context, target), (int)right.Evaluate(context, target)),
+                TokenType.Equals => (bool)left.Evaluate(context, target) == (bool)right.Evaluate(context, target),
+                TokenType.NotEquals => (bool)left.Evaluate(context, target) != (bool)right.Evaluate(context, target),
+                TokenType.LessThan => (int)left.Evaluate(context, target) < (int)right.Evaluate(context, target),
+                TokenType.GreaterThan => (int)left.Evaluate(context, target) > (int)right.Evaluate(context, target),
+                TokenType.LessThanOrEqual => (int)left.Evaluate(context, target) <= (int)right.Evaluate(context, target),
+                TokenType.GreaterThanOrEqual => (int)left.Evaluate(context, target) >= (int)right.Evaluate(context, target),
 
                 _ => throw new Exception("Operador no valido"),
             };
@@ -53,7 +53,7 @@ namespace Console
             this.value = value;
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
             return value;
         }
@@ -68,11 +68,11 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
             foreach (var expression in body)
             {
-                return expression.Evaluate();
+                return expression.Evaluate(context, target);
             }
             return null;
         }
@@ -89,11 +89,11 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
             foreach (var expression in body)
             {
-                return expression.Evaluate();
+                return expression.Evaluate(context, target);
             }
             return null;
         }
@@ -114,7 +114,7 @@ namespace Console
             properties.Add(expression);
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
             throw new NotImplementedException();
         }
@@ -124,18 +124,64 @@ namespace Console
     public class AssignamentNode : ExpressionNode
     {
         public string identifier { get; }
-        public ExpressionNode value { get; }
+        public ExpressionNode value { get; private set; }
 
-        public AssignamentNode(string identifier, ExpressionNode value)
+        public AssignamentNode(string identifier)
         {
             this.identifier = identifier;
+        }
+
+        public void SetValue(ExpressionNode value)
+        {
             this.value = value;
         }
 
-        public override object Evaluate()
+        public override object Evaluate(Context context, List<Cards> target)
         {
-            return value.Evaluate();
+            return value.Evaluate(context, target);
         }
 
+    }
+
+    public class MethodAccessNode : ExpressionNode
+    {
+        public string identifier { get; }
+        public List<ExpressionNode> parameters { get; }
+
+        public MethodAccessNode(string identifier)
+        {
+            this.identifier = identifier;
+        }
+
+        public void AddParameter(ExpressionNode parameter)
+        {
+            parameters.Add(parameter);
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ListNode : ExpressionNode
+    {
+        public string identifier { get; }
+        public List<ExpressionNode> members { get; }
+
+        public ListNode(string identifier)
+        {
+            this.identifier = identifier;
+        }
+
+        public void AddMember(ExpressionNode member)
+        {
+            members.Add(member);
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

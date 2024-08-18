@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System;
+using Unity.Properties;
 
 namespace Console
 {
@@ -83,9 +84,6 @@ namespace Console
         public ProgramNode Parse()
         {
             ProgramNode aSTNode = ParseNode();
-
-            // TODO: Implementar semantico
-
             return aSTNode;
         }
 
@@ -139,31 +137,13 @@ namespace Console
             {
                 return ParseFor();
             }
-            return ParseAssignment();
-        }
-
-        private ExpressionNode ParseAssignment()
-        {
-            var left = ParseConditions();
-            while (expression[expPosition].type == TokenType.Assign)
-            {
-                if (left is not IdentifierNode)
-                {
-                    throw new Exception("El lado izquierdo de una asignación debe ser un identificador.");
-                }
-                expPosition++;
-
-                var right = ParseConditions();
-                left = new AssignamentNode((left as IdentifierNode).value, right);
-            }
-            return left;
+            return ParseConditions();
         }
 
         private ExpressionNode ParseConditions()
         {
             var left = ParseConditional();
-
-            while (expression[expPosition].type == TokenType.LogicalOr || expression[expPosition].type == TokenType.LogicalAnd)
+            while (IsLogicalOperator(expression[expPosition].type))
             {
                 Token operatorToken = expression[expPosition];
                 expPosition++;
@@ -177,15 +157,7 @@ namespace Console
         private ExpressionNode ParseConditional()
         {
             var left = ParseAddAndSubstractExpression();
-
-            while (
-                expression[expPosition].type == TokenType.Equals ||
-                expression[expPosition].type == TokenType.NotEquals ||
-                expression[expPosition].type == TokenType.LessThanOrEqual ||
-                expression[expPosition].type == TokenType.GreaterThanOrEqual ||
-                expression[expPosition].type == TokenType.LessThan ||
-                expression[expPosition].type == TokenType.GreaterThan
-            )
+            while (IsComparisonOperator(expression[expPosition].type))
             {
                 Token operatorType = expression[expPosition];
                 expPosition++;
@@ -307,21 +279,94 @@ namespace Console
             expPosition++;
             if (expression[expPosition].type == TokenType.Dot)
             {
-
+                expPosition++;
+                if (expression[expPosition].type != TokenType.Identifier)
+                {
+                    throw new Exception("Se espera un identificador despues del punto");
+                }
+                node.AddProperty(ParseIdentifier());
             }
-            //node.AddProperty();
-
+            else
+            {
+                if (expression[expPosition].type == TokenType.LeftParenthesis)
+                {
+                    return ParseMethodAccess(node.value);
+                }
+                if (expression[expPosition].type == TokenType.LeftBracket)
+                {
+                    return ParseListAccess(node.value);
+                }
+                if (expression[expPosition].type == TokenType.Assign)
+                {
+                    return ParseAssignment(node.value);
+                }
+                if (expression[expPosition].type == TokenType.Decrement)
+                {
+                    return ParseDecrement(node.value);
+                }
+                if (expression[expPosition].type == TokenType.Increment)
+                {
+                    return ParseIncrement(node.value);
+                }
+            }
             return node;
         }
 
-        private ExpressionNode ParseMethodInvocation()
+        private ExpressionNode ParseMethodAccess(string value)
         {
-            return null;
+            MethodAccessNode node = new(value);
+            expPosition++;
+
+            while (expression[expPosition].type != TokenType.RightParenthesis)
+            {
+                ExpressionNode param = ParseExpression();
+                node.AddParameter(param);
+                if (expression[expPosition].type == TokenType.Comma)
+                {
+                    expPosition++;
+                }
+            }
+            expPosition++;
+            return node;
         }
 
-        private ExpressionNode ParseIncrementDecrement()
+        private ExpressionNode ParseListAccess(string value)
         {
-            return null;
+            ListNode node = new(value);
+            expPosition++;
+
+            while (expression[expPosition].type != TokenType.RightBracket)
+            {
+                ExpressionNode member = ParseExpression();
+                node.AddMember(member);
+            }
+            expPosition++;
+            return node;
+        }
+
+        private ExpressionNode ParseAssignment(string identifier)
+        {
+            AssignamentNode node = new(identifier);
+            expPosition++;
+            ExpressionNode value = ParseExpression();
+            node.SetValue(value);
+            return node;
+        }
+
+        private ExpressionNode ParseIncrement(string value)
+        {
+            IdentifierNode left = new IdentifierNode(value);
+            LiteralNode right = new LiteralNode(1);
+            Token op = new Token(TokenType.Minus, "+");
+            return new BinaryExpressionNode(left, op, right);
+        }
+
+        private ExpressionNode ParseDecrement(string value)
+        {
+            IdentifierNode left = new IdentifierNode(value);
+            LiteralNode right = new LiteralNode(1);
+            Token op = new Token(TokenType.Minus, "-");
+            return new BinaryExpressionNode(left, op, right);
         }
 
         private bool IsLogicalOperator(TokenType value)
