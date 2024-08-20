@@ -45,6 +45,17 @@ public class Debuguer : MonoBehaviour
         }
         ";
 
+        string input3 = @"
+        card{
+            Name: ""Prueba1"",
+            Type: ""Oro"",
+            Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
+            Faction: ""Source"",
+            Range: [""Melee"", ""Siege""],
+            OnActivation:
+            []
+        }";
+
         string input2 = @"
             effect
             {
@@ -64,7 +75,7 @@ public class Debuguer : MonoBehaviour
                 }
             }
         ";
-        Lexer lexer = new Lexer(input);
+        Lexer lexer = new Lexer(input3);
         List<Token> Tokens = lexer.Analyze();
 
         Debug.Log("------------Lexer-------------");
@@ -82,12 +93,12 @@ public class Debuguer : MonoBehaviour
         Debug.Log("------------Parser-------------");
 
         Debug.Log($@"
-             Nombre: {cardNode.Name}
-             Tipo: {cardNode.Type}
-             Faccion: {cardNode.Faction}
-             Power: {cardNode.Power}
-             Range: [{cardNode.Range[0]}, {cardNode.Range[1]}]
-             OnActivation: [{cardNode.OnActivation.OnActValues[0].EffectData.Name}], {cardNode.OnActivation.OnActValues[1].EffectData.Name}]"
+             Nombre: {cardNode.Name.Evaluate(null, null)}
+             Tipo: {cardNode.Type.Evaluate(null, null)}
+             Faccion: {cardNode.Faction.Evaluate(null, null)}
+             Power: {cardNode.Power.Evaluate(null, null)}
+             Range: [{cardNode.Range[0].Evaluate(null, null)}, {cardNode.Range[1].Evaluate(null, null)}]
+             OnActivation: []"
             );
 
     }

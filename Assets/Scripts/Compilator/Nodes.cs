@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace Console
 {
@@ -141,9 +142,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public ParameterNode Parameters
+        public List<(string, ExpressionNode)> Parameters
         {
-            get => GetProperty<ParameterNode>("Parameters");
+            get => GetProperty<List<(string, ExpressionNode)>>("Parameters");
             set => SetProperty("Parameters", value);
         }
 
@@ -154,7 +155,7 @@ namespace Console
         }
 
         public void SetName(ExpressionNode name) => Name = name;
-        public void AddParam(Type param) => AddProperty("Parameters", param);
+        public void AddParam((string, ExpressionNode) param) => AddProperty("Parameters", param);
         public void SetAction(ActionNode actionNode) => Action = actionNode;
 
         public override void Validate()
@@ -163,7 +164,6 @@ namespace Console
             {
                 throw new Exception("Falta el nombre de la carta.");
             }
-            Parameters?.Validate();
             if (Action == null)
             {
                 throw new Exception("Falta el nodo de acción");
@@ -234,23 +234,6 @@ namespace Console
         }
     }
 
-    public class ParameterNode : ProgramNode
-    {
-        public ExpressionNode amount
-        {
-            get => GetProperty<ExpressionNode>("Amount");
-            set => SetProperty("Amount", value);
-        }
-
-        public override void Validate()
-        {
-            if (amount == null)
-            {
-                throw new Exception("Falta el amount");
-            }
-        }
-    }
-
     public class PosActionNode : ProgramNode
     {
 
@@ -287,10 +270,10 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public ExpressionNode Amount
+        public List<(string, ExpressionNode)> Params
         {
-            get => GetProperty<ExpressionNode>("Amount");
-            private set => SetProperty("Amount", value);
+            get => GetProperty<List<(string, ExpressionNode)>>("Params");
+            private set => SetProperty("Params", value);
         }
 
         public override void Validate()
