@@ -342,15 +342,13 @@ namespace Console
                     return new Token(TokenType.Single, identifier);
                 case "Predicate":
                     return new Token(TokenType.Predicate, identifier);
-                case "Amount":
-                    return new Token(TokenType.Amount, identifier);
                 case "Params":
                     return new Token(TokenType.Params, identifier);
                 case "PosAction":
                     return new Token(TokenType.PosAction, identifier);
                 case "Action":
                     return new Token(TokenType.Action, identifier);
-                case "target":
+                case "targets":
                     return new Token(TokenType.Target, identifier);
                 case "context":
                     return new Token(TokenType.Context, identifier);
@@ -371,7 +369,7 @@ namespace Console
                     return new Token(TokenType.Boolean, identifier);
 
                 default:
-                    return new Token(TokenType.String, identifier);
+                    return new Token(TokenType.Identifier, identifier);
             }
         }
     }

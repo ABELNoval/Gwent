@@ -320,7 +320,7 @@ namespace Console
 
     public class ActionNode : ProgramNode
     {
-        List<ExpressionNode> expressions { get; }
+        public List<ExpressionNode> expressions { get; }
 
         public ActionNode(List<ExpressionNode> expressions)
         {

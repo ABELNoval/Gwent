@@ -56,7 +56,7 @@ namespace Console
             effectDataTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Name, HandleName},
-                {TokenType.Amount, ParseParams}
+                {TokenType.Identifier, ParseParams}
             };
 
             selectorTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
@@ -123,14 +123,6 @@ namespace Console
 
         private ExpressionNode ParseExpression()
         {
-            if (Match(TokenType.while_Token))
-            {
-                return ParseWhile();
-            }
-            if (Match(TokenType.for_Token))
-            {
-                return ParseFor();
-            }
             return ParseConditions();
         }
 
@@ -355,10 +347,30 @@ namespace Console
 
         private void GenerateExpression()
         {
+            int cantLeftParen = 0;
+            if (Match(TokenType.while_Token))
+            {
+                ParseWhile();
+                return;
+            }
+            if (Match(TokenType.for_Token))
+            {
+                ParseFor();
+                return;
+            }
+
             expression = new List<Token>();
 
-            while (!Match(TokenType.Comma) && !Match(TokenType.Semicolon) && currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.RightBracket)
+            while (!Match(TokenType.Comma) && !Match(TokenType.Semicolon) && currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.RightBracket && (currentToken.type != TokenType.RightParenthesis || cantLeftParen > 0))
             {
+                if (currentToken.type == TokenType.LeftParenthesis)
+                {
+                    cantLeftParen++;
+                }
+                if (currentToken.type == TokenType.RightParenthesis)
+                {
+                    cantLeftParen--;
+                }
                 expression.Add(currentToken);
                 Advance();
             }
@@ -370,16 +382,19 @@ namespace Console
         {
             List<ExpressionNode> body = new();
             Expect(TokenType.LeftParenthesis);
+            GenerateExpression();
             var condition = ParseExpression();
             Expect(TokenType.RightParenthesis);
             if (!Match(TokenType.LeftBrace))
             {
+                GenerateExpression();
                 body.Add(ParseExpression());
             }
             else
             {
                 while (!Match(TokenType.RightBrace))
                 {
+                    GenerateExpression();
                     body.Add(ParseExpression());
                     Expect(TokenType.Semicolon);
                 }
@@ -405,7 +420,6 @@ namespace Console
                 {
                     GenerateExpression();
                     body.Add(ParseExpression());
-                    Expect(TokenType.Semicolon);
                 }
             }
             Expect(TokenType.Semicolon);
@@ -417,9 +431,9 @@ namespace Console
             node.SetProperty("Params", new List<(string, ExpressionNode)>());
             while (currentToken.type != TokenType.RightBrace)
             {
-                Expect(TokenType.Identifier);
                 Token identifier = Previous();
                 Expect(TokenType.Colon);
+                GenerateExpression();
                 node.AddProperty("Params", (identifier.value, ParseExpression()));
                 Match(TokenType.Comma);
             }
@@ -574,6 +588,7 @@ namespace Console
             UnityEngine.Debug.Log("Params");
             Expect(TokenType.Colon);
             Expect(TokenType.LeftBrace);
+            Expect(TokenType.Identifier);
             ParseParams(node);
             Expect(TokenType.RightBrace);
             Match(TokenType.Comma);
@@ -595,6 +610,7 @@ namespace Console
             List<ExpressionNode> expressions = new();
             while (!Match(TokenType.RightBrace) && !Match(TokenType.EndOfFile))
             {
+                GenerateExpression();
                 expressions.Add(ParseExpression());
             }
 
