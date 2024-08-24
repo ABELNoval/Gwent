@@ -102,11 +102,13 @@ namespace Console
     public class IdentifierNode : ExpressionNode
     {
         public string value { get; }
+        public string type { get; }
         public List<ExpressionNode> properties { get; }
 
-        public IdentifierNode(string value)
+        public IdentifierNode(string value, string type)
         {
             this.value = value;
+            this.type = type;
         }
 
         public void AddProperty(ExpressionNode expression)

@@ -224,13 +224,22 @@ namespace Console
             {
                 switch (currentExpression.type)
                 {
-                    case TokenType.Number:
+                    case TokenType.NumberLiteral:
                         LiteralNode number = new LiteralNode(int.Parse(currentExpression.value));
                         AdvanceExp();
                         return number;
 
                     case TokenType.Identifier:
-                        return ParseIdentifier();
+                        AdvanceExp();
+                        return ParseIdentifier(null);
+
+                    case TokenType.String:
+                    case TokenType.Number:
+                    case TokenType.Boolean:
+                        string value = currentExpression.value;
+                        AdvanceExp();
+                        ExpectExp(TokenType.Identifier);
+                        return ParseIdentifier(value);
 
                     case TokenType.LeftParenthesis:
                         AdvanceExp();
@@ -238,12 +247,12 @@ namespace Console
                         ExpectExp(TokenType.RightParenthesis);
                         return exp;
 
-                    case TokenType.Boolean:
+                    case TokenType.BooleanLiteral:
                         LiteralNode boolean = new LiteralNode(currentExpression.value == "true");
                         AdvanceExp();
                         return boolean;
 
-                    case TokenType.String:
+                    case TokenType.StringLiteral:
                         LiteralNode text = new LiteralNode(currentExpression.value);
                         AdvanceExp();
                         return text;
@@ -258,39 +267,44 @@ namespace Console
             }
         }
 
-        private ExpressionNode ParseIdentifier()
+        private ExpressionNode ParseIdentifier(string type)
         {
-            IdentifierNode node = new(currentExpression.value);
-            AdvanceExp();
-            if (MatchExp(TokenType.Dot))
+            List<TokenType> methodTypes = new List<TokenType>()
             {
-                if (currentExpression.type != TokenType.Identifier)
-                {
-                    throw new Exception("Se espera un identificador despues del punto");
-                }
-                node.AddProperty(ParseIdentifier());
-            }
-            else
+                TokenType.Board,
+                TokenType.DeckOfPlayer,
+                TokenType.FieldOfPLayer,
+                TokenType.GraveyardOfPlayer,
+                TokenType.HandOfPlayer,
+                TokenType.Hand,
+                TokenType.Deck,
+                TokenType.Field,
+                TokenType.Graveyard
+            };
+
+            List<TokenType> propertiesTypes = new List<TokenType>()
             {
-                if (MatchExp(TokenType.LeftParenthesis))
+                TokenType.Name,
+                TokenType.Power,
+                TokenType.Faction,
+                TokenType.Range,
+                TokenType.Type,
+                TokenType.OnActivation,
+                TokenType.Deck,
+                TokenType.Identifier
+            };
+
+            IdentifierNode node = new(Previous().value, type);
+            while (expPosition < expression.Count && MatchExp(TokenType.Dot))
+            {
+                if (MatchExp(methodTypes))
                 {
-                    return ParseMethodAccess(node.value);
+                    node.AddProperty(ParseMethodAccess(node.value));
                 }
-                if (MatchExp(TokenType.LeftBracket))
+                else if (MatchExp(propertiesTypes))
                 {
-                    return ParseListAccess(node.value);
-                }
-                if (MatchExp(TokenType.Assign))
-                {
-                    return ParseAssignment(node.value);
-                }
-                if (MatchExp(TokenType.Decrement))
-                {
-                    return ParseDecrement(node.value);
-                }
-                if (MatchExp(TokenType.Increment))
-                {
-                    return ParseIncrement(node.value);
+                    var property = new IdentifierNode(PreviousExp().value, null);
+                    node.AddProperty(property);
                 }
             }
             return node;
@@ -331,7 +345,7 @@ namespace Console
 
         private ExpressionNode ParseIncrement(string value)
         {
-            IdentifierNode left = new(value);
+            IdentifierNode left = new(value, null);
             LiteralNode right = new(1);
             Token op = new(TokenType.Plus, "+");
             return new BinaryExpressionNode(left, op, right);
@@ -339,7 +353,7 @@ namespace Console
 
         private ExpressionNode ParseDecrement(string value)
         {
-            IdentifierNode left = new(value);
+            IdentifierNode left = new(value, null);
             LiteralNode right = new(1);
             Token op = new(TokenType.Minus, "-");
             return new BinaryExpressionNode(left, op, right);

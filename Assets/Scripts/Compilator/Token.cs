@@ -5,6 +5,8 @@ namespace Console
         //Palabras clave del juego
         card, effect, Name, Params, Action, Type, Power, Faction, Range, OnActivation,
         Selector, Effect, Amount, Single, Source, Predicate, PosAction, Target, Context,
+        Board, TriggerPlayer, HandOfPlayer, FieldOfPLayer, GraveyardOfPlayer, DeckOfPlayer,
+        Hand, Deck, Field, Graveyard, Owner, Find, Shuffle,
 
         //Palabras claves extras
         for_Token, while_Token, foreach_Token, if_Token, in_Token,
@@ -18,10 +20,10 @@ namespace Console
         Quote,
 
         // Literals (Literales)
-        Number, String, Boolean, CommentLine, CommentBlock,
+        NumberLiteral, StringLiteral, BooleanLiteral, CommentLine, CommentBlock,
 
-        // Identifiers (Identificadores)
-        Identifier,
+        // Types (Tipos)
+        Identifier, Number, String, Boolean,
 
         // End of Input (Fin de entrada)
         EndOfFile

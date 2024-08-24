@@ -208,7 +208,7 @@ namespace Console
                     case '"':
                         Advance();
                         string str = ReadWhile(c => c != '"');
-                        tokens.Add(new Token(TokenType.String, str));
+                        tokens.Add(new Token(TokenType.StringLiteral, str));
                         Advance();
                         break;
 
@@ -219,7 +219,7 @@ namespace Console
                         }
                         else if (char.IsDigit(currentCharacter))
                         {
-                            tokens.Add(new Token(TokenType.Number, ReadNumber()));
+                            tokens.Add(new Token(TokenType.NumberLiteral, ReadNumber()));
                         }
                         else if (char.IsLetter(currentCharacter))
                         {
@@ -364,8 +364,15 @@ namespace Console
                 case "in":
                     return new Token(TokenType.in_Token, identifier);
                 case "false":
-                    return new Token(TokenType.Boolean, identifier);
+                    return new Token(TokenType.BooleanLiteral, identifier);
                 case "true":
+                    return new Token(TokenType.BooleanLiteral, identifier);
+
+                case "string":
+                    return new Token(TokenType.String, identifier);
+                case "int":
+                    return new Token(TokenType.Number, identifier);
+                case "bool":
                     return new Token(TokenType.Boolean, identifier);
 
                 default:
