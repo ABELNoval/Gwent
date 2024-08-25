@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Compilator\SemanticAnalyzer.cs" />
     <Compile Include="Assets\Scripts\Compilar.cs" />
     <Compile Include="Assets\Scripts\Compilator\Debuguer.cs" />
+    <Compile Include="Assets\Scripts\Compilator\GlobalContext.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CardManager.cs" />
     <Compile Include="Assets\Scripts\BackEnd\Context.cs" />

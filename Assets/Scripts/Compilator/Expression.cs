@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Gwent_Proyect.Assets.Scripts.Compilator;
 
 namespace Console
 {
 
     public abstract class ExpressionNode
     {
-        public abstract object Evaluate(Context context, List<Cards> target);
+        public abstract object Evaluate(GlobalContext context, List<Cards> target);
     }
 
     public class BinaryExpressionNode : ExpressionNode
@@ -22,7 +23,7 @@ namespace Console
             this.right = right;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return Operator.type switch
             {
@@ -53,7 +54,7 @@ namespace Console
             this.value = value;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return value;
         }
@@ -68,7 +69,7 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -89,7 +90,7 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -116,7 +117,7 @@ namespace Console
             properties.Add(expression);
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             throw new NotImplementedException();
         }
@@ -125,10 +126,10 @@ namespace Console
 
     public class AssignamentNode : ExpressionNode
     {
-        public string identifier { get; }
+        public IdentifierNode identifier { get; }
         public ExpressionNode value { get; private set; }
 
-        public AssignamentNode(string identifier)
+        public AssignamentNode(IdentifierNode identifier)
         {
             this.identifier = identifier;
         }
@@ -138,7 +139,7 @@ namespace Console
             this.value = value;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return value.Evaluate(context, target);
         }
@@ -160,7 +161,7 @@ namespace Console
             parameters.Add(parameter);
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             throw new NotImplementedException();
         }
@@ -181,7 +182,7 @@ namespace Console
             members.Add(member);
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             throw new NotImplementedException();
         }

@@ -337,7 +337,7 @@ namespace Console
 
         private ExpressionNode ParseAssignment(string identifier)
         {
-            AssignamentNode node = new(identifier);
+            AssignamentNode node = new(new IdentifierNode(identifier, null));
             ExpressionNode value = ParseExpression();
             node.SetValue(value);
             return node;
