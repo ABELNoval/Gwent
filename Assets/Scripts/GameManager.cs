@@ -8,11 +8,13 @@ using System.Collections;
 using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
 using UnityEngine.Audio;
+using Gwent_Proyect.Assets.Scripts.Compilator;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI player1Points;
     public TextMeshProUGUI player2Points;
+    public TextMeshProUGUI input;
     public GameObject finalVideo;
     public GameObject boardObject;
     public GameObject declaration;
@@ -202,7 +204,20 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Create&EditCard
 
+    public void CreateCard()
+    {
+        Lexer lexer = new(input.text);
+        List<Token> Tokens = lexer.Analyze();
+        Parser parser = new(Tokens);
+        ProgramNode node = parser.Parse();
+        SemanticAnalyzer semanticAnalyzer = new();
+        semanticAnalyzer.CheckCardNode(node as CardNode, new GlobalContext());
+    }
+
+    #endregion
+    
     private void InvalidDeck()
     {
         mainMenu.SetActive(false);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Gwent_Proyect.Assets.Scripts.Compilator;
 
 namespace Console
@@ -16,71 +17,71 @@ namespace Console
             { "Melee", typeof(string) },
             { "Siege", typeof(string) },
             { "Type", typeof(string) },
-            { "Source", typeof(int) },
+            { "Source", typeof(string) },
             {"Single", typeof(bool)},
             {"Predicate", typeof(string)}
         };
 
-        public ProgramNode Analyze(ProgramNode node)
-        {
-            GlobalContext context = new();
-            switch (node)
-            {
-                case CardNode:
-                    return CheckCardNode(node as CardNode, context);
-                case EffectNode:
-                    return CheckEffectNode(node as EffectNode, context);
-                case OnActValueNode:
-                    return CheckOnActValueNode(node as OnActValueNode, context);
-                case SelectorNode:
-                    return CheckSelectorNode(node as SelectorNode, context);
-                case EffectDataNode:
-                    return CheckEffectDataNode(node, context);
-
-                default:
-                    throw new ArgumentException("Invalid node");
-            }
-        }
-
-        private CardNode CheckCardNode(CardNode node, GlobalContext context)
+        public void CheckCardNode(CardNode node, GlobalContext context)
         {
             foreach (var property in node.properties)
             {
                 if (property.Key == "OnActivation")
                 {
-                    node.SetProperty(property.Key, Analyze(property.Value as OnActivationNode));
+                    CheckOnActValueNode((property.Value as OnActivationNode).OnActValues[0], new GlobalContext(context));
+                }
+                else if (property.Key == "Range")
+                {
+                    foreach (var expression in property.Value as List<ExpressionNode>)
+                    {
+                        Type exprectedType = GetExpectedTypeForProperty((expression as LiteralNode).value.ToString());
+                        Type expType = CheckExpression(expression, context);
+                        if (expType != exprectedType)
+                            throw new Exception("No son del mismo tipo");
+                        UnityEngine.Debug.Log(expression.Evaluate(context, new List<Cards>()));
+                    }
+                }
+                else
+                {
+                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
+                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
+                    if (expType != exprectedType)
+                        throw new Exception("No son del mismo tipo");
+                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
+                }
+            }
+        }
+
+        public void CheckEffectNode(EffectNode node, GlobalContext context)
+        {
+            foreach (var property in node.properties)
+            {
+                if (property.Key == "Action")
+                {
+                    node.SetProperty(property.Key, CheckActionNode(property.Value as ActionNode, new GlobalContext(context)));
                 }
                 Type exprectedType = GetExpectedTypeForProperty(property.Key);
                 Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                 if (expType != exprectedType)
                     throw new Exception("No son del mismo tipo");
-
-                object value = (property.Value as ExpressionNode).Evaluate(context, null);
-                node.SetProperty(property.Key, value);
+                UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
             }
-            return node;
         }
 
-        private EffectNode CheckEffectNode(EffectNode node, GlobalContext context)
-        {
-            return null;
-        }
-
-        private OnActValueNode CheckOnActValueNode(OnActValueNode node, GlobalContext context)
+        private void CheckOnActValueNode(OnActValueNode node, GlobalContext context)
         {
             foreach (var property in node.properties)
             {
                 if (property.Key == "Selector")
-                    node.SetProperty(property.Key, Analyze(property.Value as SelectorNode));
+                    CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));
                 else if (property.Key == "EffectData")
-                    node.SetProperty(property.Key, Analyze(property.Value as EffectDataNode));
+                    CheckEffectDataNode(property.Value as EffectDataNode, new GlobalContext(context));
                 else if (property.Key == "PosAction")
-                    node.SetProperty(property.Key, Analyze(property.Value as PosActionNode));
+                    CheckPosActionNode(property.Value as PosActionNode, new GlobalContext(context));
             }
-            return node;
         }
 
-        private SelectorNode CheckSelectorNode(SelectorNode node, GlobalContext context)
+        private void CheckSelectorNode(SelectorNode node, GlobalContext context)
         {
             foreach (var property in node.properties)
             {
@@ -88,17 +89,59 @@ namespace Console
                 Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                 if (expType != exprectedType)
                     throw new Exception("No son del mismo tipo");
-
-                object value = (property.Value as ExpressionNode).Evaluate(context, null);
-                node.SetProperty(property.Key, value);
+                UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
             }
-            return node;
         }
 
-        private ProgramNode CheckEffectDataNode(ProgramNode node, GlobalContext context)
+        private void CheckEffectDataNode(ProgramNode node, GlobalContext context)
         {
+            foreach (var property in node.properties)
+            {
+                if (property.Key == "Params")
+                {
+                    foreach (var expression in property.Value as List<(string, ExpressionNode)>)
+                    {
+                        CheckExpression(expression.Item2, context);
+                        UnityEngine.Debug.Log($"{expression.Item1} :  {expression.Item2.Evaluate(context, new List<Cards>())}");
+                    }
+                }
+                else
+                {
+                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
+                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
+                    if (expType != exprectedType)
+                        throw new Exception("No son del mismo tipo");
+                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
+                }
+            }
+        }
 
-            return null;
+        private void CheckPosActionNode(ProgramNode node, GlobalContext context)
+        {
+            foreach (var property in node.properties)
+            {
+                if (property.Key == "Selector")
+                {
+                    CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));
+                }
+                else
+                {
+                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
+                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
+                    if (expType != exprectedType)
+                        throw new Exception("No son del mismo tipo");
+                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
+                }
+            }
+        }
+
+        private ActionNode CheckActionNode(ActionNode node, GlobalContext context)
+        {
+            foreach (var expression in node.expressions)
+            {
+                CheckExpression(expression, context);
+            }
+            return node;
         }
 
         public Type CheckExpression(ExpressionNode expression, GlobalContext context)
@@ -111,6 +154,10 @@ namespace Console
                         if (context.ConteinsSymbol((expression as IdentifierNode).value))
                         {
                             return context.LookupSymbol((expression as IdentifierNode).value).Item1;
+                        }
+                        else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).value))
+                        {
+                            return context.parentContext.LookupSymbol((expression as IdentifierNode).value).Item1;
                         }
                         else
                         {
@@ -133,11 +180,18 @@ namespace Console
                     return leftExpression;
 
                 case AssignamentNode:
-                    Type left = CheckExpression((expression as AssignamentNode).identifier, context);
+                    string name = (expression as AssignamentNode).identifier.value;
                     Type right = CheckExpression((expression as AssignamentNode).value, context);
-                    if (left != right)
-                        throw new Exception("The two expressions aren't the same type");
-                    return left;
+                    if (context.ConteinsSymbol(name))
+                    {
+                        Type left = context.LookupSymbol(name).Item1;
+                        if (left != right)
+                            throw new Exception("The two expressions aren't the same type");
+                        context.DefineSymbol((expression as AssignamentNode).identifier.value, right, (expression as AssignamentNode).value);
+                        return left;
+                    }
+                    context.DefineSymbol(name, right, (expression as AssignamentNode).value);
+                    return right;
 
                 case MethodAccessNode:
                 case ListNode:

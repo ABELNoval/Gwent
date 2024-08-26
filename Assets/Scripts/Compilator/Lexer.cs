@@ -22,7 +22,7 @@ namespace Console
         {
             List<Token> tokens = new List<Token>();
 
-            while (position < input.Length)
+            while (position < input.Length - 1)
             {
                 switch (currentCharacter)
                 {

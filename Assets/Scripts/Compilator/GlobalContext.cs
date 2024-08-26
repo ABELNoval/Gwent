@@ -6,7 +6,7 @@ namespace Gwent_Proyect.Assets.Scripts.Compilator
     public class GlobalContext
     {
         private Dictionary<string, (Type, object)> symbols;
-        private GlobalContext parentContext;
+        public GlobalContext parentContext;
 
         public GlobalContext(GlobalContext parent = null)
         {
@@ -16,8 +16,6 @@ namespace Gwent_Proyect.Assets.Scripts.Compilator
 
         public void DefineSymbol(string name, Type type, object value)
         {
-            if (symbols.ContainsKey(name))
-                throw new Exception($"Symbol {name} already defined.");
             symbols[name] = (type, value);
         }
 

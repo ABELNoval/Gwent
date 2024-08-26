@@ -119,9 +119,8 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target)
         {
-            throw new NotImplementedException();
+            return context.ConteinsSymbol(value) ? context.LookupSymbol(value).Item2 : throw new Exception("Variable indefinida");
         }
-
     }
 
     public class AssignamentNode : ExpressionNode
@@ -141,7 +140,9 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target)
         {
-            return value.Evaluate(context, target);
+            var val = value.Evaluate(context, target);
+            context.DefineSymbol(identifier.value, val.GetType(), val);
+            return val;
         }
 
     }

@@ -537,7 +537,7 @@ namespace Console
             Expect(TokenType.Colon);
             EffectDataNode val = new();
 
-            if (currentToken.type == TokenType.String)
+            if (currentToken.type == TokenType.StringLiteral)
             {
                 GenerateExpression();
                 val.SetProperty("Name", ParseExpression());
