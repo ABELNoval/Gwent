@@ -7,7 +7,7 @@ namespace Console
 
     public abstract class ExpressionNode
     {
-        public abstract object Evaluate(GlobalContext context, List<Cards> target);
+        public abstract object Evaluate(Context context, List<Cards> target);
     }
 
     public class BinaryExpressionNode : ExpressionNode
@@ -23,7 +23,7 @@ namespace Console
             this.right = right;
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             return Operator.type switch
             {
@@ -54,7 +54,7 @@ namespace Console
             this.value = value;
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             return value;
         }
@@ -69,7 +69,7 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -90,7 +90,7 @@ namespace Console
             this.body = body;
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -117,9 +117,9 @@ namespace Console
             properties.Add(expression);
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
-            return context.ConteinsSymbol(value) ? context.LookupSymbol(value).Item2 : throw new Exception("Variable indefinida");
+            return value;
         }
     }
 
@@ -138,10 +138,9 @@ namespace Console
             this.value = value;
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             var val = value.Evaluate(context, target);
-            context.DefineSymbol(identifier.value, val.GetType(), val);
             return val;
         }
 
@@ -162,7 +161,7 @@ namespace Console
             parameters.Add(parameter);
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             throw new NotImplementedException();
         }
@@ -183,7 +182,7 @@ namespace Console
             members.Add(member);
         }
 
-        public override object Evaluate(GlobalContext context, List<Cards> target)
+        public override object Evaluate(Context context, List<Cards> target)
         {
             throw new NotImplementedException();
         }

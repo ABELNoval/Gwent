@@ -8,46 +8,46 @@ using Gwent_Proyect.Assets.Scripts.Compilator;
 
 public class Debuguer : MonoBehaviour
 {
-    // void Start()
-    // {
-    //     string input = @"
-    //     card{
-    //     Name: ""Prueba1"",
-    //         Type: ""Oro"",
-    //         Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
-    //         Faction: ""Source"",
-    //         Range: [""Melee"", ""Siege""],
-    //         OnActivation:
-    //         [
-    //             {
-    //         Effect:
-    //             {
-    //             Name: ""Draw"",
-    //                     Amount: 5
-    //                 },
-    //                 Selector:
-    //             {
-    //             Source: ""board"",
-    //                     Single: false,
-    //                     Predicate: ""(unit) => unit.Faction == Source"",
-    //                 },
-    //                 PosAction:
-    //             {
-    //             Name: ""ReturnRoDeck"",
-    //                     Selector:
-    //                 {
-    //                 Source: ""parent"",
-    //                         Single: false,
-    //                         Predicate: ""(unit) => unit.Power < 1""
-    //                     }
-    //             }
-    //         },
-    //             {
-    //         Effect: ""Kill""
-    //             }
-    //         ]
-    //     }
-    //     ";
+    //  void Start()
+    //  {
+    //      string input = @"
+    //      card{
+    //      Name: ""Prueba1"",
+    //          Type: ""Oro"",
+    //          Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
+    //          Faction: ""Source"",
+    //          Range: [""Melee"", ""Siege""],
+    //          OnActivation:
+    //          [
+    //              {
+    //          Effect:
+    //              {
+    //              Name: ""Draw"",
+    //                      Amount: 5
+    //                  },
+    //                  Selector:
+    //              {
+    //              Source: ""board"",
+    //                      Single: false,
+    //                      Predicate: ""(unit) => unit.Faction == Source"",
+    //                  },
+    //                  PosAction:
+    //              {
+    //              Name: ""ReturnRoDeck"",
+    //                      Selector:
+    //                  {
+    //                  Source: ""parent"",
+    //                          Single: false,
+    //                          Predicate: ""(unit) => unit.Power < 1""
+    //                      }
+    //              }
+    //          },
+    //              {
+    //          Effect: ""Kill""
+    //              }
+    //          ]
+    //      }
+    //      ";
 
     //     //Ok, parsea propiedades sin OnActivation
     //     // string input3 = @"

@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    
+
     private void InvalidDeck()
     {
         mainMenu.SetActive(false);

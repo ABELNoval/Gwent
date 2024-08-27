@@ -2,24 +2,27 @@ using System;
 
 namespace Console
 {
-    public enum Font
-    {
-        hand,
-        otherHand,
-        deck,
-        otherDeck,
-        field,
-        otherField,
-        parent
-    }
+    // public enum Font
+    // {
+    //     board,
+    //     hand,
+    //     otherHand,
+    //     deck,
+    //     otherDeck,
+    //     field,
+    //     otherField,
+    //     parent
+    // }
+
     public class Selector
     {
-        public Font source;
+        public string source;
         public bool single;
         public Predicate<Cards> predicate;
 
-        public Selector(Font source, Predicate<Cards> predicate)
+        public Selector(string source, Predicate<Cards> predicate, bool single = false)
         {
+            this.single = single;
             this.source = source;
             this.predicate = predicate;
         }

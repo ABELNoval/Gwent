@@ -68,7 +68,7 @@ namespace Console
 
             posActionTokenHandler = new Dictionary<TokenType, Action<ProgramNode>>()
             {
-                {TokenType.Name, HandleName},
+                {TokenType.Type, HandleType},
                 {TokenType.Selector, HandleSelector}
             };
         }

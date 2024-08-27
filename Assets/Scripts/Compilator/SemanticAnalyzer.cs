@@ -28,7 +28,10 @@ namespace Console
             {
                 if (property.Key == "OnActivation")
                 {
-                    CheckOnActValueNode((property.Value as OnActivationNode).OnActValues[0], new GlobalContext(context));
+                    foreach (var onActValue in (property.Value as OnActivationNode).OnActValues)
+                    {
+                        CheckOnActValueNode(onActValue, new GlobalContext(context));
+                    }
                 }
                 else if (property.Key == "Range")
                 {
@@ -38,7 +41,6 @@ namespace Console
                         Type expType = CheckExpression(expression, context);
                         if (expType != exprectedType)
                             throw new Exception("No son del mismo tipo");
-                        UnityEngine.Debug.Log(expression.Evaluate(context, new List<Cards>()));
                     }
                 }
                 else
@@ -47,7 +49,6 @@ namespace Console
                     Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                     if (expType != exprectedType)
                         throw new Exception("No son del mismo tipo");
-                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
                 }
             }
         }
@@ -64,7 +65,6 @@ namespace Console
                 Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                 if (expType != exprectedType)
                     throw new Exception("No son del mismo tipo");
-                UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
             }
         }
 
@@ -89,7 +89,6 @@ namespace Console
                 Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                 if (expType != exprectedType)
                     throw new Exception("No son del mismo tipo");
-                UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
             }
         }
 
@@ -102,7 +101,6 @@ namespace Console
                     foreach (var expression in property.Value as List<(string, ExpressionNode)>)
                     {
                         CheckExpression(expression.Item2, context);
-                        UnityEngine.Debug.Log($"{expression.Item1} :  {expression.Item2.Evaluate(context, new List<Cards>())}");
                     }
                 }
                 else
@@ -111,7 +109,6 @@ namespace Console
                     Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                     if (expType != exprectedType)
                         throw new Exception("No son del mismo tipo");
-                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
                 }
             }
         }
@@ -130,7 +127,6 @@ namespace Console
                     Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                     if (expType != exprectedType)
                         throw new Exception("No son del mismo tipo");
-                    UnityEngine.Debug.Log(node.GetProperty<ExpressionNode>(property.Key).Evaluate(context, new List<Cards>()));
                 }
             }
         }

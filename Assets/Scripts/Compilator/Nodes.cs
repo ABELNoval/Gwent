@@ -237,10 +237,10 @@ namespace Console
     public class PosActionNode : ProgramNode
     {
 
-        public ExpressionNode Name
+        public ExpressionNode Type
         {
-            get => GetProperty<ExpressionNode>("Name");
-            private set => SetProperty("Name", value);
+            get => GetProperty<ExpressionNode>("Type");
+            private set => SetProperty("Type", value);
         }
         public SelectorNode Selector
         {
@@ -248,14 +248,14 @@ namespace Console
             private set => SetProperty("Selector", value);
         }
 
-        public void SetName(ExpressionNode name) => Name = name;
+        public void SetType(ExpressionNode type) => Type = type;
         public void SetSelector(SelectorNode selector) => Selector = selector;
 
         public override void Validate()
         {
-            if (Name == null)
+            if (Type == null)
             {
-                throw new Exception("Falta el nombre de la carta.");
+                throw new Exception("Falta el tipo de la carta.");
             }
             Selector?.Validate();
         }

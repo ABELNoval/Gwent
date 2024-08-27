@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\BackEnd\Hand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\BackEnd\Graveyard.cs" />
+    <Compile Include="Assets\Scripts\Compilator\Build.cs" />
     <Compile Include="Assets\Scripts\BackEnd\Deck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

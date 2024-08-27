@@ -32,15 +32,38 @@ namespace Console
 
     public class OnActivation
     {
-        public string effect;
+        public EffectData effect;
         public Selector selector;
-        public OnActivation posAction;
+        public PosAction posAction;
 
-        public OnActivation(string effect, Selector selector, OnActivation posAction)
+        public OnActivation(EffectData effect, Selector selector, PosAction posAction = null)
         {
             this.effect = effect;
             this.selector = selector;
             this.posAction = posAction;
+        }
+    }
+
+    public class EffectData
+    {
+        public string name { get; }
+        public List<(string, object)> properties { get; }
+        public EffectData(string name, List<(string, object)> properties)
+        {
+            this.name = name;
+            this.properties = properties;
+        }
+    }
+
+    public class PosAction
+    {
+        public string type { get; }
+        public Selector selector { get; }
+
+        public PosAction(string type, Selector selector = null)
+        {
+            this.type = type;
+            this.selector = selector;
         }
     }
 }
