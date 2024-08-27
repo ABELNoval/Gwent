@@ -33,7 +33,7 @@ namespace Console
                     throw new InvalidCastException($"El valor para la clave \"{key}\" no es del tipo esperado. Se esperaba {typeof(T)}, pero se encontró {value.GetType()}.");
                 }
             }
-            throw new Exception($"La propiedad \"{key}\" no está definida.");
+            return default(T);
         }
 
 

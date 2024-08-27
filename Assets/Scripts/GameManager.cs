@@ -208,12 +208,15 @@ public class GameManager : MonoBehaviour
 
     public void CreateCard()
     {
+        BuildNode buildNode = new BuildNode();
         Lexer lexer = new(input.text);
         List<Token> Tokens = lexer.Analyze();
         Parser parser = new(Tokens);
         ProgramNode node = parser.Parse();
         SemanticAnalyzer semanticAnalyzer = new();
         semanticAnalyzer.CheckCardNode(node as CardNode, new GlobalContext());
+        Cards card = buildNode.BuildCard(node as CardNode);
+        game.selectedDeck.Push(card);
     }
 
     #endregion

@@ -36,7 +36,7 @@ namespace Console
         public Selector selector;
         public PosAction posAction;
 
-        public OnActivation(EffectData effect, Selector selector, PosAction posAction = null)
+        public OnActivation(EffectData effect, Selector selector = null, PosAction posAction = null)
         {
             this.effect = effect;
             this.selector = selector;
@@ -48,7 +48,7 @@ namespace Console
     {
         public string name { get; }
         public List<(string, object)> properties { get; }
-        public EffectData(string name, List<(string, object)> properties)
+        public EffectData(string name, List<(string, object)> properties = null)
         {
             this.name = name;
             this.properties = properties;

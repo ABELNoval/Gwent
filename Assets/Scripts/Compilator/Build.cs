@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace Console
@@ -22,14 +23,30 @@ namespace Console
             {
                 onActivation.Add(BuildOnActivation(onActValue));
             }
-            return new Cards(name, type, "...", faction, range, power, "img", onActivation);
+            return new Cards(name, type, "...", faction, range, power, "Art/Images/Nanami", onActivation);
         }
 
         private OnActivation BuildOnActivation(OnActValueNode onActValue)
         {
-            Selector selector = BuildSelector(onActValue.Selector);
-            EffectData effectData = BuildEffectData(onActValue.EffectData);
-            PosAction posAction = BuildPosAction(onActValue.PosAction);
+            Selector selector = null;
+            if (onActValue.Selector != null)
+            {
+                selector = BuildSelector(onActValue.Selector);
+            }
+            EffectData effectData;
+            if (onActValue.EffectData.Params != null)
+            {
+                effectData = BuildEffectData(onActValue.EffectData);
+            }
+            else
+            {
+                effectData = new EffectData((string)onActValue.EffectData.Name.Evaluate(null, null));
+            }
+            PosAction posAction = null;
+            if (onActValue.Selector != null)
+            {
+                posAction = BuildPosAction(onActValue.PosAction);
+            }
             return new OnActivation(effectData, selector, posAction);
         }
 
@@ -37,7 +54,7 @@ namespace Console
         {
             string source = (string)selector.Source.Evaluate(null, null);
             bool single = (bool)selector.Single.Evaluate(null, null);
-            Predicate<Cards> predicate = (Predicate<Cards>)selector.Predicate.Evaluate(null, null);
+            string predicate = (string)selector.Predicate.Evaluate(null, null);
             return new Selector(source, predicate, single);
         }
 

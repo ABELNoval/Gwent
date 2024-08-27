@@ -87,8 +87,10 @@ namespace Console
 
         public void Push(Cards card)
         {
-            List<Cards> listResult = new List<Cards>();
-            listResult.Add(card);
+            List<Cards> listResult = new List<Cards>
+            {
+                card
+            };
             foreach (Cards c in cards)
             {
                 listResult.Add(c);

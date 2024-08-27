@@ -18,9 +18,9 @@ namespace Console
     {
         public string source;
         public bool single;
-        public Predicate<Cards> predicate;
+        public string predicate;
 
-        public Selector(string source, Predicate<Cards> predicate, bool single = false)
+        public Selector(string source, string predicate, bool single = false)
         {
             this.single = single;
             this.source = source;
