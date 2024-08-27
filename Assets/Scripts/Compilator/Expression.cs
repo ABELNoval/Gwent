@@ -32,13 +32,14 @@ namespace Console
                 TokenType.Multiply => (int)left.Evaluate(context, target) * (int)right.Evaluate(context, target),
                 TokenType.Divide => (int)left.Evaluate(context, target) / (int)right.Evaluate(context, target),
                 TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(context, target), (int)right.Evaluate(context, target)),
-                TokenType.Equals => (bool)left.Evaluate(context, target) == (bool)right.Evaluate(context, target),
-                TokenType.NotEquals => (bool)left.Evaluate(context, target) != (bool)right.Evaluate(context, target),
+                TokenType.Equals => (int)left.Evaluate(context, target) == (int)right.Evaluate(context, target),
+                TokenType.NotEquals => (int)left.Evaluate(context, target) != (int)right.Evaluate(context, target),
                 TokenType.LessThan => (int)left.Evaluate(context, target) < (int)right.Evaluate(context, target),
                 TokenType.GreaterThan => (int)left.Evaluate(context, target) > (int)right.Evaluate(context, target),
                 TokenType.LessThanOrEqual => (int)left.Evaluate(context, target) <= (int)right.Evaluate(context, target),
                 TokenType.GreaterThanOrEqual => (int)left.Evaluate(context, target) >= (int)right.Evaluate(context, target),
-
+                TokenType.LogicalAnd => (bool)left.Evaluate(context, target) && (bool)right.Evaluate(context, target),
+                TokenType.LogicalOr => (bool)left.Evaluate(context, target) || (bool)right.Evaluate(context, target),
                 _ => throw new Exception("Operador no valido"),
             };
 
