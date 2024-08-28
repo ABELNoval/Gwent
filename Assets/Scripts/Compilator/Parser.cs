@@ -285,7 +285,7 @@ namespace Console
             while (expPosition < expression.Count && MatchExp(TokenType.Dot))
             {
                 var right = ParseListAccess();
-                left = new IdentifierNode(left, null, right);
+                left.SetProperty(right);
             }
             return left;
         }
@@ -352,7 +352,7 @@ namespace Console
             };
             if (expPosition < expression.Count && MatchExp(propertyTypes))
             {
-                var left = new PropertyAccessNode(PreviousExp().value);
+                var left = new PropertyNode(PreviousExp().value);
                 return left;
             }
             else

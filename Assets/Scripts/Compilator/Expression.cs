@@ -212,6 +212,13 @@ namespace Console
 
     public class PropertyNode : ExpressionNode
     {
+        public string Name { get; }
+
+        public PropertyNode(string name)
+        {
+            Name = name;
+        }
+
         public void SetCard(Cards cards)
         {
 
@@ -272,11 +279,10 @@ namespace Console
         public Type type { get; }
         public ExpressionNode property { get; private set; } // Puede ser un MethodExpression, ListExpression, etc.
 
-        public IdentifierNode(string name, Type type = null, ExpressionNode property = null)
+        public IdentifierNode(string name, Type type = null)
         {
             this.type = type;
             Name = name;
-            this.property = property;
         }
 
         public override void SetProperty(ExpressionNode property)
