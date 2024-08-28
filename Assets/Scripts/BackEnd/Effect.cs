@@ -14,6 +14,6 @@ namespace Console
             this.parameters = parameters;
         }
 
-        public void Action(List<Cards> targets, Context context) { }
+        public void Action(List<Cards> targets) { }
     }
 }
