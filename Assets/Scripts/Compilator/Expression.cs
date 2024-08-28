@@ -331,7 +331,8 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target)
         {
-            return null;
+            identifier.SetValue(context, target, value, null);
+            return identifier.Evaluate(context, target);
         }
     }
 

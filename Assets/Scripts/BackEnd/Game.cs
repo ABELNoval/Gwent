@@ -9,7 +9,6 @@ public class Game
     public bool player2IsPlaying;
     public int player2Points;
     public int player1Points;
-    Context context;
     System.Random random = new System.Random();
     public delegate void InvalidDeck();
     public delegate void InstantiateHands(List<Cards> player1Hand, List<Cards> player2Hand);
@@ -46,8 +45,6 @@ public class Game
             Debug.Log("Juego listo para empezar");
             GeneratePlayers();
             activePlayer = player1;
-            context = new Context(new List<Cards>(), activePlayer.id);
-            context.findPlayer += FindPlayer;
             start();
         }
     }
@@ -100,13 +97,13 @@ public class Game
         Deck player1Deck = new Deck(selectedDeck.id, selectedDeck.Name);
         foreach (Cards cards in selectedDeck.cards)
         {
-            player1Deck.SendButtom(cards);
+            player1Deck.SendBottom(cards);
         }
 
         Deck player2Deck = new Deck(Store.decks[index].id, Store.decks[index].Name);
         foreach (Cards cards in Store.decks[index].cards)
         {
-            player2Deck.SendButtom(cards);
+            player2Deck.SendBottom(cards);
         }
         player1 = new Player(player1Deck);
         player2 = new Player(player2Deck);
@@ -124,8 +121,8 @@ public class Game
     public void PlayCard(Cards card, GameObject panel)
     {
         activePlayer.hand.Remove(card);
-        activePlayer.field.SendButtom(card);
-        context.board.Add(card);
+        activePlayer.field.SendBottom(card);
+        Context.board.SendBottom(card);
         ActiveEffect();
         UpdatePoints();
         passTurn();
@@ -136,12 +133,12 @@ public class Game
         if (IsPlayer1Playing())
         {
             activePlayer = player2;
-            context.triggerPlayer = player2.id;
+            Context.triggerPlayer = player2.id;
         }
         else
         {
             activePlayer = player1;
-            context.triggerPlayer = player1.id;
+            Context.triggerPlayer = player1.id;
         }
     }
 
@@ -232,21 +229,21 @@ public class Game
             if (player1.hand.cards.Count < 10)
             {
                 player1Cards.Add(card1);
-                player1.hand.SendButtom(card1);
+                player1.hand.SendBottom(card1);
             }
             else
             {
-                player1.graveyard.SendButtom(card1);
+                player1.graveyard.SendBottom(card1);
             }
 
             if (player2.hand.cards.Count < 10)
             {
                 player2Cards.Add(card2);
-                player2.hand.SendButtom(card2);
+                player2.hand.SendBottom(card2);
             }
             else
             {
-                player2.graveyard.SendButtom(card2);
+                player2.graveyard.SendBottom(card2);
             }
 
         }
