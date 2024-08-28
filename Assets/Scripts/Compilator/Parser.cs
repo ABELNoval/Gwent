@@ -321,34 +321,18 @@ namespace Console
                 switch (PreviousExp().value)
                 {
                     case "Field":
-                        left = new FieldList();
-                        break;
                     case "Deck":
-                        left = new DeckList();
-                        break;
                     case "Hand":
-                        left = new HandList();
-                        break;
                     case "Graveyard":
-                        left = new GraveyardList();
-                        break;
                     case "Board":
-                        left = new BoardList();
+                        left = new MethodListNode(PreviousExp().value);
                         break;
+
                     case "FieldOfPlayer":
-                        left = new FieldList(ParseExpression());
-                        Expect(TokenType.RightParenthesis);
-                        break;
                     case "DeckOfPlayer":
-                        left = new DeckList(ParseExpression());
-                        Expect(TokenType.RightParenthesis);
-                        break;
                     case "HandOfPlayer":
-                        left = new HandList(ParseExpression());
-                        Expect(TokenType.RightParenthesis);
-                        break;
                     case "GraveyardOfPlayer":
-                        left = new GraveyardList(ParseExpression());
+                        left = new MethodListNode(PreviousExp().value, ParseExpression());
                         Expect(TokenType.RightParenthesis);
                         break;
                 }

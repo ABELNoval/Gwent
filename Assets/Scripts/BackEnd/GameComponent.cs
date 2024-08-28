@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Console
         public abstract Cards Pop();
         public abstract void SendBottom(Cards card);
         public abstract void Remove(Cards card);
+        public abstract List<Cards> Find(Predicate<Cards> predicate);
         public void Shuffle()
         {
             for (int i = 0; i < cards.Count; i++)

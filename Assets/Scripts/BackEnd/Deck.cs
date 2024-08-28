@@ -54,7 +54,7 @@ namespace Console
             }
         }
 
-        public List<Cards> Find(Predicate<Cards> predicate)
+        public override List<Cards> Find(Predicate<Cards> predicate)
         {
             return cards.FindAll(predicate);
         }
