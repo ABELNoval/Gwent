@@ -97,13 +97,13 @@ public class Game
             }
             index = i;
         }
-        Deck player1Deck = new Deck(selectedDeck.id, selectedDeck.name);
+        Deck player1Deck = new Deck(selectedDeck.id, selectedDeck.Name);
         foreach (Cards cards in selectedDeck.cards)
         {
             player1Deck.SendButtom(cards);
         }
 
-        Deck player2Deck = new Deck(Store.decks[index].id, Store.decks[index].name);
+        Deck player2Deck = new Deck(Store.decks[index].id, Store.decks[index].Name);
         foreach (Cards cards in Store.decks[index].cards)
         {
             player2Deck.SendButtom(cards);

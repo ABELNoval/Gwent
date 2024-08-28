@@ -16,20 +16,20 @@ namespace Console
         BuffSiege,
         Climate
     }
-    public class Field
+    public class Field : GameComponent
     {
-        System.Random random = new System.Random();
-        public List<Cards> cards = new List<Cards>();
 
-        public void SendButtom(Cards card)
+        public override void SendBottom(Cards card)
         {
             cards.Add(card);
         }
 
-        public void Push(Cards card)
+        public override void Push(Cards card)
         {
-            List<Cards> listResult = new List<Cards>();
-            listResult.Add(card);
+            List<Cards> listResult = new List<Cards>
+            {
+                card
+            };
             foreach (Cards c in cards)
             {
                 listResult.Add(c);
@@ -37,7 +37,7 @@ namespace Console
             cards = listResult;
         }
 
-        public void Remove(Cards card)
+        public override void Remove(Cards card)
         {
             cards.Remove(card);
         }
@@ -47,24 +47,7 @@ namespace Console
             return cards.FindAll(predicate);
         }
 
-        public void Shuffle()
-        {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                int a = random.Next(0, cards.Count);
-                int b = random.Next(0, cards.Count);
-                Swap(a, b);
-            }
-        }
-
-        private void Swap(int a, int b)
-        {
-            Cards aux = cards[a];
-            cards[a] = cards[b];
-            cards[b] = aux;
-        }
-
-        public Cards Pop()
+        public override Cards Pop()
         {
             Cards card = cards[0];
             cards.Remove(card);

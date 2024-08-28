@@ -43,7 +43,7 @@ namespace Console
                 effectData = new EffectData((string)onActValue.EffectData.Name.Evaluate(null, null));
             }
             PosAction posAction = null;
-            if (onActValue.Selector != null)
+            if (onActValue.PosAction != null)
             {
                 posAction = BuildPosAction(onActValue.PosAction);
             }

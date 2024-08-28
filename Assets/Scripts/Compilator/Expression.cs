@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Gwent_Proyect.Assets.Scripts.Compilator;
+using Unity.VisualScripting;
 
 namespace Console
 {
 
     public abstract class ExpressionNode
     {
+        public abstract void SetProperty(ExpressionNode property);
         public abstract object Evaluate(Context context, List<Cards> target);
     }
 
@@ -15,6 +18,7 @@ namespace Console
         public Token Operator { get; }
         public ExpressionNode left { get; set; }
         public ExpressionNode right { get; set; }
+        public override void SetProperty(ExpressionNode property) { }
 
         public BinaryExpressionNode(ExpressionNode left, Token Operator, ExpressionNode right)
         {
@@ -32,14 +36,15 @@ namespace Console
                 TokenType.Multiply => (int)left.Evaluate(context, target) * (int)right.Evaluate(context, target),
                 TokenType.Divide => (int)left.Evaluate(context, target) / (int)right.Evaluate(context, target),
                 TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(context, target), (int)right.Evaluate(context, target)),
-                TokenType.Equals => (int)left.Evaluate(context, target) == (int)right.Evaluate(context, target),
-                TokenType.NotEquals => (int)left.Evaluate(context, target) != (int)right.Evaluate(context, target),
+                TokenType.Equals => left.Evaluate(context, target) == right.Evaluate(context, target),
+                TokenType.NotEquals => left.Evaluate(context, target) != right.Evaluate(context, target),
                 TokenType.LessThan => (int)left.Evaluate(context, target) < (int)right.Evaluate(context, target),
                 TokenType.GreaterThan => (int)left.Evaluate(context, target) > (int)right.Evaluate(context, target),
                 TokenType.LessThanOrEqual => (int)left.Evaluate(context, target) <= (int)right.Evaluate(context, target),
                 TokenType.GreaterThanOrEqual => (int)left.Evaluate(context, target) >= (int)right.Evaluate(context, target),
                 TokenType.LogicalAnd => (bool)left.Evaluate(context, target) && (bool)right.Evaluate(context, target),
                 TokenType.LogicalOr => (bool)left.Evaluate(context, target) || (bool)right.Evaluate(context, target),
+                TokenType.Dot => (IdentifierNode)left.Evaluate(context, target),
                 _ => throw new Exception("Operador no valido"),
             };
 
@@ -49,6 +54,7 @@ namespace Console
     public class LiteralNode : ExpressionNode
     {
         public object value { get; }
+        public override void SetProperty(ExpressionNode property) { }
 
         public LiteralNode(object value)
         {
@@ -69,6 +75,7 @@ namespace Console
         {
             this.body = body;
         }
+        public override void SetProperty(ExpressionNode property) { }
 
         public override object Evaluate(Context context, List<Cards> target)
         {
@@ -84,6 +91,7 @@ namespace Console
     {
         public ExpressionNode condition { get; }
         public List<ExpressionNode> body { get; }
+        public override void SetProperty(ExpressionNode property) { }
 
         public WhileNode(ExpressionNode condition, List<ExpressionNode> body)
         {
@@ -105,7 +113,7 @@ namespace Console
     {
         public string value { get; }
         public string type { get; }
-        public List<ExpressionNode> properties { get; }
+        public ExpressionNode property { get; private set; }
 
         public IdentifierNode(string value, string type)
         {
@@ -113,35 +121,44 @@ namespace Console
             this.type = type;
         }
 
-        public void AddProperty(ExpressionNode expression)
+        public override void SetProperty(ExpressionNode property)
         {
-            properties.Add(expression);
+            if (this.property != null)
+            {
+                this.property.SetProperty(property);
+                return;
+            }
+            this.property = property;
         }
+
+        // public override void SetValue(GlobalContext context, List<Cards> targets, object value)
+        // {
+
+        // }
 
         public override object Evaluate(Context context, List<Cards> target)
         {
+            if (property == null)
+                return property.Evaluate(context, target);
             return value;
         }
     }
 
     public class AssignamentNode : ExpressionNode
     {
-        public IdentifierNode identifier { get; }
+        public ExpressionNode identifier { get; }
         public ExpressionNode value { get; private set; }
+        public override void SetProperty(ExpressionNode property) { }
 
-        public AssignamentNode(IdentifierNode identifier)
+        public AssignamentNode(ExpressionNode identifier, ExpressionNode value)
         {
             this.identifier = identifier;
-        }
-
-        public void SetValue(ExpressionNode value)
-        {
             this.value = value;
         }
 
         public override object Evaluate(Context context, List<Cards> target)
         {
-            var val = value.Evaluate(context, target);
+            identifier.SetValue(context, target, value.Evaluate(context, target));
             return val;
         }
 
@@ -149,38 +166,105 @@ namespace Console
 
     public class MethodAccessNode : ExpressionNode
     {
-        public string identifier { get; }
-        public List<ExpressionNode> parameters { get; }
+        public string name { get; }
+        public ExpressionNode parameter { get; private set; }
+        public ExpressionNode property { get; private set; }
 
-        public MethodAccessNode(string identifier)
+        public MethodAccessNode(string name)
         {
-            this.identifier = identifier;
+            this.name = name;
+        }
+
+        public override void SetProperty(ExpressionNode property)
+        {
+            if (this.property != null)
+            {
+                this.property.SetProperty(property);
+                return;
+            }
+            this.property = property;
         }
 
         public void AddParameter(ExpressionNode parameter)
         {
-            parameters.Add(parameter);
+            this.parameter = parameter;
         }
 
         public override object Evaluate(Context context, List<Cards> target)
         {
+            if (parameter == null)
+            {
+                return name switch
+                {
+                    "Field" => context.Field,
+                    "Deck" => context.Deck,
+                    "Hand" => context.Hand,
+                    "Graveyard" => context.Graveyard,
+                    "Board" => context.board,
+                    _ => throw new Exception("Unknown method"),
+                };
+            }
+            else
+            {
+                return name switch
+                {
+                    "FieldOfPlayer" => context.FieldOfPlayer((Guid)parameter.Evaluate(context, target)),
+                    "DeckOfPlayer" => context.DeckOfPlayer((Guid)parameter.Evaluate(context, target)),
+                    "HandOfPlayer" => context.HandOfPlayer((Guid)parameter.Evaluate(context, target)),
+                    "GraveyardOfPlayer" => context.GraveyardOfPlayer((Guid)parameter.Evaluate(context, target)),
+                    _ => throw new Exception("Unknown method"),
+                };
+            }
             throw new NotImplementedException();
         }
     }
 
     public class ListNode : ExpressionNode
     {
-        public string identifier { get; }
-        public List<ExpressionNode> members { get; }
+        public ExpressionNode left { get; }
+        public ExpressionNode arg { get; }
+        public ExpressionNode property { get; private set; }
 
-        public ListNode(string identifier)
+        public ListNode(ExpressionNode left, ExpressionNode arg)
         {
-            this.identifier = identifier;
+            this.arg = arg;
+            this.left = left;
         }
 
-        public void AddMember(ExpressionNode member)
+        public override void SetProperty(ExpressionNode property)
         {
-            members.Add(member);
+            if (this.property != null)
+            {
+                this.property.SetProperty(property);
+                return;
+            }
+            this.property = property;
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            return ((List<Cards>)property.Evaluate(context, target))[(int)arg.Evaluate(context, target)];
+        }
+    }
+
+    public class PropertyAccessNode : ExpressionNode
+    {
+        public string name { get; }
+        public ExpressionNode property { get; private set; }
+
+        public PropertyAccessNode(string name)
+        {
+            this.name = name;
+        }
+
+        public override void SetProperty(ExpressionNode property)
+        {
+            if (this.property != null)
+            {
+                this.property.SetProperty(property);
+                return;
+            }
+            this.property = property;
         }
 
         public override object Evaluate(Context context, List<Cards> target)

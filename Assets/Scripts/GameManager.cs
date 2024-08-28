@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
         {
             ChangesToCreateDeck();
             InstantiateAllCardsOfTheDeck(game.selectedDeck);
-            deckManager = new DeckManager(game.selectedDeck.cards.Count, game.GoldCardCant(game.selectedDeck), game.SilverCardCant(game.selectedDeck), createDeck, game.selectedDeck.name);
+            deckManager = new DeckManager(game.selectedDeck.cards.Count, game.GoldCardCant(game.selectedDeck), game.SilverCardCant(game.selectedDeck), createDeck, game.selectedDeck.Name);
         }
         else
         {
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(deckName);
         if (deckName != "")
         {
-            game.selectedDeck.name = deckName;
+            game.selectedDeck.Name = deckName;
         }
         Store.AddOrEditDeck(game.selectedDeck);
         Discard();

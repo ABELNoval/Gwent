@@ -4,6 +4,100 @@
       "id": "b7b06643-0ad5-41dd-94ab-68ece81c75d2",
       "cards": [
         {
+          "owner": "00000000-0000-0000-0000-000000000000",
+          "name": "Prueba1",
+          "type": "Oro",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Melee",
+            "Siege"
+          ],
+          "attack": 12,
+          "img": "Art/Images/Nanami",
+          "onActivation": [
+            {
+              "effect": {
+                "name": "Draw",
+                "properties": [
+                  {
+                    "Item1": "Amount",
+                    "Item2": 5
+                  }
+                ]
+              },
+              "selector": {
+                "source": "board",
+                "single": false,
+                "predicate": "(unit) => unit.Faction == Source"
+              },
+              "posAction": {
+                "type": "ReturnToDeck",
+                "selector": {
+                  "source": "parent",
+                  "single": false,
+                  "predicate": "(unit) => unit.Power < 1"
+                }
+              }
+            },
+            {
+              "effect": {
+                "name": "Kill",
+                "properties": null
+              },
+              "selector": null,
+              "posAction": null
+            }
+          ]
+        },
+        {
+          "owner": "00000000-0000-0000-0000-000000000000",
+          "name": "Prueba1",
+          "type": "Oro",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Melee",
+            "Siege"
+          ],
+          "attack": 12,
+          "img": "Art/Images/Nanami",
+          "onActivation": [
+            {
+              "effect": {
+                "name": "Draw",
+                "properties": [
+                  {
+                    "Item1": "Amount",
+                    "Item2": 5
+                  }
+                ]
+              },
+              "selector": {
+                "source": "board",
+                "single": false,
+                "predicate": "(unit) => unit.Faction == Source"
+              },
+              "posAction": {
+                "type": "ReturnToDeck",
+                "selector": {
+                  "source": "parent",
+                  "single": false,
+                  "predicate": "(unit) => unit.Power < 1"
+                }
+              }
+            },
+            {
+              "effect": {
+                "name": "Kill",
+                "properties": null
+              },
+              "selector": null,
+              "posAction": null
+            }
+          ]
+        },
+        {
           "owner": "d9c9899b-e838-47cb-84a0-41d4e70edee3",
           "name": "Nanami Kento",
           "type": "Normal",

@@ -231,7 +231,7 @@ namespace Console
 
                     case TokenType.Identifier:
                         AdvanceExp();
-                        return ParseIdentifier(null);
+                        return ParseAssignment();
 
                     case TokenType.String:
                     case TokenType.Number:
@@ -239,7 +239,7 @@ namespace Console
                         string value = currentExpression.value;
                         AdvanceExp();
                         ExpectExp(TokenType.Identifier);
-                        return ParseIdentifier(value);
+                        return ParseIdentifier();
 
                     case TokenType.LeftParenthesis:
                         AdvanceExp();
@@ -263,11 +263,44 @@ namespace Console
             }
             else
             {
-                throw new Exception("");
+                throw new Exception("Expression no valida");
             }
         }
 
-        private ExpressionNode ParseIdentifier(string type)
+        private ExpressionNode ParseAssignment()
+        {
+            var left = ParseIdentifier();
+            while (expPosition < expression.Count && MatchExp(TokenType.Dot))
+            {
+                var right = ParseListAccess();
+                left.SetProperty(right);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseIdentifier()
+        {
+            var left = ParseListAccess();
+            while (expPosition < expression.Count && MatchExp(TokenType.Dot))
+            {
+                var right = ParseListAccess();
+                left.SetProperty(right);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseListAccess()
+        {
+            var left = ParseMethodAccess();
+            if (expPosition < expression.Count && MatchExp(TokenType.LeftBracket))
+            {
+                left = new ListNode(left, ParseExpression());
+                ExpectExp(TokenType.RightBracket);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseMethodAccess()
         {
             List<TokenType> methodTypes = new List<TokenType>()
             {
@@ -281,67 +314,36 @@ namespace Console
                 TokenType.Field,
                 TokenType.Graveyard
             };
-
-            List<TokenType> propertiesTypes = new List<TokenType>()
+            var left = ParsePropertyAccess();
+            if (expPosition < expression.Count && MatchExp(methodTypes))
             {
-                TokenType.Name,
+                left = new MethodAccessNode(PreviousExp().value);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParsePropertyAccess()
+        {
+            List<TokenType> propertyTypes = new List<TokenType>()
+            {
                 TokenType.Power,
                 TokenType.Faction,
-                TokenType.Range,
+                TokenType.Name,
                 TokenType.Type,
-                TokenType.OnActivation,
-                TokenType.Deck,
-                TokenType.Identifier
+                TokenType.Range,
             };
-
-            IdentifierNode node = new(Previous().value, type);
-            while (expPosition < expression.Count && MatchExp(TokenType.Dot))
+            if (expPosition < expression.Count && MatchExp(propertyTypes))
             {
-                if (MatchExp(methodTypes))
-                {
-                    node.AddProperty(ParseMethodAccess(node.value));
-                }
-                else if (MatchExp(propertiesTypes))
-                {
-                    var property = new IdentifierNode(PreviousExp().value, null);
-                    node.AddProperty(property);
-                }
+                var left = new PropertyAccessNode(PreviousExp().value);
+                return left;
             }
-            return node;
-        }
-
-        private ExpressionNode ParseMethodAccess(string value)
-        {
-            MethodAccessNode node = new(value);
-
-            while (!MatchExp(TokenType.RightParenthesis))
+            else
             {
-                ExpressionNode param = ParseExpression();
-                node.AddParameter(param);
-                MatchExp(TokenType.Comma);
+                var left = new IdentifierNode(currentExpression.value, null);
+                return left;
             }
-            return node;
         }
 
-        private ExpressionNode ParseListAccess(string value)
-        {
-            ListNode node = new(value);
-
-            while (!MatchExp(TokenType.RightBracket))
-            {
-                ExpressionNode member = ParseExpression();
-                node.AddMember(member);
-            }
-            return node;
-        }
-
-        private ExpressionNode ParseAssignment(string identifier)
-        {
-            AssignamentNode node = new(new IdentifierNode(identifier, null));
-            ExpressionNode value = ParseExpression();
-            node.SetValue(value);
-            return node;
-        }
 
         private ExpressionNode ParseIncrement(string value)
         {

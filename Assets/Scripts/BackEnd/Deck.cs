@@ -5,44 +5,25 @@ using UnityEngine;
 namespace Console
 {
     [Serializable]
-    public class Deck
+    public class Deck : GameComponent
     {
         public Guid id;
-        private System.Random random = new System.Random();
-        public List<Cards> cards = new List<Cards>();
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public Deck(Guid id, string name)
         {
             this.id = id;
-            this.name = name;
+            this.Name = name;
         }
 
-        public void SendButtom(Cards card)
+        public override void SendBottom(Cards card)
         {
             cards.Add(card);
         }
 
-        public void Remove(Cards card)
+        public override void Remove(Cards card)
         {
             cards.Remove(card);
-        }
-
-        public void Shuffle()
-        {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                int a = random.Next(0, cards.Count);
-                int b = random.Next(0, cards.Count);
-                Swap(a, b);
-            }
-        }
-
-        private void Swap(int a, int b)
-        {
-            Cards aux = cards[a];
-            cards[a] = cards[b];
-            cards[b] = aux;
         }
 
         public Cards DrawCard()
@@ -78,14 +59,14 @@ namespace Console
             return cards.FindAll(predicate);
         }
 
-        public Cards Pop()
+        public override Cards Pop()
         {
             Cards card = cards[0];
             cards.RemoveAt(0);
             return card;
         }
 
-        public void Push(Cards card)
+        public override void Push(Cards card)
         {
             List<Cards> listResult = new List<Cards>
             {
