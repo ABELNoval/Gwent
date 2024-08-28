@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Unity.Properties;
 using System.Diagnostics;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 
 namespace Console
 {
@@ -270,10 +271,10 @@ namespace Console
         private ExpressionNode ParseAssignment()
         {
             var left = ParseIdentifier();
-            while (expPosition < expression.Count && MatchExp(TokenType.Dot))
+            while (expPosition < expression.Count && MatchExp(TokenType.Assign))
             {
-                var right = ParseListAccess();
-                left.SetProperty(right);
+                var right = ParseIdentifier();
+                left = new AssignamentNode(left, right);
             }
             return left;
         }
@@ -284,7 +285,7 @@ namespace Console
             while (expPosition < expression.Count && MatchExp(TokenType.Dot))
             {
                 var right = ParseListAccess();
-                left.SetProperty(right);
+                left = new IdentifierNode(left, right);
             }
             return left;
         }
@@ -317,7 +318,40 @@ namespace Console
             var left = ParsePropertyAccess();
             if (expPosition < expression.Count && MatchExp(methodTypes))
             {
-                left = new MethodAccessNode(PreviousExp().value);
+                switch (PreviousExp().value)
+                {
+                    case "Field":
+                        left = new FieldList();
+                        break;
+                    case "Deck":
+                        left = new DeckList();
+                        break;
+                    case "Hand":
+                        left = new HandList();
+                        break;
+                    case "Graveyard":
+                        left = new GraveyardList();
+                        break;
+                    case "Board":
+                        left = new BoardList();
+                        break;
+                    case "FieldOfPlayer":
+                        left = new FieldList(ParseExpression());
+                        Expect(TokenType.RightParenthesis);
+                        break;
+                    case "DeckOfPlayer":
+                        left = new DeckList(ParseExpression());
+                        Expect(TokenType.RightParenthesis);
+                        break;
+                    case "HandOfPlayer":
+                        left = new HandList(ParseExpression());
+                        Expect(TokenType.RightParenthesis);
+                        break;
+                    case "GraveyardOfPlayer":
+                        left = new GraveyardList(ParseExpression());
+                        Expect(TokenType.RightParenthesis);
+                        break;
+                }
             }
             return left;
         }

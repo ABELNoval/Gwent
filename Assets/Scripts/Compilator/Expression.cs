@@ -62,7 +62,7 @@ namespace Console
     public class DeckList : ExpressionNode
     {
         ExpressionNode player { get; }
-        public DeckList(ExpressionNode player)
+        public DeckList(ExpressionNode player = null)
         {
             this.player = player;
         }
@@ -80,7 +80,7 @@ namespace Console
     public class HandList : ExpressionNode
     {
         ExpressionNode player { get; }
-        public HandList(ExpressionNode player)
+        public HandList(ExpressionNode player = null)
         {
             this.player = player;
         }
@@ -98,7 +98,7 @@ namespace Console
     public class FieldList : ExpressionNode
     {
         ExpressionNode player { get; }
-        public FieldList(ExpressionNode player)
+        public FieldList(ExpressionNode player = null)
         {
             this.player = player;
         }
@@ -116,7 +116,7 @@ namespace Console
     public class GraveyardList : ExpressionNode
     {
         ExpressionNode player { get; }
-        public GraveyardList(ExpressionNode player)
+        public GraveyardList(ExpressionNode player = null)
         {
             this.player = player;
         }
@@ -260,60 +260,4 @@ namespace Console
         }
 
     }
-
-    public class MethodAccessNode : ExpressionNode
-    {
-        public string name { get; }
-        public ExpressionNode parameter { get; private set; }
-        public ExpressionNode property { get; private set; }
-
-        public MethodAccessNode(string name)
-        {
-            this.name = name;
-        }
-
-        public override void SetProperty(ExpressionNode property)
-        {
-            if (this.property != null)
-            {
-                this.property.SetProperty(property);
-                return;
-            }
-            this.property = property;
-        }
-
-        public void AddParameter(ExpressionNode parameter)
-        {
-            this.parameter = parameter;
-        }
-
-        public override object Evaluate(Context context, List<Cards> target)
-        {
-            if (parameter == null)
-            {
-                return name switch
-                {
-                    "Field" => context.Field,
-                    "Deck" => context.Deck,
-                    "Hand" => context.Hand,
-                    "Graveyard" => context.Graveyard,
-                    "Board" => context.board,
-                    _ => throw new Exception("Unknown method"),
-                };
-            }
-            else
-            {
-                return name switch
-                {
-                    "FieldOfPlayer" => context.FieldOfPlayer((Guid)parameter.Evaluate(context, target)),
-                    "DeckOfPlayer" => context.DeckOfPlayer((Guid)parameter.Evaluate(context, target)),
-                    "HandOfPlayer" => context.HandOfPlayer((Guid)parameter.Evaluate(context, target)),
-                    "GraveyardOfPlayer" => context.GraveyardOfPlayer((Guid)parameter.Evaluate(context, target)),
-                    _ => throw new Exception("Unknown method"),
-                };
-            }
-            throw new NotImplementedException();
-        }
-    }
-
 }
