@@ -147,13 +147,13 @@ namespace Console
                 case IdentifierNode:
                     if ((expression as IdentifierNode).type != null)
                     {
-                        if (context.ConteinsSymbol((expression as IdentifierNode).value))
+                        if (context.ConteinsSymbol((expression as IdentifierNode).Name))
                         {
-                            return context.LookupSymbol((expression as IdentifierNode).value).Item1;
+                            return context.LookupSymbol((expression as IdentifierNode).Name).Item1;
                         }
-                        else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).value))
+                        else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
                         {
-                            return context.parentContext.LookupSymbol((expression as IdentifierNode).value).Item1;
+                            return context.parentContext.LookupSymbol((expression as IdentifierNode).Name).Item1;
                         }
                         else
                         {
@@ -189,7 +189,7 @@ namespace Console
                     context.DefineSymbol(name, right, (expression as AssignamentNode).value);
                     return right;
 
-                case MethodAccessNode:
+                case MethodListNode:
                 case ListNode:
                 case ForNode:
                 case WhileNode:

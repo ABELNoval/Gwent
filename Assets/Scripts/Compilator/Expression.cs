@@ -269,10 +269,12 @@ namespace Console
     public class IdentifierNode : ExpressionNode
     {
         public string Name { get; }
+        public Type type { get; }
         public ExpressionNode property { get; private set; } // Puede ser un MethodExpression, ListExpression, etc.
 
-        public IdentifierNode(string name, ExpressionNode property = null)
+        public IdentifierNode(string name, Type type = null, ExpressionNode property = null)
         {
+            this.type = type;
             Name = name;
             this.property = property;
         }
