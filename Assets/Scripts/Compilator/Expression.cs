@@ -9,7 +9,8 @@ namespace Console
 
     public abstract class ExpressionNode
     {
-        public abstract object Evaluate(Context context, List<Cards> target);
+        public abstract void SetValue(GlobalContext context, List<Cards> target, object value, int arg);
+        public abstract object Evaluate(GlobalContext context, List<Cards> target);
     }
 
     //BinaryExpression
@@ -18,6 +19,7 @@ namespace Console
         public Token Operator { get; }
         public ExpressionNode left { get; set; }
         public ExpressionNode right { get; set; }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
         public BinaryExpressionNode(ExpressionNode left, Token Operator, ExpressionNode right)
         {
@@ -26,7 +28,7 @@ namespace Console
             this.right = right;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return Operator.type switch
             {
@@ -53,9 +55,10 @@ namespace Console
 
     public class BoardList : ExpressionNode
     {
-        public override object Evaluate(Context context, List<Cards> targets)
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
+        public override object Evaluate(GlobalContext context, List<Cards> targets)
         {
-            return context.board;
+            return Context.board;
         }
     }
 
@@ -66,14 +69,15 @@ namespace Console
         {
             this.player = player;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             if (player != null)
             {
-                return context.DeckOfPlayer((Player)player.Evaluate(context, target));
+                return Context.DeckOfPlayer((Player)player.Evaluate(context, target));
             }
-            return context.Deck;
+            return Context.Deck;
         }
     }
 
@@ -84,14 +88,15 @@ namespace Console
         {
             this.player = player;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             if (player != null)
             {
-                return context.HandOfPlayer((Player)player.Evaluate(context, target));
+                return Context.HandOfPlayer((Player)player.Evaluate(context, target));
             }
-            return context.Hand;
+            return Context.Hand;
         }
     }
 
@@ -102,14 +107,15 @@ namespace Console
         {
             this.player = player;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             if (player != null)
             {
-                return context.FieldOfPlayer((Player)player.Evaluate(context, target));
+                return Context.FieldOfPlayer((Player)player.Evaluate(context, target));
             }
-            return context.Field;
+            return Context.Field;
         }
     }
 
@@ -120,14 +126,15 @@ namespace Console
         {
             this.player = player;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             if (player != null)
             {
-                return context.GraveyardOfPlayer((Player)player.Evaluate(context, target));
+                return Context.GraveyardOfPlayer((Player)player.Evaluate(context, target));
             }
-            return context.Graveyard;
+            return Context.Graveyard;
         }
     }
 
@@ -142,7 +149,12 @@ namespace Console
             this.list = list;
         }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg)
+        {
+            list.SetValue(context, target, value, (int)this.arg.Evaluate(context, target));
+        }
+
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return ((List<Cards>)list.Evaluate(context, target))[(int)arg.Evaluate(context, target)];
         }
@@ -151,14 +163,13 @@ namespace Console
     public class LiteralNode : ExpressionNode
     {
         public object value { get; }
-        public override void SetProperty(ExpressionNode property) { }
-
         public LiteralNode(object value)
         {
             this.value = value;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             return value;
         }
@@ -172,9 +183,9 @@ namespace Console
         {
             this.body = body;
         }
-        public override void SetProperty(ExpressionNode property) { }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -188,15 +199,15 @@ namespace Console
     {
         public ExpressionNode condition { get; }
         public List<ExpressionNode> body { get; }
-        public override void SetProperty(ExpressionNode property) { }
 
         public WhileNode(ExpressionNode condition, List<ExpressionNode> body)
         {
             this.condition = condition;
             this.body = body;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
             foreach (var expression in body)
             {
@@ -208,36 +219,40 @@ namespace Console
 
     public class IdentifierNode : ExpressionNode
     {
-        public string value { get; }
-        public string type { get; }
-        public ExpressionNode property { get; private set; }
+        public string Name { get; }
+        public ExpressionNode Property { get; private set; } // Puede ser un MethodExpression, ListExpression, etc.
 
-        public IdentifierNode(string value, string type)
+        public IdentifierNode(string name, ExpressionNode property = null)
         {
-            this.value = value;
-            this.type = type;
+            Name = name;
+            Property = property;
         }
 
-        public override void SetProperty(ExpressionNode property)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
-            if (this.property != null)
+            // Evaluar el contexto base, p. ej., context o cualquier objeto base
+            var baseValue = context.LookupSymbol(Name);
+
+            // Evaluar la propiedad si existe
+            if (Property != null)
             {
-                this.property.SetProperty(property);
-                return;
+                return Property.Evaluate(context, target); // Esto recursivamente evalúa Hand(), [1], Power
             }
-            this.property = property;
+
+            return baseValue;
         }
 
-        // public override void SetValue(GlobalContext context, List<Cards> targets, object value)
-        // {
-
-        // }
-
-        public override object Evaluate(Context context, List<Cards> target)
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg)
         {
-            if (property == null)
-                return property.Evaluate(context, target);
-            return value;
+            if (Property != null)
+            {
+                Property.SetValue(context, target, value, arg); // Propaga la asignación hacia la propiedad correcta
+            }
+            else
+            {
+                // Asignar directamente si es el valor final
+                context.DefineSymbol(Name, value.GetType(), value);
+            }
         }
     }
 
@@ -245,19 +260,17 @@ namespace Console
     {
         public ExpressionNode identifier { get; }
         public ExpressionNode value { get; private set; }
-        public override void SetProperty(ExpressionNode property) { }
 
         public AssignamentNode(ExpressionNode identifier, ExpressionNode value)
         {
             this.identifier = identifier;
             this.value = value;
         }
+        public override void SetValue(GlobalContext context, List<Cards> target, object value, int arg) { }
 
-        public override object Evaluate(Context context, List<Cards> target)
+        public override object Evaluate(GlobalContext context, List<Cards> target)
         {
-            identifier.SetValue(context, target, value.Evaluate(context, target));
-            return val;
+            return null;
         }
-
     }
 }

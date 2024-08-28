@@ -285,7 +285,7 @@ namespace Console
             while (expPosition < expression.Count && MatchExp(TokenType.Dot))
             {
                 var right = ParseListAccess();
-                left = new IdentifierNode(left, right);
+                left = new IdentifierNode(left, null, right);
             }
             return left;
         }
