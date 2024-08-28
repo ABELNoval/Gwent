@@ -17,48 +17,44 @@ namespace Console
             this.triggerPlayer = triggerPlayer;
         }
 
-        public Hand HandOfPlayer(Guid id)
+        public Hand HandOfPlayer(Player player)
         {
-            Player player = findPlayer(id);
             return player.hand;
         }
 
-        public Deck DeckOfPlayer(Guid id)
+        public Deck DeckOfPlayer(Player player)
         {
-            Player player = findPlayer(id);
             return player.deck;
         }
 
-        public Field FieldOfPlayer(Guid id)
+        public Field FieldOfPlayer(Player player)
         {
-            Player player = findPlayer(id);
             return player.field;
         }
 
-        public Graveyard GraveyardOfPlayer(Guid id)
+        public Graveyard GraveyardOfPlayer(Player player)
         {
-            Player player = findPlayer(id);
             return player.graveyard;
         }
 
         public Deck Deck
         {
-            get { return DeckOfPlayer(triggerPlayer); }
+            get { return DeckOfPlayer(findPlayer(triggerPlayer)); }
         }
 
         public Hand Hand
         {
-            get { return HandOfPlayer(triggerPlayer); }
+            get { return HandOfPlayer(findPlayer(triggerPlayer)); }
         }
 
         public Field Field
         {
-            get { return FieldOfPlayer(triggerPlayer); }
+            get { return FieldOfPlayer(findPlayer(triggerPlayer)); }
         }
 
         public Graveyard Graveyard
         {
-            get { return GraveyardOfPlayer(triggerPlayer); }
+            get { return GraveyardOfPlayer(findPlayer(triggerPlayer)); }
         }
     }
 }

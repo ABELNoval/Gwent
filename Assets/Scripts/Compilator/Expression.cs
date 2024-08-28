@@ -18,7 +18,6 @@ namespace Console
         public Token Operator { get; }
         public ExpressionNode left { get; set; }
         public ExpressionNode right { get; set; }
-        public override void SetProperty(ExpressionNode property) { }
 
         public BinaryExpressionNode(ExpressionNode left, Token Operator, ExpressionNode right)
         {
@@ -52,146 +51,102 @@ namespace Console
     }
 
 
-
-    public abstract class List : ExpressionNode
+    public class BoardList : ExpressionNode
     {
-        public Token accessToken;
-        public GameComponent gameComponent;
-
-        public List(Token accesToken)
-        {
-            this.accessToken = accesToken;
-        }
-    }
-
-    // List of cards on the board
-    public class BoardList : List
-    {
-        public BoardList(ExpressionNode context, Token accessToken) : base(accessToken)
-        {
-            this.context = context;
-        }
-        public ExpressionNode context;
         public override object Evaluate(Context context, List<Cards> targets)
         {
-            return context.board.cards;
+            return context.board;
         }
     }
 
-    // Abstract class for lists specific to a player
-    public abstract class IndividualList : List
+    public class DeckList : ExpressionNode
     {
-        //This field isn't used in the evaluation method, it is only for the semnatic check
-        //This is why in cases where a semantic check isn't needed it will have null value
-        public ExpressionNode context;
-        public Token playertoken;
-        public ExpressionNode player;
-        public IndividualList(ExpressionNode context, ExpressionNode player, Token accessToken, Token playertoken) : base(accessToken)
+        ExpressionNode player { get; }
+        public DeckList(ExpressionNode player)
         {
-            this.context = context;
             this.player = player;
-            this.playertoken = playertoken;
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            if (player != null)
+            {
+                return context.DeckOfPlayer((Player)player.Evaluate(context, target));
+            }
+            return context.Deck;
         }
     }
 
-    // List of cards in a player's hand
-    public class HandList : IndividualList
+    public class HandList : ExpressionNode
     {
-        public HandList(ExpressionNode context, ExpressionNode player, Token accessToken, Token playertoken) : base(context, player, accessToken, playertoken) { }
-
-        public override object Evaluate(Context context, List<Card> targets)
+        ExpressionNode player { get; }
+        public HandList(ExpressionNode player)
         {
-            Player targetPlayer = (Player)player.Evaluate(context, targets);
-            gameComponent = GlobalContext.Hand(targetPlayer);
-            return gameComponent.cards;
+            this.player = player;
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            if (player != null)
+            {
+                return context.HandOfPlayer((Player)player.Evaluate(context, target));
+            }
+            return context.Hand;
         }
     }
 
-    // List of cards in a player's deck
-    public class DeckList : IndividualList
+    public class FieldList : ExpressionNode
     {
-        public DeckList(ExpressionNode context, ExpressionNode player, Token accessToken, Token playertoken) : base(context, player, accessToken, playertoken) { }
-
-        public override object Evaluate(Context context, List<Card> targets)
+        ExpressionNode player { get; }
+        public FieldList(ExpressionNode player)
         {
-            Player targetPlayer = (Player)player.Evaluate(context, targets);
-            gameComponent = GlobalContext.Deck(targetPlayer);
-            return gameComponent.cards;
+            this.player = player;
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            if (player != null)
+            {
+                return context.FieldOfPlayer((Player)player.Evaluate(context, target));
+            }
+            return context.Field;
         }
     }
 
-    // List of cards in a player's graveyard
-    public class GraveyardList : IndividualList
+    public class GraveyardList : ExpressionNode
     {
-        public GraveyardList(ExpressionNode context, ExpressionNode player, Token accessToken, Token playertoken) : base(context, player, accessToken, playertoken) { }
-
-        public override object Evaluate(Context context, List<Card> targets)
+        ExpressionNode player { get; }
+        public GraveyardList(ExpressionNode player)
         {
-            Player targetPlayer = (Player)player.Evaluate(context, targets);
-            gameComponent = GlobalContext.Graveyard(targetPlayer);
-            return gameComponent.cards;
+            this.player = player;
+        }
+
+        public override object Evaluate(Context context, List<Cards> target)
+        {
+            if (player != null)
+            {
+                return context.GraveyardOfPlayer((Player)player.Evaluate(context, target));
+            }
+            return context.Graveyard;
         }
     }
 
-    // List of cards in a player's field
-    public class FieldList : IndividualList
+    public class ListNode : ExpressionNode
     {
-        public FieldList(ExpressionNode context, ExpressionNode player, Token accessToken, Token playertoken) : base(context, player, accessToken, playertoken) { }
+        public ExpressionNode list { get; }
+        public ExpressionNode arg { get; }
 
-        public override object Evaluate(Context context, List<Card> targets)
+        public ListNode(ExpressionNode list, ExpressionNode arg)
         {
-            Player targetPlayer = (Player)player.Evaluate(context, targets);
-            gameComponent = GlobalContext.Field(targetPlayer);
-            return gameComponent.cards;
-        }
-    }
-
-    // List of cards filtered by a predicate
-    public class ListFind : List
-    {
-        public ListFind() : base(null) { }
-
-        public ListFind(ExpressionNode list, ExpressionNode predicate, Token parameter, Token accessToken, Token argumentToken) : base(accessToken)
-        {
+            this.arg = arg;
             this.list = list;
-            this.predicate = predicate;
-            this.parameter = parameter;
-            this.argumentToken = argumentToken;
         }
 
-        public IExpression list;
-        public IExpression predicate;
-        public Token parameter;
-        public Token argumentToken;
-
-        public override object Evaluate(Context context, List<Card> targets)
+        public override object Evaluate(Context context, List<Cards> target)
         {
-            // Save the variable value if it exists in the context
-            object card = 0;
-            List<Card> result = new List<Card>();
-            bool usedvariable = false;
-            if (context.variables.ContainsKey(parameter.lexeme))
-            {
-                card = context.variables[parameter.lexeme];
-                usedvariable = true;
-            }
-
-            // Evaluate the predicate for each card in the list
-            foreach (Card listcard in (List<Card>)list.Evaluate(context, targets))
-            {
-                context.Set(parameter, listcard);
-                if ((bool)predicate.Evaluate(context, targets)) result.Add(listcard);
-            }
-
-            // Restore the original variable value if it was used
-            if (usedvariable) context.Set(parameter, card);
-            else context.variables.Remove(parameter.lexeme);
-
-            return result;
+            return ((List<Cards>)list.Evaluate(context, target))[(int)arg.Evaluate(context, target)];
         }
     }
-
-
 
     public class LiteralNode : ExpressionNode
     {
@@ -358,34 +313,6 @@ namespace Console
                 };
             }
             throw new NotImplementedException();
-        }
-    }
-
-    public class ListNode : ExpressionNode
-    {
-        public ExpressionNode left { get; }
-        public ExpressionNode arg { get; }
-        public ExpressionNode property { get; private set; }
-
-        public ListNode(ExpressionNode left, ExpressionNode arg)
-        {
-            this.arg = arg;
-            this.left = left;
-        }
-
-        public override void SetProperty(ExpressionNode property)
-        {
-            if (this.property != null)
-            {
-                this.property.SetProperty(property);
-                return;
-            }
-            this.property = property;
-        }
-
-        public override object Evaluate(Context context, List<Cards> target)
-        {
-            return ((List<Cards>)property.Evaluate(context, target))[(int)arg.Evaluate(context, target)];
         }
     }
 
