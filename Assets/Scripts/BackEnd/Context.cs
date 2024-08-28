@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using System;
 using System.Collections.Generic;
 
@@ -8,11 +9,11 @@ namespace Console
         public delegate Player FindPlayer(Guid id);
         public event FindPlayer findPlayer;
         public Guid triggerPlayer { get; set; }
-        public List<Cards> board { get; set; }
+        public Board board { get; set; }
 
-        public Context(List<Cards> board, Guid triggerPlayer)
+        public Context(List<Cards> cards, Guid triggerPlayer)
         {
-            this.board = board;
+            board.cards = cards;
             this.triggerPlayer = triggerPlayer;
         }
 
