@@ -213,6 +213,11 @@ public class GameManager : MonoBehaviour
         List<Token> Tokens = lexer.Analyze();
         Parser parser = new(Tokens);
         ProgramNode node = parser.Parse();
+        if (node is EffectNode)
+        {
+            Store.AddEffect(node as EffectNode);
+            return;
+        }
         SemanticAnalyzer semanticAnalyzer = new();
         semanticAnalyzer.CheckCardNode(node as CardNode, new GlobalContext());
         Cards card = buildNode.BuildCard(node as CardNode);

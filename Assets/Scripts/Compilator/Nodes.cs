@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 namespace Console
 {
+    [Serializable]
     public class ProgramNode
     {
         public Dictionary<string, object> properties = new Dictionary<string, object>();
@@ -142,9 +143,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, ExpressionNode)> Parameters
+        public List<(string, Type)> Parameters
         {
-            get => GetProperty<List<(string, ExpressionNode)>>("Parameters");
+            get => GetProperty<List<(string, Type)>>("Parameters");
             set => SetProperty("Parameters", value);
         }
 
@@ -270,9 +271,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, ExpressionNode)> Params
+        public List<(string, Type)> Params
         {
-            get => GetProperty<List<(string, ExpressionNode)>>("Params");
+            get => GetProperty<List<(string, Type)>>("Params");
             private set => SetProperty("Params", value);
         }
 

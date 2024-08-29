@@ -11,7 +11,7 @@ namespace Console
     {
         public const string file = "dataGame.json";
         public static List<Deck> decks { get; private set; }
-        public static List<Effect> effects { get; private set; }
+        public static List<EffectNode> effects { get; private set; }
         public delegate void ChangeDecks();
         public static event ChangeDecks changeDecks;
 
@@ -36,9 +36,9 @@ namespace Console
             changeDecks();
         }
 
-        public static void AddEffect(Effect effect)
+        public static void AddEffect(EffectNode effect)
         {
-            throw new NotImplementedException();
+            effects.Add(effect);
         }
 
         private static void LoadFromJSON()
@@ -57,7 +57,7 @@ namespace Console
             {
                 Debug.LogWarning("El archivo JSON no existe. Inicializando datos vacíos");
                 decks = new List<Deck>();
-                effects = new List<Effect>();
+                effects = new List<EffectNode>();
             }
         }
 
@@ -84,6 +84,6 @@ namespace Console
     class StoreData
     {
         public List<Deck> decks;
-        public List<Effect> effects;
+        public List<EffectNode> effects;
     }
 }

@@ -2,6 +2,8 @@
   "decks": [
     {
       "id": "b7b06643-0ad5-41dd-94ab-68ece81c75d2",
+      "random": {},
+      "owner": null,
       "cards": [
         {
           "owner": "00000000-0000-0000-0000-000000000000",
@@ -13,7 +15,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 12,
+          "power": 12,
           "img": "Art/Images/Nanami",
           "onActivation": [
             {
@@ -60,7 +62,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 12,
+          "power": 12,
           "img": "Art/Images/Nanami",
           "onActivation": [
             {
@@ -106,7 +108,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Nanami",
           "onActivation": null
         },
@@ -119,7 +121,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Nanami",
           "onActivation": null
         },
@@ -133,7 +135,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 7,
+          "power": 7,
           "img": "Art/Images/Yuki",
           "onActivation": null
         },
@@ -147,7 +149,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 9,
+          "power": 9,
           "img": "Art/Images/Yuki",
           "onActivation": null
         },
@@ -160,7 +162,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Panda",
           "onActivation": null
         },
@@ -173,7 +175,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Panda",
           "onActivation": null
         },
@@ -186,7 +188,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 6,
+          "power": 6,
           "img": "Art/Images/Itadori",
           "onActivation": null
         },
@@ -199,7 +201,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 6,
+          "power": 6,
           "img": "Art/Images/Itadori",
           "onActivation": null
         },
@@ -212,7 +214,7 @@
           "range": [
             "Buff"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Energia Maldita(potenciador)",
           "onActivation": null
         },
@@ -225,7 +227,7 @@
           "range": [
             "Buff"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Energia Maldita(potenciador)",
           "onActivation": null
         },
@@ -238,7 +240,7 @@
           "range": [
             "Range"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Megumi",
           "onActivation": null
         },
@@ -251,7 +253,7 @@
           "range": [
             "Range"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Megumi",
           "onActivation": null
         },
@@ -264,7 +266,7 @@
           "range": [
             "Range"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Nobara",
           "onActivation": null
         },
@@ -278,7 +280,7 @@
             "Melee",
             "Range"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Maki",
           "onActivation": null
         },
@@ -292,7 +294,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Yuta",
           "onActivation": null
         },
@@ -306,7 +308,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Yuta",
           "onActivation": null
         },
@@ -319,7 +321,7 @@
           "range": [
             "Range"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Nobara",
           "onActivation": null
         },
@@ -333,7 +335,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 4,
+          "power": 4,
           "img": "Art/Images/Hakari",
           "onActivation": null
         },
@@ -347,7 +349,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 4,
+          "power": 4,
           "img": "Art/Images/Hakari",
           "onActivation": null
         },
@@ -360,7 +362,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Expansion de Gojo",
           "onActivation": null
         },
@@ -373,7 +375,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Expansion de Hakari",
           "onActivation": null
         },
@@ -386,7 +388,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Expansion de Yuta",
           "onActivation": null
         },
@@ -399,7 +401,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Impacto Externo",
           "onActivation": null
         },
@@ -414,7 +416,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Buggi Buggi",
           "onActivation": null
         },
@@ -429,7 +431,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 10,
+          "power": 10,
           "img": "Art/Images/Gojo",
           "onActivation": null
         },
@@ -443,29 +445,18 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Maki",
           "onActivation": null
         }
       ],
-      "name": "Source"
+      "Name": "Source"
     },
     {
       "id": "26157bfb-f071-46fb-89ca-35a0dd3a1ab3",
+      "random": {},
+      "owner": null,
       "cards": [
-        {
-          "owner": "00000000-0000-0000-0000-000000000000",
-          "name": "Hanami",
-          "type": "Normal",
-          "description": "...",
-          "faction": "Curse",
-          "range": [
-            "Melee"
-          ],
-          "attack": 5,
-          "img": "Art/Images/Hanami",
-          "onActivation": null
-        },
         {
           "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Jogo",
@@ -475,7 +466,7 @@
           "range": [
             "Range"
           ],
-          "attack": 7,
+          "power": 7,
           "img": "Art/Images/Jogo",
           "onActivation": null
         },
@@ -488,7 +479,7 @@
           "range": [
             "Range"
           ],
-          "attack": 7,
+          "power": 7,
           "img": "Art/Images/Jogo",
           "onActivation": null
         },
@@ -502,7 +493,7 @@
             "Melee",
             "Range"
           ],
-          "attack": 6,
+          "power": 6,
           "img": "Art/Images/Kenjaku",
           "onActivation": null
         },
@@ -516,7 +507,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Toji",
           "onActivation": null
         },
@@ -530,7 +521,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Toji",
           "onActivation": null
         },
@@ -543,7 +534,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Dagon",
           "onActivation": null
         },
@@ -557,7 +548,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 7,
+          "power": 7,
           "img": "Art/Images/Kashimo",
           "onActivation": null
         },
@@ -571,7 +562,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 7,
+          "power": 7,
           "img": "Art/Images/Kashimo",
           "onActivation": null
         },
@@ -584,7 +575,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Expansion de Sukuna",
           "onActivation": null
         },
@@ -597,7 +588,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Expansion de Jogo",
           "onActivation": null
         },
@@ -610,7 +601,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Uzumaki",
           "onActivation": null
         },
@@ -624,7 +615,7 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Mahoraga",
           "onActivation": null
         },
@@ -637,7 +628,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Hanami",
           "onActivation": null
         },
@@ -651,7 +642,7 @@
             "Melee",
             "Range"
           ],
-          "attack": 6,
+          "power": 6,
           "img": "Art/Images/Kenjaku",
           "onActivation": null
         },
@@ -664,7 +655,7 @@
           "range": [
             "Melee"
           ],
-          "attack": 5,
+          "power": 5,
           "img": "Art/Images/Dagon",
           "onActivation": null
         },
@@ -677,7 +668,7 @@
           "range": [
             "Climate"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Impacto Externo",
           "onActivation": null
         },
@@ -692,7 +683,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 0,
+          "power": 0,
           "img": "Art/Images/Buggi Buggi",
           "onActivation": null
         },
@@ -707,7 +698,7 @@
             "Range",
             "Siege"
           ],
-          "attack": 10,
+          "power": 10,
           "img": "Art/Images/Sukuna",
           "onActivation": null
         },
@@ -721,18 +712,14 @@
             "Melee",
             "Siege"
           ],
-          "attack": 8,
+          "power": 8,
           "img": "Art/Images/Mahoraga",
           "onActivation": null
         }
       ],
-      "name": "Curse"
-    },
-    {
-      "id": "d0a82c0c-a490-4c7c-8659-68b8a53eca8f",
-      "cards": [],
-      "name": "Prueba"
+      "Name": "Curse"
     }
   ],
-  "effects": []
+  "effects": [
+  ]
 }

@@ -59,7 +59,7 @@ namespace Console
             int points = 0;
             foreach (Cards card in cards)
             {
-                points += card.attack;
+                points += card.power;
             }
             return points;
         }

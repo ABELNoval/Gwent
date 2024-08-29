@@ -20,7 +20,7 @@ public class PanelCardInformation : MonoBehaviour
         cardName.text = card.name;
         cardImage.sprite = Resources.Load<Sprite>(card.img);
         cardDescription.text = card.description;
-        cardPower.text = card.attack.ToString();
+        cardPower.text = card.power.ToString();
         effect.text = Effect();
     }
 

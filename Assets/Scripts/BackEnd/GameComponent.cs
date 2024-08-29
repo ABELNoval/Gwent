@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Console
 {
-    public abstract class GameComponent : MonoBehaviour
+    public abstract class GameComponent
     {
         public System.Random random = new System.Random();
         public Player owner;
-        public List<Cards> cards;
+        public List<Cards> cards = new List<Cards>();
         public abstract void Push(Cards card);
         public abstract Cards Pop();
         public abstract void SendBottom(Cards card);
@@ -29,11 +29,6 @@ namespace Console
             Cards aux = cards[a];
             cards[a] = cards[b];
             cards[b] = aux;
-        }
-
-        void Awake()
-        {
-            cards = new List<Cards>();
         }
     }
 }

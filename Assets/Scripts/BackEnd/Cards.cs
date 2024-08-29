@@ -12,18 +12,18 @@ namespace Console
         public string description { get; set; }
         public string faction { get; set; }
         public List<string> range { get; set; }
-        public int attack { get; set; }
+        public int power { get; set; }
         public string img { get; set; }
         public List<OnActivation> onActivation { get; set; }
 
-        public Cards(string name, string type, string description, string faction, List<string> range, int attack, string img, List<OnActivation> onActivation)
+        public Cards(string name, string type, string description, string faction, List<string> range, int power, string img, List<OnActivation> onActivation)
         {
             this.name = name;
             this.type = type;
             this.description = description;
             this.range = range;
             this.faction = faction;
-            this.attack = attack;
+            this.power = power;
             this.img = img;
             this.onActivation = onActivation;
         }

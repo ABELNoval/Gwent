@@ -176,14 +176,14 @@ namespace Console
                     return leftExpression;
 
                 case AssignamentNode:
-                    string name = (string)(expression as AssignamentNode).identifier.Evaluate(null, null);
+                    string name = (string)(expression as AssignamentNode).identifier.Evaluate(null, null, null);
                     Type right = CheckExpression((expression as AssignamentNode).value, context);
                     if (context.ConteinsSymbol(name))
                     {
                         Type left = context.LookupSymbol(name).Item1;
                         if (left != right)
                             throw new Exception("The two expressions aren't the same type");
-                        context.DefineSymbol((string)(expression as AssignamentNode).identifier.Evaluate(null, null), right, (expression as AssignamentNode).value);
+                        context.DefineSymbol((string)(expression as AssignamentNode).identifier.Evaluate(null, null, null), right, (expression as AssignamentNode).value);
                         return left;
                     }
                     context.DefineSymbol(name, right, (expression as AssignamentNode).value);

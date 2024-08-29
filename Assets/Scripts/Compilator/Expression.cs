@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 
 namespace Console
 {
-
+    [Serializable]
     public abstract class ExpressionNode
     {
         public abstract void SetProperty(ExpressionNode property);
@@ -175,6 +175,7 @@ namespace Console
 
     public class PropertyNode : ExpressionNode
     {
+        public Cards card { get; private set; }
         public string Name { get; }
 
         public PropertyNode(string name)
@@ -182,16 +183,44 @@ namespace Console
             Name = name;
         }
 
-        public void SetCard(Cards cards)
+        public void SetCard(Cards card)
         {
-
+            this.card = card;
         }
 
         public override void SetProperty(ExpressionNode property) { }
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
-            throw new NotImplementedException();
+            switch (Name)
+            {
+                case "Power":
+                    if (value != null)
+                        card.power = (int)value;
+                    return card.power;
+                case "Faction":
+                    if (value != null)
+                        card.faction = (string)value;
+                    return card.faction;
+                case "Type":
+                    if (value != null)
+                        card.type = (string)value;
+                    return card.type;
+                case "Range":
+                    if (value != null)
+                        card.range = (List<string>)value;
+                    return card.range;
+                case "Name":
+                    if (value != null)
+                        card.name = (string)value;
+                    return card.name;
+                case "Owner":
+                    if (value != null)
+                        card.owner = (Guid)value;
+                    return card.owner;
+                default:
+                    throw new Exception("Propiedad no encontrado");
+            };
         }
     }
 
@@ -230,7 +259,7 @@ namespace Console
     {
         public string Name { get; }
         public Type type { get; }
-        public ExpressionNode property { get; private set; } // Puede ser un MethodExpression, ListExpression, etc.
+        public ExpressionNode property { get; private set; }
 
         public IdentifierNode(string name, Type type = null)
         {
@@ -252,6 +281,8 @@ namespace Console
         {
             if (property != null)
             {
+                if (property is PropertyNode)
+                    ((PropertyNode)property).SetCard((Cards)context.LookupSymbol(Name).Item2);
                 return property.Evaluate(context, target, value);
             }
             return context.LookupSymbol(Name);
@@ -273,7 +304,7 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
-            return identifier.Evaluate(context, target, this.value);
+            return identifier.Evaluate(context, target, this.value.Evaluate(context, target, value));
         }
     }
 

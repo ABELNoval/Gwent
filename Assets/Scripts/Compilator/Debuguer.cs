@@ -61,25 +61,20 @@ public class Debuguer : MonoBehaviour
     //     //     []
     //     // }";
 
-    //     string input2 = @"
-    //         effect
-    //         {
-    //             Name: ""Damage"",
-    //             Params:
-    //             {
-    //                 amount: Number
-    //             },
-    //             Action: (targets, context) =>
-    //             {
-    //                 for target in targets
-    //                 {
-    //                     i = 1;
-    //                     while(i++ < amount)
-    //                         target.Power = 1;
-    //                 };
-    //             }
-    //         }
-    //     ";
+    string input2 = @"
+             effect
+             {
+                 Name: ""Damage"",
+                 Params:
+                 {
+                     amount: Number
+                 },
+                 Action: (targets, context) =>
+                 {
+                    context.Hand[1].Power = 3;
+                 }
+             }
+         ";
     //     Lexer lexer1 = new Lexer(input);
     //     List<Token> Tokens = lexer1.Analyze();
     //     Lexer lexer2 = new Lexer(input2);
