@@ -274,7 +274,7 @@ namespace Console
         private ExpressionNode ParseAssignment()
         {
             var left = ParseIdentifier();
-            while (expPosition < expression.Count && MatchExp(TokenType.Assign))
+            if (expPosition < expression.Count && MatchExp(TokenType.Assign))
             {
                 var right = ParseIdentifier();
                 left = new AssignamentNode(left, right);

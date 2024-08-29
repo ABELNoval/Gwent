@@ -62,7 +62,7 @@ public class Debuguer : MonoBehaviour
     //     // }";
 
     string input2 = @"
-             effect
+        effect
              {
                  Name: ""Damage"",
                  Params:

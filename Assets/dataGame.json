@@ -721,5 +721,107 @@
     }
   ],
   "effects": [
+    {
+      "properties": {
+        "Name": {
+          "$type": "Console.LiteralNode, Assembly-CSharp",
+          "value": ""
+        },
+        "Parameters": {
+          "$type": "System.Collections.Generic.List`1[[System.ValueTuple`2[[System.String, mscorlib],[System.Type, mscorlib]], mscorlib]], mscorlib",
+          "$values": [
+            {
+              "Item1": "amount",
+              "Item2": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            }
+          ]
+        },
+        "Action": {
+          "$type": "Console.ActionNode, Assembly-CSharp",
+          "properties": {},
+          "expressions": [
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.IdentifierNode, Assembly-CSharp",
+                    "Name": "Hand",
+                    "type": null,
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Power"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "3",
+                "type": null,
+                "property": null
+              }
+            }
+          ]
+        }
+      },
+      "Name": {
+        "$type": "Console.LiteralNode, Assembly-CSharp",
+        "value": ""
+      },
+      "Parameters": [
+        {
+          "Item1": "amount",
+          "Item2": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+        }
+      ],
+      "Action": {
+        "properties": {},
+        "expressions": [
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.IdentifierNode, Assembly-CSharp",
+                  "Name": "Hand",
+                  "type": null,
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Power"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "3",
+              "type": null,
+              "property": null
+            }
+          }
+        ]
+      }
+    }
   ]
 }
