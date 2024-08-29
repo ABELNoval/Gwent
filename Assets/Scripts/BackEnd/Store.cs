@@ -43,12 +43,16 @@ namespace Console
 
         private static void LoadFromJSON()
         {
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
             string path = Path.Combine(Application.dataPath, file);
             Debug.Log($"{path}");
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
-                StoreData storeData = JsonConvert.DeserializeObject<StoreData>(json);
+                StoreData storeData = JsonConvert.DeserializeObject<StoreData>(json, settings);
                 decks = storeData.decks;
                 effects = storeData.effects;
                 Debug.Log("Datos cargados correctamente desde el archivo JSON");
@@ -63,13 +67,17 @@ namespace Console
 
         private static void SaveFromJSON()
         {
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
             string path = Path.Combine(Application.dataPath, file);
             StoreData storeData = new StoreData
             {
                 decks = decks,
                 effects = effects
             };
-            string json = JsonConvert.SerializeObject(storeData, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(storeData, Formatting.Indented, settings);
             File.WriteAllText(path, json);
             Debug.Log("Datos guardados correctamente en el archivo JSON");
         }

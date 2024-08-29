@@ -7,13 +7,13 @@ using Unity.VisualScripting;
 
 namespace Console
 {
-    [Serializable]
     public abstract class ExpressionNode
     {
         public abstract void SetProperty(ExpressionNode property);
         public abstract object Evaluate(GlobalContext context, List<Cards> target, object value);
     }
 
+    [Serializable]
     //BinaryExpression
     public class BinaryExpressionNode : ExpressionNode
     {
@@ -53,6 +53,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class MethodListNode : ExpressionNode
     {
         public string name { get; }
@@ -112,6 +113,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class MethodCardNode : ExpressionNode
     {
         public string name { get; }
@@ -173,6 +175,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class PropertyNode : ExpressionNode
     {
         public Cards card { get; private set; }
@@ -224,6 +227,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class ListNode : ExpressionNode
     {
         public ExpressionNode list { get; }
@@ -255,6 +259,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class IdentifierNode : ExpressionNode
     {
         public string Name { get; }
@@ -289,6 +294,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class AssignamentNode : ExpressionNode
     {
         public ExpressionNode identifier { get; }
@@ -308,6 +314,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class LiteralNode : ExpressionNode
     {
         public object value { get; }
@@ -323,6 +330,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class ForNode : ExpressionNode
     {
         public List<ExpressionNode> body { get; }
@@ -344,6 +352,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class WhileNode : ExpressionNode
     {
         public ExpressionNode condition { get; }
