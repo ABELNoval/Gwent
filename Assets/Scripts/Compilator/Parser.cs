@@ -399,6 +399,7 @@ namespace Console
             else
             {
                 var left = new IdentifierNode(currentExpression.value, null);
+                AdvanceExp();
                 return left;
             }
         }
@@ -766,18 +767,6 @@ namespace Console
                 return true;
             }
             return false;
-        }
-
-        private Token PeekNext()
-        {
-            if (position < input.Count - 1)
-            {
-                return input[position + 1];
-            }
-            else
-            {
-                throw new Exception("Llegaste al limite del input");
-            }
         }
 
         private void Advance()

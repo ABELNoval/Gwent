@@ -721,34 +721,5 @@
     }
   ],
   "effects": [
-    {
-      "properties": {
-        "Name": {
-          "$type": "Console.LiteralNode, Assembly-CSharp",
-          "value": "Damage"
-        },
-        "Parameters": {
-          "$type": "System.Collections.Generic.List`1[[System.ValueTuple`2[[System.String, mscorlib],[System.Type, mscorlib]], mscorlib]], mscorlib",
-          "$values": [
-            {
-              "Item1": "amount",
-              "Item2": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-            }
-          ]
-        },
-        "Action": {
-          "$type": "Console.ActionNode, Assembly-CSharp",
-          "properties": {},
-          "expressions": [
-            {
-              "$type": "Console.IdentifierNode, Assembly-CSharp",
-              "Name": "context",
-              "type": null,
-              "property": null
-            }
-          ]
-        }
-      }
-    }
   ]
 }

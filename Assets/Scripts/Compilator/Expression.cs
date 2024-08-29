@@ -68,7 +68,7 @@ namespace Console
 
         public override void SetProperty(ExpressionNode property)
         {
-            if (property != null)
+            if (this.property != null)
             {
                 this.property.SetProperty(property);
                 return;
@@ -133,7 +133,7 @@ namespace Console
 
         public override void SetProperty(ExpressionNode property)
         {
-            if (property != null)
+            if (this.property != null)
             {
                 this.property.SetProperty(property);
                 return;
@@ -242,7 +242,7 @@ namespace Console
 
         public override void SetProperty(ExpressionNode property)
         {
-            if (property != null)
+            if (this.property != null)
             {
                 this.property.SetProperty(property);
                 return;
@@ -274,7 +274,7 @@ namespace Console
 
         public override void SetProperty(ExpressionNode property)
         {
-            if (property != null)
+            if (this.property != null)
             {
                 this.property.SetProperty(property);
                 return;
