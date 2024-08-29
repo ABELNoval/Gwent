@@ -310,7 +310,7 @@ namespace Console
             {
                 TokenType.Board,
                 TokenType.DeckOfPlayer,
-                TokenType.FieldOfPLayer,
+                TokenType.FieldOfPlayer,
                 TokenType.GraveyardOfPlayer,
                 TokenType.HandOfPlayer,
                 TokenType.Hand,
@@ -319,6 +319,8 @@ namespace Console
                 TokenType.Graveyard
             };
             var left = ParseMethodCardAccess();
+            expPosition -= 2;
+            AdvanceExp();
             if (expPosition < expression.Count && MatchExp(methodTypes))
             {
                 switch (PreviousExp().value)
@@ -340,6 +342,10 @@ namespace Console
                         break;
                 }
             }
+            else
+            {
+                AdvanceExp();
+            }
             return left;
         }
 
@@ -355,6 +361,8 @@ namespace Console
                 TokenType.Remove,
             };
             var left = ParsePropertyAccess();
+            expPosition -= 2;
+            AdvanceExp();
             if (expPosition < expression.Count && MatchExp(methodTypes))
             {
                 string name = PreviousExp().value;
@@ -376,6 +384,10 @@ namespace Console
                         Expect(TokenType.RightParenthesis);
                         break;
                 }
+            }
+            else
+            {
+                AdvanceExp();
             }
             return left;
         }

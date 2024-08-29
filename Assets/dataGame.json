@@ -725,7 +725,7 @@
       "properties": {
         "Name": {
           "$type": "Console.LiteralNode, Assembly-CSharp",
-          "value": ""
+          "value": "Damage"
         },
         "Parameters": {
           "$type": "System.Collections.Generic.List`1[[System.ValueTuple`2[[System.String, mscorlib],[System.Type, mscorlib]], mscorlib]], mscorlib",
@@ -749,9 +749,8 @@
                 "property": {
                   "$type": "Console.ListNode, Assembly-CSharp",
                   "list": {
-                    "$type": "Console.IdentifierNode, Assembly-CSharp",
-                    "Name": "Hand",
-                    "type": null,
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "Hand",
                     "property": null
                   },
                   "arg": {
@@ -777,7 +776,7 @@
       },
       "Name": {
         "$type": "Console.LiteralNode, Assembly-CSharp",
-        "value": ""
+        "value": "Damage"
       },
       "Parameters": [
         {
@@ -797,9 +796,8 @@
               "property": {
                 "$type": "Console.ListNode, Assembly-CSharp",
                 "list": {
-                  "$type": "Console.IdentifierNode, Assembly-CSharp",
-                  "Name": "Hand",
-                  "type": null,
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "Hand",
                   "property": null
                 },
                 "arg": {

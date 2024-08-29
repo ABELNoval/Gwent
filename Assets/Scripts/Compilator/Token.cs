@@ -5,7 +5,7 @@ namespace Console
         //Palabras clave del juego
         card, effect, Name, Params, Action, Type, Power, Faction, Range, OnActivation,
         Selector, Effect, Amount, Single, Source, Predicate, PosAction, Target, Context,
-        Board, TriggerPlayer, HandOfPlayer, FieldOfPLayer, GraveyardOfPlayer, DeckOfPlayer,
+        Board, TriggerPlayer, HandOfPlayer, FieldOfPlayer, GraveyardOfPlayer, DeckOfPlayer,
         Hand, Deck, Field, Graveyard, Owner, Find, Shuffle, Pop, Push, SendBottom, Remove,
 
         //Palabras claves extras

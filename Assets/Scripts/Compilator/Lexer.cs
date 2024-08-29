@@ -351,6 +351,36 @@ namespace Console
                 case "targets":
                     return new Token(TokenType.Target, identifier);
 
+                case "Hand":
+                    return new Token(TokenType.Hand, identifier);
+                case "HandofPlayer":
+                    return new Token(TokenType.HandOfPlayer, identifier);
+                case "Deck":
+                    return new Token(TokenType.Deck, identifier);
+                case "DeckOfPlayer":
+                    return new Token(TokenType.DeckOfPlayer, identifier);
+                case "Field":
+                    return new Token(TokenType.Field, identifier);
+                case "FieldOfPlayer":
+                    return new Token(TokenType.FieldOfPlayer, identifier);
+                case "Graveyard":
+                    return new Token(TokenType.Graveyard, identifier);
+                case "GraveyardOfPlayer":
+                    return new Token(TokenType.GraveyardOfPlayer, identifier);
+
+                case "Pop":
+                    return new Token(TokenType.Pop, identifier);
+                case "Push":
+                    return new Token(TokenType.Push, identifier);
+                case "SendBottom":
+                    return new Token(TokenType.SendBottom, identifier);
+                case "Remove":
+                    return new Token(TokenType.Remove, identifier);
+                case "Find":
+                    return new Token(TokenType.Find, identifier);
+                case "Shuffle":
+                    return new Token(TokenType.Shuffle, identifier);
+
                 case "for":
                     return new Token(TokenType.for_Token, identifier);
                 case "while":
