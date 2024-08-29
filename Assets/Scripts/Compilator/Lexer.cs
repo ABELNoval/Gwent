@@ -14,7 +14,7 @@ namespace Console
         public Lexer(string input)
         {
             this.input = input;
-            this.position = 0;
+            position = 0;
             currentCharacter = input[position];
         }
 
@@ -350,8 +350,6 @@ namespace Console
                     return new Token(TokenType.Action, identifier);
                 case "targets":
                     return new Token(TokenType.Target, identifier);
-                case "context":
-                    return new Token(TokenType.Context, identifier);
 
                 case "for":
                     return new Token(TokenType.for_Token, identifier);
@@ -371,9 +369,15 @@ namespace Console
                 case "string":
                     return new Token(TokenType.String, identifier);
                 case "int":
-                    return new Token(TokenType.Number, identifier);
+                    return new Token(TokenType.Int, identifier);
                 case "bool":
                     return new Token(TokenType.Boolean, identifier);
+                case "Number":
+                    return new Token(TokenType.Number, identifier);
+                case "String":
+                    return new Token(TokenType.Str, identifier);
+                case "Bool":
+                    return new Token(TokenType.Bool, identifier);
 
                 default:
                     return new Token(TokenType.Identifier, identifier);

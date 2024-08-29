@@ -43,7 +43,7 @@ namespace Console
             effectTokenHandlers = new Dictionary<TokenType, Action<ProgramNode>>()
             {
                 {TokenType.Name, HandleName},
-                {TokenType.Params, HandleParams},
+                {TokenType.Params, HandleParameters},
                 {TokenType.Action, HandleAction}
             };
 
@@ -231,16 +231,20 @@ namespace Console
                         return number;
 
                     case TokenType.Identifier:
-                        AdvanceExp();
                         return ParseAssignment();
 
                     case TokenType.String:
-                    case TokenType.Number:
-                    case TokenType.Boolean:
-                        string value = currentExpression.value;
-                        AdvanceExp();
                         ExpectExp(TokenType.Identifier);
-                        return ParseIdentifier();
+                        // TODO: Check(string identifier = "value")
+                        return new IdentifierNode(currentExpression.value, typeof(string));
+                    case TokenType.Number:
+                        ExpectExp(TokenType.Identifier);
+                        // TODO: Check(int identifier = value)
+                        return new IdentifierNode(currentExpression.value, typeof(int));
+                    case TokenType.Boolean:
+                        ExpectExp(TokenType.Identifier);
+                        // TODO: Check(bool identifier = true/false)
+                        return new IdentifierNode(currentExpression.value, typeof(bool));
 
                     case TokenType.LeftParenthesis:
                         AdvanceExp();
@@ -257,7 +261,6 @@ namespace Console
                         LiteralNode text = new LiteralNode(currentExpression.value);
                         AdvanceExp();
                         return text;
-
                     default:
                         throw new Exception("Token indefinido");
                 }
@@ -292,7 +295,7 @@ namespace Console
 
         private ExpressionNode ParseListAccess()
         {
-            var left = ParseMethodAccess();
+            var left = ParseMethodListAccess();
             if (expPosition < expression.Count && MatchExp(TokenType.LeftBracket))
             {
                 left = new ListNode(left, ParseExpression());
@@ -301,7 +304,7 @@ namespace Console
             return left;
         }
 
-        private ExpressionNode ParseMethodAccess()
+        private ExpressionNode ParseMethodListAccess()
         {
             List<TokenType> methodTypes = new List<TokenType>()
             {
@@ -315,7 +318,7 @@ namespace Console
                 TokenType.Field,
                 TokenType.Graveyard
             };
-            var left = ParsePropertyAccess();
+            var left = ParseMethodCardAccess();
             if (expPosition < expression.Count && MatchExp(methodTypes))
             {
                 switch (PreviousExp().value)
@@ -340,6 +343,43 @@ namespace Console
             return left;
         }
 
+        private ExpressionNode ParseMethodCardAccess()
+        {
+            List<TokenType> methodTypes = new List<TokenType>()
+            {
+                TokenType.Shuffle,
+                TokenType.Pop,
+                TokenType.Push,
+                TokenType.Find,
+                TokenType.SendBottom,
+                TokenType.Remove,
+            };
+            var left = ParsePropertyAccess();
+            if (expPosition < expression.Count && MatchExp(methodTypes))
+            {
+                string name = PreviousExp().value;
+                switch (name)
+                {
+                    case "Find":
+                    case "Push":
+                    case "Remove":
+                    case "SendBottom":
+                        ExpectExp(TokenType.LeftParenthesis);
+                        left = new MethodCardNode(name, ParseExpression());
+                        ExpectExp(TokenType.RightParenthesis);
+                        break;
+
+                    case "Pop":
+                    case "Shuffle":
+                        left = new MethodCardNode(PreviousExp().value);
+                        Expect(TokenType.LeftParenthesis);
+                        Expect(TokenType.RightParenthesis);
+                        break;
+                }
+            }
+            return left;
+        }
+
         private ExpressionNode ParsePropertyAccess()
         {
             List<TokenType> propertyTypes = new List<TokenType>()
@@ -349,6 +389,7 @@ namespace Console
                 TokenType.Name,
                 TokenType.Type,
                 TokenType.Range,
+                TokenType.Owner
             };
             if (expPosition < expression.Count && MatchExp(propertyTypes))
             {
@@ -382,6 +423,7 @@ namespace Console
         private void GenerateExpression()
         {
             int cantLeftParen = 0;
+            int cantLeftBracket = 0;
             if (Match(TokenType.while_Token))
             {
                 ParseWhile();
@@ -395,7 +437,7 @@ namespace Console
 
             expression = new List<Token>();
 
-            while (!Match(TokenType.Comma) && !Match(TokenType.Semicolon) && currentToken.type != TokenType.RightBrace && currentToken.type != TokenType.RightBracket && (currentToken.type != TokenType.RightParenthesis || cantLeftParen > 0))
+            while (!Match(TokenType.Comma) && !Match(TokenType.Semicolon) && currentToken.type != TokenType.RightBrace && (currentToken.type != TokenType.RightBracket || cantLeftBracket > 0) && (currentToken.type != TokenType.RightParenthesis || cantLeftParen > 0))
             {
                 if (currentToken.type == TokenType.LeftParenthesis)
                 {
@@ -404,6 +446,14 @@ namespace Console
                 if (currentToken.type == TokenType.RightParenthesis)
                 {
                     cantLeftParen--;
+                }
+                if (currentToken.type == TokenType.LeftBracket)
+                {
+                    cantLeftBracket++;
+                }
+                if (currentToken.type == TokenType.RightBracket)
+                {
+                    cantLeftBracket--;
                 }
                 expression.Add(currentToken);
                 Advance();
@@ -469,6 +519,32 @@ namespace Console
                 Expect(TokenType.Colon);
                 GenerateExpression();
                 node.AddProperty("Params", (identifier.value, ParseExpression()));
+                Match(TokenType.Comma);
+            }
+            Match(TokenType.Comma);
+        }
+
+        private void ParseParameters(ProgramNode node)
+        {
+            node.SetProperty("Parameters", new List<(string, Type)>());
+            while (currentToken.type != TokenType.RightBrace)
+            {
+                Expect(TokenType.Identifier);
+                Token identifier = Previous();
+                Expect(TokenType.Colon);
+                switch (currentToken.type)
+                {
+                    case TokenType.Str:
+                        node.AddProperty("Parameters", (identifier.value, typeof(string)));
+                        break;
+                    case TokenType.Bool:
+                        node.AddProperty("Parameters", (identifier.value, typeof(bool)));
+                        break;
+                    case TokenType.Number:
+                        node.AddProperty("Parameters", (identifier.value, typeof(int)));
+                        break;
+                }
+                Advance();
                 Match(TokenType.Comma);
             }
             Match(TokenType.Comma);
@@ -617,13 +693,12 @@ namespace Console
             Match(TokenType.Comma);
         }
 
-        private void HandleParams(ProgramNode node)
+        private void HandleParameters(ProgramNode node)
         {
             UnityEngine.Debug.Log("Params");
             Expect(TokenType.Colon);
             Expect(TokenType.LeftBrace);
-            Expect(TokenType.Identifier);
-            ParseParams(node);
+            ParseParameters(node);
             Expect(TokenType.RightBrace);
             Match(TokenType.Comma);
         }
@@ -636,7 +711,7 @@ namespace Console
             Expect(TokenType.LeftParenthesis);
             Expect(TokenType.Target);
             Expect(TokenType.Comma);
-            Expect(TokenType.Context);
+            Expect(TokenType.Identifier);
             Expect(TokenType.RightParenthesis);
             Expect(TokenType.Arrow);
             Expect(TokenType.LeftBrace);
