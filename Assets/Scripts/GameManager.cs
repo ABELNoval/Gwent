@@ -8,7 +8,6 @@ using System.Collections;
 using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
 using UnityEngine.Audio;
-using Gwent_Proyect.Assets.Scripts.Compilator;
 
 public class GameManager : MonoBehaviour
 {

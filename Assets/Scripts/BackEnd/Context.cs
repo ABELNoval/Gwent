@@ -9,6 +9,7 @@ namespace Console
         public delegate Player FindPlayer(Guid id);
         public static event FindPlayer findPlayer;
         public static Guid triggerPlayer { get; set; }
+        public static Player secondPlayer { get; set; }
         public static Board board { get; set; }
 
         public static Hand HandOfPlayer(Player player)

@@ -41,6 +41,18 @@ namespace Console
             effects.Add(effect);
         }
 
+        public static EffectNode GetEffectNode(string name)
+        {
+            foreach (var effect in effects)
+            {
+                if ((string)effect.Name.Evaluate(null, null, null) == name)
+                {
+                    return effect;
+                }
+            }
+            return null;
+        }
+
         private static void LoadFromJSON()
         {
             var settings = new JsonSerializerSettings

@@ -136,16 +136,15 @@ namespace Console
 
     public class EffectNode : ProgramNode
     {
-
         public ExpressionNode Name
         {
             get => GetProperty<ExpressionNode>("Name");
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, Type)> Parameters
+        public List<(string, object)> Parameters
         {
-            get => GetProperty<List<(string, Type)>>("Parameters");
+            get => GetProperty<List<(string, object)>>("Parameters");
             set => SetProperty("Parameters", value);
         }
 
@@ -271,9 +270,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, Type)> Params
+        public List<(string, ExpressionNode)> Params
         {
-            get => GetProperty<List<(string, Type)>>("Params");
+            get => GetProperty<List<(string, ExpressionNode)>>("Params");
             private set => SetProperty("Params", value);
         }
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Gwent_Proyect.Assets.Scripts.Compilator
+namespace Console
 {
     public class GlobalContext
     {

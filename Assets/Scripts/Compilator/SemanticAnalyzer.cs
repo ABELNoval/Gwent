@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Gwent_Proyect.Assets.Scripts.Compilator;
 
 namespace Console
 {
@@ -85,6 +84,10 @@ namespace Console
         {
             foreach (var property in node.properties)
             {
+                if (property.Key == "Predicate")
+                {
+                    return;
+                }
                 Type exprectedType = GetExpectedTypeForProperty(property.Key);
                 Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                 if (expType != exprectedType)
@@ -188,7 +191,6 @@ namespace Console
                     }
                     context.DefineSymbol(name, right, (expression as AssignamentNode).value);
                     return right;
-
                 case MethodListNode:
                 case ListNode:
                 case ForNode:

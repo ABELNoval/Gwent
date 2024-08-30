@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using System.Reflection;
-using Gwent_Proyect.Assets.Scripts.Compilator;
 
 public class Debuguer : MonoBehaviour
 {
@@ -29,7 +28,7 @@ public class Debuguer : MonoBehaviour
                  {
                  Source: ""board"",
                          Single: false,
-                         Predicate: ""(unit) => unit.Faction == Source"",
+                         Predicate: (unit) => unit.Faction == Source
                      },
                      PosAction:
                  {
@@ -38,7 +37,7 @@ public class Debuguer : MonoBehaviour
                      {
                      Source: ""parent"",
                              Single: false,
-                             Predicate: ""(unit) => unit.Power < 1""
+                             Predicate: (unit) => unit.Power < 1
                          }
                  }
              },

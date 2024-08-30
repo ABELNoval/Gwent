@@ -6,7 +6,7 @@ namespace Console
         card, effect, Name, Params, Action, Type, Power, Faction, Range, OnActivation,
         Selector, Effect, Amount, Single, Source, Predicate, PosAction, Target, Context,
         Board, TriggerPlayer, HandOfPlayer, FieldOfPlayer, GraveyardOfPlayer, DeckOfPlayer,
-        Hand, Deck, Field, Graveyard, Owner, Find, Shuffle, Pop, Push, SendBottom, Remove,
+        Hand, Deck, Field, Graveyard, Owner, Find, Shuffle, Pop, Push, SendBottom, Remove, ConcatWithEspace, Concat,
 
         //Palabras claves extras
         for_Token, while_Token, foreach_Token, if_Token, in_Token,

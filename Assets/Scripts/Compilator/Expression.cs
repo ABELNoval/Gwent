@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Gwent_Proyect.Assets.Scripts.Compilator;
 using Unity.Properties;
 using Unity.VisualScripting;
 
@@ -287,7 +286,7 @@ namespace Console
             if (property != null)
             {
                 if (property is PropertyNode)
-                    ((PropertyNode)property).SetCard((Cards)context.LookupSymbol(Name).Item2);
+                    ((PropertyNode)property).SetCard(target[0]);
                 return property.Evaluate(context, target, value);
             }
             return context.LookupSymbol(Name);
@@ -327,6 +326,30 @@ namespace Console
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
             return this.value;
+        }
+    }
+
+    [Serializable]
+    public class PredicateNode : ExpressionNode
+    {
+        public ExpressionNode condition { get; }
+        public PredicateNode(ExpressionNode condition)
+        {
+            this.condition = condition;
+        }
+        public override void SetProperty(ExpressionNode property) { }
+
+        public override object Evaluate(GlobalContext context, List<Cards> target, object value)
+        {
+            List<Cards> cards = new();
+            foreach (var card in target)
+            {
+                if ((bool)condition.Evaluate(context, new List<Cards>() { card }, value))
+                {
+                    cards.Add(card);
+                }
+            }
+            return cards;
         }
     }
 

@@ -15,7 +15,7 @@
             "Melee",
             "Siege"
           ],
-          "power": 12,
+          "power": 7,
           "img": "Art/Images/Nanami",
           "onActivation": [
             {
@@ -24,68 +24,68 @@
                 "properties": [
                   {
                     "Item1": "Amount",
-                    "Item2": 5
+                    "Item2": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": 5
+                    }
                   }
                 ]
               },
               "selector": {
                 "source": "board",
                 "single": false,
-                "predicate": "(unit) => unit.Faction == Source"
-              },
-              "posAction": {
-                "type": "ReturnToDeck",
-                "selector": {
-                  "source": "parent",
-                  "single": false,
-                  "predicate": "(unit) => unit.Power < 1"
+                "predicate": {
+                  "condition": {
+                    "$type": "Console.BinaryExpressionNode, Assembly-CSharp",
+                    "Operator": {
+                      "type": 49,
+                      "value": "=="
+                    },
+                    "left": {
+                      "$type": "Console.IdentifierNode, Assembly-CSharp",
+                      "Name": "unit",
+                      "type": null,
+                      "property": {
+                        "$type": "Console.PropertyNode, Assembly-CSharp",
+                        "card": null,
+                        "Name": "Faction"
+                      }
+                    },
+                    "right": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": "Source"
+                    }
+                  }
                 }
-              }
-            },
-            {
-              "effect": {
-                "name": "Kill",
-                "properties": null
-              },
-              "selector": null,
-              "posAction": null
-            }
-          ]
-        },
-        {
-          "owner": "00000000-0000-0000-0000-000000000000",
-          "name": "Prueba1",
-          "type": "Oro",
-          "description": "...",
-          "faction": "Source",
-          "range": [
-            "Melee",
-            "Siege"
-          ],
-          "power": 12,
-          "img": "Art/Images/Nanami",
-          "onActivation": [
-            {
-              "effect": {
-                "name": "Draw",
-                "properties": [
-                  {
-                    "Item1": "Amount",
-                    "Item2": 5
-                  }
-                ]
-              },
-              "selector": {
-                "source": "board",
-                "single": false,
-                "predicate": "(unit) => unit.Faction == Source"
               },
               "posAction": {
                 "type": "ReturnToDeck",
                 "selector": {
                   "source": "parent",
                   "single": false,
-                  "predicate": "(unit) => unit.Power < 1"
+                  "predicate": {
+                    "condition": {
+                      "$type": "Console.BinaryExpressionNode, Assembly-CSharp",
+                      "Operator": {
+                        "type": 51,
+                        "value": "<"
+                      },
+                      "left": {
+                        "$type": "Console.IdentifierNode, Assembly-CSharp",
+                        "Name": "unit",
+                        "type": null,
+                        "property": {
+                          "$type": "Console.PropertyNode, Assembly-CSharp",
+                          "card": null,
+                          "Name": "Power"
+                        }
+                      },
+                      "right": {
+                        "$type": "Console.LiteralNode, Assembly-CSharp",
+                        "value": 1
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -720,106 +720,5 @@
       "Name": "Curse"
     }
   ],
-  "effects": [
-    {
-      "properties": {
-        "Name": {
-          "$type": "Console.LiteralNode, Assembly-CSharp",
-          "value": "Damage"
-        },
-        "Parameters": {
-          "$type": "System.Collections.Generic.List`1[[System.ValueTuple`2[[System.String, mscorlib],[System.Type, mscorlib]], mscorlib]], mscorlib",
-          "$values": [
-            {
-              "Item1": "amount",
-              "Item2": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-            }
-          ]
-        },
-        "Action": {
-          "$type": "Console.ActionNode, Assembly-CSharp",
-          "properties": {},
-          "expressions": [
-            {
-              "$type": "Console.AssignamentNode, Assembly-CSharp",
-              "identifier": {
-                "$type": "Console.IdentifierNode, Assembly-CSharp",
-                "Name": "context",
-                "type": null,
-                "property": {
-                  "$type": "Console.ListNode, Assembly-CSharp",
-                  "list": {
-                    "$type": "Console.MethodListNode, Assembly-CSharp",
-                    "name": "Hand",
-                    "property": null
-                  },
-                  "arg": {
-                    "$type": "Console.LiteralNode, Assembly-CSharp",
-                    "value": 1
-                  },
-                  "property": {
-                    "$type": "Console.PropertyNode, Assembly-CSharp",
-                    "card": null,
-                    "Name": "Power"
-                  }
-                }
-              },
-              "value": {
-                "$type": "Console.IdentifierNode, Assembly-CSharp",
-                "Name": "3",
-                "type": null,
-                "property": null
-              }
-            }
-          ]
-        }
-      },
-      "Name": {
-        "$type": "Console.LiteralNode, Assembly-CSharp",
-        "value": "Damage"
-      },
-      "Parameters": [
-        {
-          "Item1": "amount",
-          "Item2": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-        }
-      ],
-      "Action": {
-        "properties": {},
-        "expressions": [
-          {
-            "$type": "Console.AssignamentNode, Assembly-CSharp",
-            "identifier": {
-              "$type": "Console.IdentifierNode, Assembly-CSharp",
-              "Name": "context",
-              "type": null,
-              "property": {
-                "$type": "Console.ListNode, Assembly-CSharp",
-                "list": {
-                  "$type": "Console.MethodListNode, Assembly-CSharp",
-                  "name": "Hand",
-                  "property": null
-                },
-                "arg": {
-                  "$type": "Console.LiteralNode, Assembly-CSharp",
-                  "value": 1
-                },
-                "property": {
-                  "$type": "Console.PropertyNode, Assembly-CSharp",
-                  "card": null,
-                  "Name": "Power"
-                }
-              }
-            },
-            "value": {
-              "$type": "Console.IdentifierNode, Assembly-CSharp",
-              "Name": "3",
-              "type": null,
-              "property": null
-            }
-          }
-        ]
-      }
-    }
-  ]
+  "effects": []
 }

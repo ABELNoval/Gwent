@@ -54,8 +54,7 @@ namespace Console
         {
             string source = (string)selector.Source.Evaluate(null, null, null);
             bool single = (bool)selector.Single.Evaluate(null, null, null);
-            string predicate = (string)selector.Predicate.Evaluate(null, null, null);
-            return new Selector(source, predicate, single);
+            return new Selector(source, selector.Predicate as PredicateNode, single);
         }
 
         private EffectData BuildEffectData(EffectDataNode effectData)

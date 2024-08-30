@@ -159,7 +159,7 @@ namespace Console
             };
             while (expPosition < expression.Count && MatchExp(types))
             {
-                Token operatorType = Previous();
+                Token operatorType = PreviousExp();
 
                 var right = ParseAddAndSubstractExpression();
                 left = new BinaryExpressionNode(left, operatorType, right);
@@ -231,6 +231,13 @@ namespace Console
                         return number;
 
                     case TokenType.Identifier:
+                        if (expression[expPosition + 2].type == TokenType.Arrow)
+                        {
+                            AdvanceExp();
+                            AdvanceExp();
+                            AdvanceExp();
+                            return new PredicateNode(ParseConditions());
+                        }
                         return ParseAssignment();
 
                     case TokenType.String:
@@ -249,7 +256,8 @@ namespace Console
                     case TokenType.LeftParenthesis:
                         AdvanceExp();
                         ExpressionNode exp = ParseExpression();
-                        ExpectExp(TokenType.RightParenthesis);
+                        Match(TokenType.RightParenthesis);
+                        //ExpectExp(TokenType.RightParenthesis);
                         return exp;
 
                     case TokenType.BooleanLiteral:
@@ -258,8 +266,25 @@ namespace Console
                         return boolean;
 
                     case TokenType.StringLiteral:
-                        LiteralNode text = new LiteralNode(currentExpression.value);
-                        AdvanceExp();
+                        string name = currentExpression.value;
+                        while (PeekNextExp().type == TokenType.Concat || PeekNextExp().type == TokenType.ConcatWithEspace)
+                        {
+                            if (PeekNextExp().type == TokenType.Concat)
+                            {
+                                AdvanceExp();
+                                AdvanceExp();
+                                Expect(TokenType.StringLiteral);
+                                name += Previous().value;
+                            }
+                            if (PeekNextExp().type == TokenType.ConcatWithEspace)
+                            {
+                                AdvanceExp();
+                                AdvanceExp();
+                                Expect(TokenType.StringLiteral);
+                                name += " " + Previous().value;
+                            }
+                        }
+                        LiteralNode text = new LiteralNode(name);
                         return text;
                     default:
                         throw new Exception("Token indefinido");
@@ -539,7 +564,7 @@ namespace Console
 
         private void ParseParameters(ProgramNode node)
         {
-            node.SetProperty("Parameters", new List<(string, Type)>());
+            node.SetProperty("Parameters", new List<(string, object)>());
             while (currentToken.type != TokenType.RightBrace)
             {
                 Expect(TokenType.Identifier);
@@ -751,6 +776,13 @@ namespace Console
                 return true;
             }
             return false;
+        }
+
+        private Token PeekNextExp()
+        {
+            if (expPosition < expression.Count - 1)
+                return expression[expPosition + 1];
+            return new Token(TokenType.EndOfFile, "end");
         }
 
         private bool MatchExp(TokenType expectedType)

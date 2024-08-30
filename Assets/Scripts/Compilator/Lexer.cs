@@ -381,6 +381,10 @@ namespace Console
                 case "Shuffle":
                     return new Token(TokenType.Shuffle, identifier);
 
+                case "@":
+                    return new Token(TokenType.Concat, identifier);
+                case "@@":
+                    return new Token(TokenType.ConcatWithEspace, identifier);
                 case "for":
                     return new Token(TokenType.for_Token, identifier);
                 case "while":

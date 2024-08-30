@@ -97,7 +97,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\PanelCardInformation.cs" />
     <Compile Include="Assets\Scripts\DropDownHandler.cs" />
-    <Compile Include="Assets\Scripts\BackEnd\Selector.cs" />
     <Compile Include="Assets\Scripts\Compilator\Nodes.cs" />
     <Compile Include="Assets\Scripts\BackEnd\Player.cs" />
     <Compile Include="Assets\Scripts\BackEnd\Cards.cs" />
