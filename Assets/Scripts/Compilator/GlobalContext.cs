@@ -5,31 +5,51 @@ namespace Console
 {
     public class GlobalContext
     {
-        private Dictionary<string, (Type, object)> symbols;
+        private Dictionary<string, Type> symbols;
+        private Dictionary<string, object> variables;
         public GlobalContext parentContext;
 
         public GlobalContext(GlobalContext parent = null)
         {
-            symbols = new Dictionary<string, (Type, object)>();
+            symbols = new Dictionary<string, Type>();
+            variables = new Dictionary<string, object>();
             parentContext = parent;
         }
 
-        public void DefineSymbol(string name, Type type, object value)
+        public void DefineSymbol(string name, Type type)
         {
-            symbols[name] = (type, value);
+            symbols[name] = type;
         }
 
-        public (Type, object) LookupSymbol(string name)
+        public void DefineVariable(string name, object value)
         {
-            if (symbols.TryGetValue(name, out (Type, object) element))
+            variables[name] = value;
+        }
+
+        public Type LookupSymbol(string name)
+        {
+            if (symbols.TryGetValue(name, out Type element))
                 return element;
 
-            return ((Type, object))(parentContext?.LookupSymbol(name));
+            return parentContext?.LookupSymbol(name);
+        }
+
+        public object LookupVariable(string name)
+        {
+            if (variables.TryGetValue(name, out object value))
+                return value;
+
+            return parentContext?.LookupVariable(name);
         }
 
         public bool ConteinsSymbol(string name)
         {
             return symbols.ContainsKey(name);
+        }
+
+        public bool ConteinsVariable(string name)
+        {
+            return variables.ContainsKey(name);
         }
     }
 }

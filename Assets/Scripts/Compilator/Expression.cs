@@ -315,7 +315,11 @@ namespace Console
                     ((PropertyNode)property).SetCard(target[0]);
                 return property.Evaluate(context, target, value);
             }
-            return context.LookupSymbol(Name);
+            if (value != null)
+            {
+                context.DefineVariable(Name, value);
+            }
+            return context.LookupVariable(Name);
         }
     }
 

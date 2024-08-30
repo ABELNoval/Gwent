@@ -45,18 +45,18 @@ namespace Console
 
         public void GenerateEffect()
         {
-            EffectNode effectNode = effect.GetEffect();
+            (EffectNode, GlobalContext) effectNode = effect.GetEffect();
             if (selector != null)
             {
                 List<Cards> targets = selector.GetTargets();
-                ActiveEffect(effectNode, targets);
+                ActiveEffect(effectNode.Item1, effectNode.Item2, targets);
             }
-            ActiveEffect(effectNode);
+            ActiveEffect(effectNode.Item1, effectNode.Item2);
             if (posAction != null)
                 posAction.GenerateEffect();
         }
 
-        private void ActiveEffect(EffectNode effectNode, List<Cards> targets = null)
+        private void ActiveEffect(EffectNode effectNode, GlobalContext globalContext, List<Cards> targets = null)
         {
             foreach (var expression in effectNode.Action.expressions)
             {
@@ -75,27 +75,15 @@ namespace Console
             this.properties = properties;
         }
 
-        public EffectNode GetEffect()
+        public (EffectNode, GlobalContext) GetEffect()
         {
             EffectNode effectNode = Store.GetEffectNode(name);
-            if (effectNode.properties.TryGetValue("Parameters", out var parameter) && parameter != null)
+            GlobalContext globalContext = new GlobalContext();
+            foreach (var parameter in properties)
             {
-                for (int i = 0; i < effectNode.Parameters.Count - 1; i++)
-                {
-                    int j = 0;
-                    while (j < properties.Count && effectNode.Parameters[i].Item1 != properties[j].Item1)
-                    {
-                        j++;
-                    }
-                    if (j < properties.Count)
-                    {
-                        List<(string, (Type, object))> parameters = effectNode.Parameters;
-                        parameters[i] = (parameters[i].Item1, (parameters[i].Item2.Item1, properties[j].Item2));
-                        effectNode.SetProperty("Parameters", parameters);
-                    }
-                }
+                globalContext.DefineVariable(parameter.Item1.ToLower(), parameter.Item2);
             }
-            return effectNode;
+            return (effectNode, globalContext);
         }
     }
 

@@ -152,11 +152,11 @@ namespace Console
                     {
                         if (context.ConteinsSymbol((expression as IdentifierNode).Name))
                         {
-                            return context.LookupSymbol((expression as IdentifierNode).Name).Item1;
+                            return context.LookupSymbol((expression as IdentifierNode).Name);
                         }
                         else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
                         {
-                            return context.parentContext.LookupSymbol((expression as IdentifierNode).Name).Item1;
+                            return context.parentContext.LookupSymbol((expression as IdentifierNode).Name);
                         }
                         else
                         {
@@ -183,13 +183,13 @@ namespace Console
                     Type right = CheckExpression((expression as AssignamentNode).value, context);
                     if (context.ConteinsSymbol(name))
                     {
-                        Type left = context.LookupSymbol(name).Item1;
+                        Type left = context.LookupSymbol(name);
                         if (left != right)
                             throw new Exception("The two expressions aren't the same type");
-                        context.DefineSymbol((string)(expression as AssignamentNode).identifier.Evaluate(null, null, null), right, (expression as AssignamentNode).value);
+                        context.DefineSymbol((string)(expression as AssignamentNode).identifier.Evaluate(null, null, null), right);
                         return left;
                     }
-                    context.DefineSymbol(name, right, (expression as AssignamentNode).value);
+                    context.DefineSymbol(name, right);
                     return right;
                 case MethodListNode:
                 case ListNode:
