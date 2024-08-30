@@ -8,28 +8,62 @@ namespace Console
     {
         public delegate Player FindPlayer(Guid id);
         public static event FindPlayer findPlayer;
+        public delegate Player FindPlayerWithString(string name);
+        public static event FindPlayerWithString findPlayerWithString;
         public static Guid triggerPlayer { get; set; }
         public static Player secondPlayer { get; set; }
         public static Board board { get; set; }
 
-        public static Hand HandOfPlayer(Player player)
+        public static Hand HandOfPlayer(object player)
         {
-            return player.hand;
+            if (player is string)
+            {
+                return findPlayerWithString(player.ToString()).hand;
+            }
+            if (player is Guid)
+            {
+                return findPlayer((Guid)player).hand;
+            }
+            return ((Player)player).hand;
         }
 
-        public static Deck DeckOfPlayer(Player player)
+        public static Deck DeckOfPlayer(object player)
         {
-            return player.deck;
+            if (player is string)
+            {
+                return findPlayerWithString(player.ToString()).deck;
+            }
+            if (player is Guid)
+            {
+                return findPlayer((Guid)player).deck;
+            }
+            return ((Player)player).deck;
         }
 
-        public static Field FieldOfPlayer(Player player)
+        public static Field FieldOfPlayer(object player)
         {
-            return player.field;
+            if (player is string)
+            {
+                return findPlayerWithString(player.ToString()).field;
+            }
+            if (player is Guid)
+            {
+                return findPlayer((Guid)player).field;
+            }
+            return ((Player)player).field;
         }
 
-        public static Graveyard GraveyardOfPlayer(Player player)
+        public static Graveyard GraveyardOfPlayer(object player)
         {
-            return player.graveyard;
+            if (player is string)
+            {
+                return findPlayerWithString(player.ToString()).graveyard;
+            }
+            if (player is Guid)
+            {
+                return findPlayer((Guid)player).graveyard;
+            }
+            return ((Player)player).graveyard;
         }
 
         public static Deck Deck

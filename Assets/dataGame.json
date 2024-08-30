@@ -702,6 +702,39 @@
                 "$type": "Console.LiteralNode, Assembly-CSharp",
                 "value": 3
               }
+            },
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "FieldOfPlayer",
+                    "player": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": "player1"
+                    },
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Faction"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": "Hamil"
+              }
             }
           ]
         }
@@ -742,6 +775,39 @@
             "value": {
               "$type": "Console.LiteralNode, Assembly-CSharp",
               "value": 3
+            }
+          },
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "FieldOfPlayer",
+                  "player": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": "player1"
+                  },
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Name"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": "Hamil"
             }
           }
         ]

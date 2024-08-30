@@ -363,7 +363,8 @@ namespace Console
                     case "HandOfPlayer":
                     case "GraveyardOfPlayer":
                         left = new MethodListNode(PreviousExp().value, ParseExpression());
-                        Expect(TokenType.RightParenthesis);
+                        AdvanceExp();
+                        ExpectExp(TokenType.RightParenthesis);
                         break;
                 }
             }

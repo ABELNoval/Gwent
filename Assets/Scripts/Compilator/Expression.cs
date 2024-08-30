@@ -9,6 +9,8 @@ namespace Console
 {
     public abstract class ExpressionNode
     {
+        public delegate Player FindPlayer(string name);
+
         public abstract void SetProperty(ExpressionNode property);
         public abstract object Evaluate(GlobalContext context, List<Cards> target, object value);
     }
@@ -59,6 +61,7 @@ namespace Console
     [Serializable]
     public class MethodListNode : ExpressionNode
     {
+        public event FindPlayer findPlayer;
         [JsonProperty]
         public string name { get; }
         [JsonProperty]
@@ -84,6 +87,7 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
+
             if (property != null)
             {
                 ExpressionNode newProperty = property;
@@ -95,10 +99,10 @@ namespace Console
             {
                 return name switch
                 {
-                    "DeckOfPlayer" => Context.DeckOfPlayer((Player)player.Evaluate(context, target, value)),
-                    "HandOfPlayer" => Context.HandOfPlayer((Player)player.Evaluate(context, target, value)),
-                    "FieldOfPlayer" => Context.FieldOfPlayer((Player)player.Evaluate(context, target, value)),
-                    "GraveyardOfPlayer" => Context.GraveyardOfPlayer((Player)player.Evaluate(context, target, value)),
+                    "DeckOfPlayer" => Context.DeckOfPlayer(player.Evaluate(context, target, value)),
+                    "HandOfPlayer" => Context.HandOfPlayer(player.Evaluate(context, target, value)),
+                    "FieldOfPlayer" => Context.FieldOfPlayer(player.Evaluate(context, target, value)),
+                    "GraveyardOfPlayer" => Context.GraveyardOfPlayer(player.Evaluate(context, target, value)),
 
                     _ => throw new Exception("Metodo no encontrado"),
                 };

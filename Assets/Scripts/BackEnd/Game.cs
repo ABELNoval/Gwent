@@ -48,6 +48,7 @@ public class Game
             Context.board = new Board();
             Context.triggerPlayer = activePlayer.id;
             Context.findPlayer += FindPlayer;
+            Context.findPlayerWithString += FindPlayerWithString;
             start();
         }
     }
@@ -262,6 +263,15 @@ public class Game
     private Player FindPlayer(Guid id)
     {
         if (player1.id == id)
+        {
+            return player1;
+        }
+        return player2;
+    }
+
+    private Player FindPlayerWithString(string name)
+    {
+        if (name == "player1")
         {
             return player1;
         }
