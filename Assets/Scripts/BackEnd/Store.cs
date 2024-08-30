@@ -32,7 +32,6 @@ namespace Console
                 decks.Add(deck);
             }
             SaveFromJSON();
-            LoadFromJSON();
             changeDecks();
         }
 

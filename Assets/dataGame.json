@@ -20,16 +20,8 @@
           "onActivation": [
             {
               "effect": {
-                "name": "Draw",
-                "properties": [
-                  {
-                    "Item1": "Amount",
-                    "Item2": {
-                      "$type": "Console.LiteralNode, Assembly-CSharp",
-                      "value": 5
-                    }
-                  }
-                ]
+                "name": "Damage",
+                "properties": null
               },
               "selector": {
                 "source": "board",
@@ -58,59 +50,9 @@
                   }
                 }
               },
-              "posAction": {
-                "type": "ReturnToDeck",
-                "selector": {
-                  "source": "parent",
-                  "single": false,
-                  "predicate": {
-                    "condition": {
-                      "$type": "Console.BinaryExpressionNode, Assembly-CSharp",
-                      "Operator": {
-                        "type": 51,
-                        "value": "<"
-                      },
-                      "left": {
-                        "$type": "Console.IdentifierNode, Assembly-CSharp",
-                        "Name": "unit",
-                        "type": null,
-                        "property": {
-                          "$type": "Console.PropertyNode, Assembly-CSharp",
-                          "card": null,
-                          "Name": "Power"
-                        }
-                      },
-                      "right": {
-                        "$type": "Console.LiteralNode, Assembly-CSharp",
-                        "value": 1
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "effect": {
-                "name": "Kill",
-                "properties": null
-              },
-              "selector": null,
               "posAction": null
             }
           ]
-        },
-        {
-          "owner": "d9c9899b-e838-47cb-84a0-41d4e70edee3",
-          "name": "Nanami Kento",
-          "type": "Normal",
-          "description": "...",
-          "faction": "Source",
-          "range": [
-            "Melee"
-          ],
-          "power": 5,
-          "img": "Art/Images/Nanami",
-          "onActivation": null
         },
         {
           "owner": "d9c9899b-e838-47cb-84a0-41d4e70edee3",
@@ -720,5 +662,90 @@
       "Name": "Curse"
     }
   ],
-  "effects": []
+  "effects": [
+    {
+      "properties": {
+        "Name": {
+          "$type": "Console.LiteralNode, Assembly-CSharp",
+          "value": "Damage"
+        },
+        "Action": {
+          "$type": "Console.ActionNode, Assembly-CSharp",
+          "properties": {},
+          "expressions": [
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "Hand",
+                    "player": null,
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Power"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": 3
+              }
+            }
+          ]
+        }
+      },
+      "Name": {
+        "$type": "Console.LiteralNode, Assembly-CSharp",
+        "value": "Damage"
+      },
+      "Parameters": null,
+      "Action": {
+        "properties": {},
+        "expressions": [
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "Hand",
+                  "player": null,
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Power"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": 3
+            }
+          }
+        ]
+      }
+    }
+  ]
 }

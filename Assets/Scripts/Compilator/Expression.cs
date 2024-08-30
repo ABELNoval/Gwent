@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Newtonsoft.Json;
 using Unity.Properties;
 using Unity.VisualScripting;
 
@@ -16,8 +17,11 @@ namespace Console
     //BinaryExpression
     public class BinaryExpressionNode : ExpressionNode
     {
+        [JsonProperty]
         public Token Operator { get; }
+        [JsonProperty]
         public ExpressionNode left { get; set; }
+        [JsonProperty]
         public ExpressionNode right { get; set; }
         public override void SetProperty(ExpressionNode property) { }
 
@@ -37,7 +41,7 @@ namespace Console
                 TokenType.Multiply => (int)left.Evaluate(context, target, value) * (int)right.Evaluate(context, target, value),
                 TokenType.Divide => (int)left.Evaluate(context, target, value) / (int)right.Evaluate(context, target, value),
                 TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(context, target, value), (int)right.Evaluate(context, target, value)),
-                TokenType.Equals => left.Evaluate(context, target, value) == right.Evaluate(context, target, value),
+                TokenType.Equals => left.Evaluate(context, target, value).Equals(right.Evaluate(context, target, value)),
                 TokenType.NotEquals => left.Evaluate(context, target, value) != right.Evaluate(context, target, value),
                 TokenType.LessThan => (int)left.Evaluate(context, target, value) < (int)right.Evaluate(context, target, value),
                 TokenType.GreaterThan => (int)left.Evaluate(context, target, value) > (int)right.Evaluate(context, target, value),
@@ -55,8 +59,11 @@ namespace Console
     [Serializable]
     public class MethodListNode : ExpressionNode
     {
+        [JsonProperty]
         public string name { get; }
+        [JsonProperty]
         ExpressionNode player { get; }
+        [JsonProperty]
         public ExpressionNode property { get; private set; }
 
         public MethodListNode(string name, ExpressionNode player = null)
@@ -115,9 +122,13 @@ namespace Console
     [Serializable]
     public class MethodCardNode : ExpressionNode
     {
+        [JsonProperty]
         public string name { get; }
+        [JsonProperty]
         public GameComponent list { get; set; }
+        [JsonProperty]
         public ExpressionNode card { get; }
+        [JsonProperty]
         public ExpressionNode property { get; private set; }
         public MethodCardNode(string name, ExpressionNode card = null)
         {
@@ -177,7 +188,9 @@ namespace Console
     [Serializable]
     public class PropertyNode : ExpressionNode
     {
+        [JsonProperty]
         public Cards card { get; private set; }
+        [JsonProperty]
         public string Name { get; }
 
         public PropertyNode(string name)
@@ -229,8 +242,11 @@ namespace Console
     [Serializable]
     public class ListNode : ExpressionNode
     {
+        [JsonProperty]
         public ExpressionNode list { get; }
+        [JsonProperty]
         public ExpressionNode arg { get; }
+        [JsonProperty]
         public ExpressionNode property { get; private set; }
 
         public ListNode(ExpressionNode list, ExpressionNode arg)
@@ -252,8 +268,8 @@ namespace Console
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
             if (property == null)
-                return ((List<Cards>)list.Evaluate(context, target, value))[(int)arg.Evaluate(context, target, value)];
-            ((PropertyNode)property).SetCard(((List<Cards>)list.Evaluate(context, target, value))[(int)arg.Evaluate(context, target, value)]);
+                return ((GameComponent)list.Evaluate(context, target, value)).cards[(int)arg.Evaluate(context, target, value)];
+            ((PropertyNode)property).SetCard(((GameComponent)list.Evaluate(context, target, value)).cards[(int)arg.Evaluate(context, target, value)]);
             return property.Evaluate(context, target, value);
         }
     }
@@ -261,8 +277,11 @@ namespace Console
     [Serializable]
     public class IdentifierNode : ExpressionNode
     {
+        [JsonProperty]
         public string Name { get; }
+        [JsonProperty]
         public Type type { get; }
+        [JsonProperty]
         public ExpressionNode property { get; private set; }
 
         public IdentifierNode(string name, Type type = null)
@@ -296,7 +315,9 @@ namespace Console
     [Serializable]
     public class AssignamentNode : ExpressionNode
     {
+        [JsonProperty]
         public ExpressionNode identifier { get; }
+        [JsonProperty]
         public ExpressionNode value { get; private set; }
 
         public AssignamentNode(ExpressionNode identifier, ExpressionNode value)
@@ -316,7 +337,9 @@ namespace Console
     [Serializable]
     public class LiteralNode : ExpressionNode
     {
+        [JsonProperty]
         public object value { get; }
+
         public LiteralNode(object value)
         {
             this.value = value;
@@ -332,6 +355,7 @@ namespace Console
     [Serializable]
     public class PredicateNode : ExpressionNode
     {
+        [JsonProperty]
         public ExpressionNode condition { get; }
         public PredicateNode(ExpressionNode condition)
         {
@@ -356,6 +380,7 @@ namespace Console
     [Serializable]
     public class ForNode : ExpressionNode
     {
+        [JsonProperty]
         public List<ExpressionNode> body { get; }
 
         public ForNode(List<ExpressionNode> body)
@@ -378,7 +403,9 @@ namespace Console
     [Serializable]
     public class WhileNode : ExpressionNode
     {
+        [JsonProperty]
         public ExpressionNode condition { get; }
+        [JsonProperty]
         public List<ExpressionNode> body { get; }
 
         public WhileNode(ExpressionNode condition, List<ExpressionNode> body)

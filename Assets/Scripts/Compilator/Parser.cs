@@ -301,7 +301,7 @@ namespace Console
             var left = ParseIdentifier();
             if (expPosition < expression.Count && MatchExp(TokenType.Assign))
             {
-                var right = ParseIdentifier();
+                var right = ParseExpression();
                 left = new AssignamentNode(left, right);
             }
             return left;
@@ -564,7 +564,7 @@ namespace Console
 
         private void ParseParameters(ProgramNode node)
         {
-            node.SetProperty("Parameters", new List<(string, object)>());
+            node.SetProperty("Parameters", new List<(string, (Type, object))>());
             while (currentToken.type != TokenType.RightBrace)
             {
                 Expect(TokenType.Identifier);
@@ -573,13 +573,13 @@ namespace Console
                 switch (currentToken.type)
                 {
                     case TokenType.Str:
-                        node.AddProperty("Parameters", (identifier.value, typeof(string)));
+                        node.AddProperty("Parameters", (identifier.value, (typeof(string), "vacio")));
                         break;
                     case TokenType.Bool:
-                        node.AddProperty("Parameters", (identifier.value, typeof(bool)));
+                        node.AddProperty("Parameters", (identifier.value, (typeof(bool), "vacio")));
                         break;
                     case TokenType.Number:
-                        node.AddProperty("Parameters", (identifier.value, typeof(int)));
+                        node.AddProperty("Parameters", (identifier.value, (typeof(int), "vacio")));
                         break;
                 }
                 Advance();

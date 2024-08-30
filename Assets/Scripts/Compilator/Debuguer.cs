@@ -48,17 +48,17 @@ public class Debuguer : MonoBehaviour
          }
          ";
 
-    //     //Ok, parsea propiedades sin OnActivation
-    //     // string input3 = @"
-    //     // card{
-    //     //     Name: ""Prueba1"",
-    //     //     Type: ""Oro"",
-    //     //     Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
-    //     //     Faction: ""Source"",
-    //     //     Range: [""Melee"", ""Siege""],
-    //     //     OnActivation:
-    //     //     []
-    //     // }";
+    // Ok, parsea propiedades sin OnActivation
+    string input3 = @"
+          card{
+              Name: ""Prueba1"",
+              Type: ""Oro"",
+              Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
+              Faction: ""Source"",
+              Range: [""Melee"", ""Siege""],
+              OnActivation:
+              []
+          }";
 
     string input2 = @"
         effect

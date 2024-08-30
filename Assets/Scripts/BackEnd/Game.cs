@@ -45,6 +45,9 @@ public class Game
             Debug.Log("Juego listo para empezar");
             GeneratePlayers();
             activePlayer = player1;
+            Context.board = new Board();
+            Context.triggerPlayer = activePlayer.id;
+            Context.findPlayer += FindPlayer;
             start();
         }
     }
@@ -123,7 +126,7 @@ public class Game
         activePlayer.hand.Remove(card);
         activePlayer.field.SendBottom(card);
         Context.board.SendBottom(card);
-        ActiveEffect();
+        ActiveEffect(card);
         UpdatePoints();
         passTurn();
     }
@@ -147,9 +150,15 @@ public class Game
         return activePlayer == player1 ? true : false;
     }
 
-    private void ActiveEffect()
+    private void ActiveEffect(Cards card)
     {
-
+        if (card.onActivation != null)
+        {
+            for (int i = 0; i < card.onActivation.Count; i++)
+            {
+                card.onActivation[i].GenerateEffect();
+            }
+        }
     }
 
     public void UpdatePoints()

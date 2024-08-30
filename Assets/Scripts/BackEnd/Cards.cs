@@ -78,16 +78,21 @@ namespace Console
         public EffectNode GetEffect()
         {
             EffectNode effectNode = Store.GetEffectNode(name);
-            for (int i = 0; i < effectNode.Parameters.Count - 1; i++)
+            if (effectNode.properties.TryGetValue("Parameters", out var parameter) && parameter != null)
             {
-                int j = 0;
-                while (j < properties.Count && effectNode.Parameters[i].Item1 != properties[j].Item1)
+                for (int i = 0; i < effectNode.Parameters.Count - 1; i++)
                 {
-                    j++;
-                }
-                if (j < properties.Count)
-                {
-                    effectNode.Parameters[i] = properties[j];
+                    int j = 0;
+                    while (j < properties.Count && effectNode.Parameters[i].Item1 != properties[j].Item1)
+                    {
+                        j++;
+                    }
+                    if (j < properties.Count)
+                    {
+                        List<(string, (Type, object))> parameters = effectNode.Parameters;
+                        parameters[i] = (parameters[i].Item1, (parameters[i].Item2.Item1, properties[j].Item2));
+                        effectNode.SetProperty("Parameters", parameters);
+                    }
                 }
             }
             return effectNode;

@@ -31,10 +31,10 @@ namespace Console
                 }
                 else
                 {
-                    throw new InvalidCastException($"El valor para la clave \"{key}\" no es del tipo esperado. Se esperaba {typeof(T)}, pero se encontró {value.GetType()}.");
+                    return default;
                 }
             }
-            return default(T);
+            return default;
         }
 
 
@@ -65,6 +65,7 @@ namespace Console
         public virtual void Validate() { }
     }
 
+    [Serializable]
     public class CardNode : ProgramNode
     {
 
@@ -134,6 +135,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class EffectNode : ProgramNode
     {
         public ExpressionNode Name
@@ -142,16 +144,16 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, object)> Parameters
+        public List<(string, (Type, object))> Parameters
         {
-            get => GetProperty<List<(string, object)>>("Parameters");
-            set => SetProperty("Parameters", value);
+            get => GetProperty<List<(string, (Type, object))>>("Parameters");
+            private set => SetProperty("Parameters", value);
         }
 
         public ActionNode Action
         {
             get => GetProperty<ActionNode>("Action");
-            set => SetProperty("Action", value);
+            private set => SetProperty("Action", value);
         }
 
         public void SetName(ExpressionNode name) => Name = name;
@@ -175,6 +177,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class OnActivationNode : ProgramNode
     {
 
@@ -234,6 +237,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class PosActionNode : ProgramNode
     {
 
@@ -261,6 +265,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class EffectDataNode : ProgramNode
     {
 
@@ -285,6 +290,7 @@ namespace Console
         }
     }
 
+    [Serializable]
     public class OnActValueNode : ProgramNode
     {
         public SelectorNode Selector
@@ -318,6 +324,7 @@ namespace Console
 
     }
 
+    [Serializable]
     public class ActionNode : ProgramNode
     {
         public List<ExpressionNode> expressions { get; }
