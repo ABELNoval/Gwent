@@ -211,7 +211,7 @@ namespace Console
             {
                 case "Power":
                     if (value != null)
-                        card.power = (int)value;
+                        card.power = Convert.ToInt32(value);
                     return card.power;
                 case "Faction":
                     if (value != null)
@@ -269,7 +269,10 @@ namespace Console
         {
             if (property == null)
                 return ((GameComponent)list.Evaluate(context, target, value)).cards[(int)arg.Evaluate(context, target, value)];
-            ((PropertyNode)property).SetCard(((GameComponent)list.Evaluate(context, target, value)).cards[(int)arg.Evaluate(context, target, value)]);
+            GameComponent lista = (GameComponent)list.Evaluate(context, target, value);
+            List<Cards> listaCard = lista.cards;
+            int argument = Convert.ToInt32(arg.Evaluate(context, target, value));
+            ((PropertyNode)property).SetCard(listaCard[argument]);
             return property.Evaluate(context, target, value);
         }
     }
