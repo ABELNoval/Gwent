@@ -327,7 +327,7 @@ namespace Console
                 {
                     Operator = new Token(TokenType.Plus, "+");
                 }
-                left = new BinaryExpressionNode(left, Operator, new LiteralNode(1));
+                left = new AssignamentNode(left, new BinaryExpressionNode(left, Operator, new LiteralNode(1)));
             }
             return left;
         }
