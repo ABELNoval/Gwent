@@ -50,14 +50,18 @@ public class Debuguer : MonoBehaviour
     string input2 = @"
         effect
              {
-                 Name: ""Damage"",
+                 Name: ""DecrementPower"",
                  Params:
                  {
                      amount: Number
                  },
                  Action: (targets, context) =>
                  {
-                    context.Hand[1].Power = 3;
+                    for target in targets =>
+                    {
+                        target.Power = target.Power - amount;
+                        target.Power--;
+                    }
                  }
              }
          ";

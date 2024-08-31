@@ -144,9 +144,9 @@ namespace Console
             private set => SetProperty("Name", value);
         }
 
-        public List<(string, (Type, object))> Parameters
+        public List<(string, Type)> Parameters
         {
-            get => GetProperty<List<(string, (Type, object))>>("Parameters");
+            get => GetProperty<List<(string, Type)>>("Parameters");
             private set => SetProperty("Parameters", value);
         }
 
@@ -157,7 +157,7 @@ namespace Console
         }
 
         public void SetName(ExpressionNode name) => Name = name;
-        public void AddParam((string, ExpressionNode) param) => AddProperty("Parameters", param);
+        public void AddParam((string, Type) param) => AddProperty("Parameters", param);
         public void SetAction(ActionNode actionNode) => Action = actionNode;
 
         public override void Validate()

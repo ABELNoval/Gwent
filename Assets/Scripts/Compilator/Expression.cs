@@ -38,17 +38,17 @@ namespace Console
         {
             return Operator.type switch
             {
-                TokenType.Plus => (int)left.Evaluate(context, target, value) + (int)right.Evaluate(context, target, value),
-                TokenType.Minus => (int)left.Evaluate(context, target, value) - (int)right.Evaluate(context, target, value),
-                TokenType.Multiply => (int)left.Evaluate(context, target, value) * (int)right.Evaluate(context, target, value),
-                TokenType.Divide => (int)left.Evaluate(context, target, value) / (int)right.Evaluate(context, target, value),
-                TokenType.Exponent => (int)Math.Pow((int)left.Evaluate(context, target, value), (int)right.Evaluate(context, target, value)),
+                TokenType.Plus => Convert.ToInt32(left.Evaluate(context, target, value)) + Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.Minus => Convert.ToInt32(left.Evaluate(context, target, value)) - Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.Multiply => Convert.ToInt32(left.Evaluate(context, target, value)) * Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.Divide => Convert.ToInt32(left.Evaluate(context, target, value)) / Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.Exponent => Math.Pow(Convert.ToInt32(left.Evaluate(context, target, value)), Convert.ToInt32(right.Evaluate(context, target, value))),
                 TokenType.Equals => left.Evaluate(context, target, value).Equals(right.Evaluate(context, target, value)),
                 TokenType.NotEquals => left.Evaluate(context, target, value) != right.Evaluate(context, target, value),
-                TokenType.LessThan => (int)left.Evaluate(context, target, value) < (int)right.Evaluate(context, target, value),
-                TokenType.GreaterThan => (int)left.Evaluate(context, target, value) > (int)right.Evaluate(context, target, value),
-                TokenType.LessThanOrEqual => (int)left.Evaluate(context, target, value) <= (int)right.Evaluate(context, target, value),
-                TokenType.GreaterThanOrEqual => (int)left.Evaluate(context, target, value) >= (int)right.Evaluate(context, target, value),
+                TokenType.LessThan => Convert.ToInt32(left.Evaluate(context, target, value)) < Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.GreaterThan => Convert.ToInt32(left.Evaluate(context, target, value)) > Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.LessThanOrEqual => Convert.ToInt32(left.Evaluate(context, target, value)) <= Convert.ToInt32(right.Evaluate(context, target, value)),
+                TokenType.GreaterThanOrEqual => Convert.ToInt32(left.Evaluate(context, target, value)) >= Convert.ToInt32(right.Evaluate(context, target, value)),
                 TokenType.LogicalAnd => (bool)left.Evaluate(context, target, value) && (bool)right.Evaluate(context, target, value),
                 TokenType.LogicalOr => (bool)left.Evaluate(context, target, value) || (bool)right.Evaluate(context, target, value),
 
@@ -376,7 +376,8 @@ namespace Console
             List<Cards> cards = new();
             foreach (var card in target)
             {
-                if ((bool)condition.Evaluate(context, new List<Cards>() { card }, value))
+                context.DefineVariable("unit", card);
+                if ((bool)condition.Evaluate(context, target, value))
                 {
                     cards.Add(card);
                 }

@@ -230,7 +230,7 @@ namespace Console
                         return number;
 
                     case TokenType.Identifier:
-                        if (expression[expPosition + 2].type == TokenType.Arrow)
+                        if (expression.Count > expPosition + 2 && expression[expPosition + 2].type == TokenType.Arrow)
                         {
                             AdvanceExp();
                             AdvanceExp();
@@ -299,11 +299,35 @@ namespace Console
 
         private ExpressionNode ParseAssignment()
         {
-            var left = ParseIdentifier();
+            var left = ParseIncrementAndDecrement();
             if (expPosition < expression.Count && MatchExp(TokenType.Assign))
             {
                 var right = ParseExpression();
                 left = new AssignamentNode(left, right);
+            }
+            return left;
+        }
+
+        private ExpressionNode ParseIncrementAndDecrement()
+        {
+            List<TokenType> operatorsTypes = new List<TokenType>()
+            {
+                TokenType.Decrement,
+                TokenType.Increment
+            };
+            var left = ParseIdentifier();
+            if (expPosition < expression.Count && MatchExp(operatorsTypes))
+            {
+                Token Operator;
+                if (PreviousExp().type == TokenType.Decrement || (expPosition == expression.Count - 1 && MatchExp(TokenType.Decrement)))
+                {
+                    Operator = new Token(TokenType.Minus, "-");
+                }
+                else
+                {
+                    Operator = new Token(TokenType.Plus, "+");
+                }
+                left = new BinaryExpressionNode(left, Operator, new LiteralNode(1));
             }
             return left;
         }
@@ -387,7 +411,7 @@ namespace Console
                 TokenType.SendBottom,
                 TokenType.Remove,
             };
-            var left = ParseIncrementAndDecrement();
+            var left = ParsePropertyAccess();
             expPosition -= 2;
             AdvanceExp();
             if (expPosition < expression.Count && MatchExp(methodTypes))
@@ -415,26 +439,6 @@ namespace Console
             else
             {
                 AdvanceExp();
-            }
-            return left;
-        }
-
-        private ExpressionNode ParseIncrementAndDecrement()
-        {
-            List<TokenType> operatorsTypes = new List<TokenType>()
-            {
-                TokenType.Decrement,
-                TokenType.Increment
-            };
-            var left = ParsePropertyAccess();
-            if (expPosition < expression.Count && MatchExp(operatorsTypes))
-            {
-                Token Operator;
-                if (PreviousExp().type == TokenType.Decrement)
-                    Operator = new Token(TokenType.Minus, "-");
-                else
-                    Operator = new Token(TokenType.Plus, "+");
-                left = new BinaryExpressionNode(left, Operator, new LiteralNode(1));
             }
             return left;
         }
@@ -470,16 +474,6 @@ namespace Console
         {
             int cantLeftParen = 0;
             int cantLeftBracket = 0;
-            if (Match(TokenType.while_Token))
-            {
-                ParseWhile();
-                return;
-            }
-            if (Match(TokenType.for_Token))
-            {
-                ParseFor();
-                return;
-            }
 
             expression = new List<Token>();
 
@@ -524,9 +518,19 @@ namespace Console
             {
                 while (!Match(TokenType.RightBrace))
                 {
-                    GenerateExpression();
-                    body.Add(ParseExpression());
-                    Expect(TokenType.Semicolon);
+                    if (Match(TokenType.for_Token))
+                    {
+                        body.Add(ParseFor());
+                    }
+                    else if (Match(TokenType.while_Token))
+                    {
+                        body.Add(ParseWhile());
+                    }
+                    else
+                    {
+                        GenerateExpression();
+                        body.Add(ParseExpression());
+                    }
                 }
             }
             Expect(TokenType.Semicolon);
@@ -548,8 +552,19 @@ namespace Console
             {
                 while (!Match(TokenType.RightBrace))
                 {
-                    GenerateExpression();
-                    body.Add(ParseExpression());
+                    if (Match(TokenType.for_Token))
+                    {
+                        body.Add(ParseFor());
+                    }
+                    else if (Match(TokenType.while_Token))
+                    {
+                        body.Add(ParseWhile());
+                    }
+                    else
+                    {
+                        GenerateExpression();
+                        body.Add(ParseExpression());
+                    }
                 }
             }
             Expect(TokenType.Semicolon);
@@ -572,7 +587,7 @@ namespace Console
 
         private void ParseParameters(ProgramNode node)
         {
-            node.SetProperty("Parameters", new List<(string, (Type, object))>());
+            node.SetProperty("Parameters", new List<(string, Type)>());
             while (currentToken.type != TokenType.RightBrace)
             {
                 Expect(TokenType.Identifier);
@@ -581,13 +596,13 @@ namespace Console
                 switch (currentToken.type)
                 {
                     case TokenType.Str:
-                        node.AddProperty("Parameters", (identifier.value, (typeof(string), "vacio")));
+                        node.AddProperty("Parameters", (identifier.value, typeof(string)));
                         break;
                     case TokenType.Bool:
-                        node.AddProperty("Parameters", (identifier.value, (typeof(bool), "vacio")));
+                        node.AddProperty("Parameters", (identifier.value, typeof(bool)));
                         break;
                     case TokenType.Number:
-                        node.AddProperty("Parameters", (identifier.value, (typeof(int), "vacio")));
+                        node.AddProperty("Parameters", (identifier.value, typeof(int)));
                         break;
                 }
                 Advance();
@@ -765,8 +780,19 @@ namespace Console
             List<ExpressionNode> expressions = new();
             while (!Match(TokenType.RightBrace) && !Match(TokenType.EndOfFile))
             {
-                GenerateExpression();
-                expressions.Add(ParseExpression());
+                if (Match(TokenType.for_Token))
+                {
+                    expressions.Add(ParseFor());
+                }
+                else if (Match(TokenType.while_Token))
+                {
+                    expressions.Add(ParseWhile());
+                }
+                else
+                {
+                    GenerateExpression();
+                    expressions.Add(ParseExpression());
+                }
             }
 
             node.SetProperty("Action", new ActionNode(expressions));

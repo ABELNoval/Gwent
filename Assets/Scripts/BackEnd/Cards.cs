@@ -60,7 +60,7 @@ namespace Console
         {
             foreach (var expression in effectNode.Action.expressions)
             {
-                expression.Evaluate(new GlobalContext(), targets, null);
+                expression.Evaluate(globalContext, targets, null);
             }
         }
     }
@@ -79,9 +79,12 @@ namespace Console
         {
             EffectNode effectNode = Store.GetEffectNode(name);
             GlobalContext globalContext = new GlobalContext();
-            foreach (var parameter in properties)
+            if (properties != null)
             {
-                globalContext.DefineVariable(parameter.Item1.ToLower(), parameter.Item2);
+                foreach (var parameter in properties)
+                {
+                    globalContext.DefineVariable(parameter.Item1.ToLower(), parameter.Item2);
+                }
             }
             return (effectNode, globalContext);
         }
@@ -133,7 +136,7 @@ namespace Console
                     cards = Context.GraveyardOfPlayer(Context.secondPlayer).cards;
                     break;
             }
-            cards = (List<Cards>)predicate.Evaluate(null, cards, null);
+            cards = (List<Cards>)predicate.Evaluate(new GlobalContext(), cards, null);
             if (single)
             {
                 return new List<Cards>() { cards[0] };

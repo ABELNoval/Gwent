@@ -142,7 +142,7 @@ public class Game
 
     public void PlayCard(Cards card, GameObject panel)
     {
-        activePlayer.hand.Remove(card);
+        activePlayer.hand.cards.Remove(card);
         activePlayer.field.SendBottom(card);
         Context.board.SendBottom(card);
         ActiveEffect(card);
