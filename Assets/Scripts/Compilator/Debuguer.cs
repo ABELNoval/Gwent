@@ -11,41 +11,28 @@ public class Debuguer : MonoBehaviour
     //  {
     string input = @"
          card{
-         Name: ""Prueba1"",
+         Name: ""Hamil"",
              Type: ""Oro"",
-             Power: 3 + 4 * (2 - 1) / (4 - (1 + 1))^0 + 5,
+             Power: ((5+3)*2)-(4/2)^1,
              Faction: ""Source"",
-             Range: [""Melee"", ""Siege""],
+             Range: [""Melee"", ""Siege"", ""Range""],
              OnActivation:
              [
                  {
-             Effect:
-                 {
-                 Name: ""Draw"",
-                         Amount: 5
-                     },
-                     Selector:
-                 {
-                 Source: ""board"",
-                         Single: false,
-                         Predicate: (unit) => unit.Faction == Source
-                     },
-                     PosAction:
-                 {
-                 Type: ""ReturnToDeck"",
-                         Selector:
-                     {
-                     Source: ""parent"",
-                             Single: false,
-                             Predicate: (unit) => unit.Power < 1
-                         }
-                 }
-             },
-                 {
-             Effect: ""Kill""
-                 }
-             ]
-         }
+                    Effect:
+                       {
+                         Name: ""DecrementPower"",
+                         Amount: 3
+                        },
+                    Selector:
+                        {
+                        Source: ""field"",
+                         Single: true,
+                         Predicate: (unit) => unit.Power > 5
+                        },
+                 },
+              ]
+            }
          ";
 
     // Ok, parsea propiedades sin OnActivation

@@ -7,6 +7,11 @@ namespace Console
     [Serializable]
     public class Deck : GameComponent
     {
+        // public event PopObj popObj;
+        // public event ShuffleObj shuffleObj;
+        // public event SendBottomObj sendBottomObj;
+        // public event PushObj pushObj;
+        // public event RemoveObj removeObj;
         public Guid id;
         public string Name { get; set; }
 
@@ -19,11 +24,13 @@ namespace Console
         public override void SendBottom(Cards card)
         {
             cards.Add(card);
+            //sendBottomObj("deck", owner);
         }
 
         public override void Remove(Cards card)
         {
             cards.Remove(card);
+            //removeObj("deck", owner, card.owner);
         }
 
         public Cards DrawCard()
@@ -63,6 +70,7 @@ namespace Console
         {
             Cards card = cards[0];
             cards.RemoveAt(0);
+            //popObj("deck", owner);
             return card;
         }
 
@@ -77,6 +85,24 @@ namespace Console
                 listResult.Add(c);
             }
             cards = listResult;
+            //pushObj("deck", owner);
+        }
+        public override void Shuffle()
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                int a = random.Next(0, cards.Count);
+                int b = random.Next(0, cards.Count);
+                Swap(a, b);
+            }
+            //shuffleObj("deck", owner);
+        }
+
+        private void Swap(int a, int b)
+        {
+            Cards aux = cards[a];
+            cards[a] = cards[b];
+            cards[b] = aux;
         }
     }
 }

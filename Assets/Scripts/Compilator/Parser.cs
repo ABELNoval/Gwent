@@ -4,6 +4,7 @@ using System;
 using Unity.Properties;
 using System.Diagnostics;
 using Palmmedia.ReportGenerator.Core.Parser.Analysis;
+using NUnit.Framework.Constraints;
 
 namespace Console
 {
@@ -386,7 +387,7 @@ namespace Console
                 TokenType.SendBottom,
                 TokenType.Remove,
             };
-            var left = ParsePropertyAccess();
+            var left = ParseIncrementAndDecrement();
             expPosition -= 2;
             AdvanceExp();
             if (expPosition < expression.Count && MatchExp(methodTypes))
@@ -418,6 +419,26 @@ namespace Console
             return left;
         }
 
+        private ExpressionNode ParseIncrementAndDecrement()
+        {
+            List<TokenType> operatorsTypes = new List<TokenType>()
+            {
+                TokenType.Decrement,
+                TokenType.Increment
+            };
+            var left = ParsePropertyAccess();
+            if (expPosition < expression.Count && MatchExp(operatorsTypes))
+            {
+                Token Operator;
+                if (PreviousExp().type == TokenType.Decrement)
+                    Operator = new Token(TokenType.Minus, "-");
+                else
+                    Operator = new Token(TokenType.Plus, "+");
+                left = new BinaryExpressionNode(left, Operator, new LiteralNode(1));
+            }
+            return left;
+        }
+
         private ExpressionNode ParsePropertyAccess()
         {
             List<TokenType> propertyTypes = new List<TokenType>()
@@ -444,21 +465,6 @@ namespace Console
 
         #endregion
 
-        private ExpressionNode ParseIncrement(string value)
-        {
-            IdentifierNode left = new(value, null);
-            LiteralNode right = new(1);
-            Token op = new(TokenType.Plus, "+");
-            return new BinaryExpressionNode(left, op, right);
-        }
-
-        private ExpressionNode ParseDecrement(string value)
-        {
-            IdentifierNode left = new(value, null);
-            LiteralNode right = new(1);
-            Token op = new(TokenType.Minus, "-");
-            return new BinaryExpressionNode(left, op, right);
-        }
 
         private void GenerateExpression()
         {

@@ -16,6 +16,11 @@ public class Game
     public delegate void Draw(List<Cards> player1Cards, List<Cards> player2cards);
     public delegate void UpdatePlayersPoints(int player1Points, int player2Points);
     public delegate void PassTurn();
+    public delegate void UpdateHand(Player player);
+    public delegate void RemoveCard(Player player, Cards card);
+    public event UpdateHand updateHand;
+    public event RemoveCard removeCard;
+
     public event InvalidDeck invalidDeck;
     public event InstantiateHands instantiateHands;
     public event PassTurn passTurn;
@@ -110,14 +115,27 @@ public class Game
             player2Deck.SendBottom(cards);
         }
         player1 = new Player(player1Deck);
+        player1.deck.owner = player1;
+        player1.graveyard.owner = player1;
+        player1.field.owner = player1;
+
         player2 = new Player(player2Deck);
+        player2.deck.owner = player2;
+        player2.graveyard.owner = player2;
+        player2.field.owner = player2;
         GenerateHands();
+        player1.removeCard += RemoveCards;
+        player1.updateHand += UpdateHands;
+        player2.removeCard += RemoveCards;
+        player2.updateHand += UpdateHands;
     }
 
     public void GenerateHands()
     {
         player1.GenerateHand();
+        player1.hand.owner = player1;
         player2.GenerateHand();
+        player2.hand.owner = player2;
         Debug.Log($"{player1.hand.cards[0].name} y {player2.hand.cards[0].name}");
         instantiateHands(player1.hand.cards, player2.hand.cards);
     }
@@ -130,6 +148,16 @@ public class Game
         ActiveEffect(card);
         UpdatePoints();
         passTurn();
+    }
+
+    private void UpdateHands(Player player)
+    {
+        updateHand(player);
+    }
+
+    private void RemoveCards(Player player, Cards card)
+    {
+        removeCard(player, card);
     }
 
     public void ChangesActivePlayer()

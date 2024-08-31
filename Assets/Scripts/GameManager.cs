@@ -8,6 +8,7 @@ using System.Collections;
 using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
 using UnityEngine.Audio;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour
         game.updatePoints += UpdatePoints;
         game.draw += InstantiateHands;
         game.start += ChangesToGame;
+        game.removeCard += RemoveCard;
+        game.updateHand += UpdateHand;
         Debug.Log("GameStart");
     }
 
@@ -322,6 +325,51 @@ public class GameManager : MonoBehaviour
         ChangesCardsConfig(panel);
         selectedCard.transform.SetParent(panel.transform, false);
         DeselectPanels();
+    }
+
+    private void RemoveCard(Player player, Cards card)
+    {
+        foreach (var panels in boardPanels)
+        {
+            for (int i = 0; i < panels.transform.childCount; i++)
+            {
+                if (panels.transform.GetChild(i).GetComponent<CardUi>().card.Equals(card))
+                {
+                    Destroy(panels.transform.GetChild(i).gameObject);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void UpdateHand(Player player)
+    {
+        if (player == game.player1)
+        {
+            for (int i = player1HandPanel.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(player1HandPanel.transform.GetChild(i).gameObject);
+            }
+            GenerateHand(player, player1HandPanel, player1CardsPrefab);
+        }
+        else
+        {
+            for (int i = player2HandPanel.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(player2HandPanel.transform.GetChild(i).gameObject);
+            }
+            GenerateHand(player, player2HandPanel, player2CardsPrefab);
+        }
+    }
+
+    private void GenerateHand(Player player, GameObject panel, GameObject playerPrefab)
+    {
+        for (int i = 0; i < player.hand.cards.Count; i++)
+        {
+            GameObject cardObj = Instantiate(playerPrefab, panel.transform);
+            CardUi cardUi = cardObj.GetComponent<CardUi>();
+            cardUi.SetupCard(player.hand.cards[i]);
+        }
     }
 
     private void DeselectPanels()

@@ -7,6 +7,64 @@
       "cards": [
         {
           "owner": "00000000-0000-0000-0000-000000000000",
+          "name": "Hamil",
+          "type": "Oro",
+          "description": "...",
+          "faction": "Source",
+          "range": [
+            "Melee",
+            "Siege",
+            "Range"
+          ],
+          "power": 14,
+          "img": "Art/Images/Nanami",
+          "onActivation": [
+            {
+              "effect": {
+                "name": "DecrementPower",
+                "properties": [
+                  {
+                    "Item1": "Amount",
+                    "Item2": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": 3
+                    }
+                  }
+                ]
+              },
+              "selector": {
+                "source": "field",
+                "single": true,
+                "predicate": {
+                  "condition": {
+                    "$type": "Console.BinaryExpressionNode, Assembly-CSharp",
+                    "Operator": {
+                      "type": 52,
+                      "value": ">"
+                    },
+                    "left": {
+                      "$type": "Console.IdentifierNode, Assembly-CSharp",
+                      "Name": "unit",
+                      "type": null,
+                      "property": {
+                        "$type": "Console.PropertyNode, Assembly-CSharp",
+                        "card": null,
+                        "Name": "Power"
+                      }
+                    },
+                    "right": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": 5
+                    }
+                  }
+                }
+              },
+              "posAction": null
+            }
+          ]
+        },
+        {
+          "owner": "00000000-0000-0000-0000-000000000000",
           "name": "Prueba1",
           "type": "Oro",
           "description": "...",
@@ -798,6 +856,132 @@
                 "$type": "Console.LiteralNode, Assembly-CSharp",
                 "value": "Hamil"
               }
+            },
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "Hand",
+                    "player": null,
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Power"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": 3
+              }
+            },
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "FieldOfPlayer",
+                    "player": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": "player1"
+                    },
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Faction"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": "Hamil"
+              }
+            },
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "Hand",
+                    "player": null,
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Power"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": 3
+              }
+            },
+            {
+              "$type": "Console.AssignamentNode, Assembly-CSharp",
+              "identifier": {
+                "$type": "Console.IdentifierNode, Assembly-CSharp",
+                "Name": "context",
+                "type": null,
+                "property": {
+                  "$type": "Console.ListNode, Assembly-CSharp",
+                  "list": {
+                    "$type": "Console.MethodListNode, Assembly-CSharp",
+                    "name": "FieldOfPlayer",
+                    "player": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": "player1"
+                    },
+                    "property": null
+                  },
+                  "arg": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": 1
+                  },
+                  "property": {
+                    "$type": "Console.PropertyNode, Assembly-CSharp",
+                    "card": null,
+                    "Name": "Name"
+                  }
+                }
+              },
+              "value": {
+                "$type": "Console.LiteralNode, Assembly-CSharp",
+                "value": "Hamil"
+              }
             }
           ]
         }
@@ -810,6 +994,132 @@
       "Action": {
         "properties": {},
         "expressions": [
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "Hand",
+                  "player": null,
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Power"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": 3
+            }
+          },
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "FieldOfPlayer",
+                  "player": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": "player1"
+                  },
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Faction"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": "Hamil"
+            }
+          },
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "Hand",
+                  "player": null,
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Power"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": 3
+            }
+          },
+          {
+            "$type": "Console.AssignamentNode, Assembly-CSharp",
+            "identifier": {
+              "$type": "Console.IdentifierNode, Assembly-CSharp",
+              "Name": "context",
+              "type": null,
+              "property": {
+                "$type": "Console.ListNode, Assembly-CSharp",
+                "list": {
+                  "$type": "Console.MethodListNode, Assembly-CSharp",
+                  "name": "FieldOfPlayer",
+                  "player": {
+                    "$type": "Console.LiteralNode, Assembly-CSharp",
+                    "value": "player1"
+                  },
+                  "property": null
+                },
+                "arg": {
+                  "$type": "Console.LiteralNode, Assembly-CSharp",
+                  "value": 1
+                },
+                "property": {
+                  "$type": "Console.PropertyNode, Assembly-CSharp",
+                  "card": null,
+                  "Name": "Name"
+                }
+              }
+            },
+            "value": {
+              "$type": "Console.LiteralNode, Assembly-CSharp",
+              "value": "Hamil"
+            }
+          },
           {
             "$type": "Console.AssignamentNode, Assembly-CSharp",
             "identifier": {

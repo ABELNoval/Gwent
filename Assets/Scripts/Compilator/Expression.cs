@@ -273,10 +273,7 @@ namespace Console
         {
             if (property == null)
                 return ((GameComponent)list.Evaluate(context, target, value)).cards[(int)arg.Evaluate(context, target, value)];
-            GameComponent lista = (GameComponent)list.Evaluate(context, target, value);
-            List<Cards> listaCard = lista.cards;
-            int argument = Convert.ToInt32(arg.Evaluate(context, target, value));
-            ((PropertyNode)property).SetCard(listaCard[argument]);
+            ((PropertyNode)property).SetCard(((GameComponent)list.Evaluate(context, target, value)).cards[Convert.ToInt32(arg.Evaluate(context, target, value))]);
             return property.Evaluate(context, target, value);
         }
     }
@@ -312,7 +309,7 @@ namespace Console
             if (property != null)
             {
                 if (property is PropertyNode)
-                    ((PropertyNode)property).SetCard(target[0]);
+                    ((PropertyNode)property).SetCard((Cards)context.LookupVariable(Name));
                 return property.Evaluate(context, target, value);
             }
             if (value != null)
@@ -388,6 +385,7 @@ namespace Console
         }
     }
 
+
     [Serializable]
     public class ForNode : ExpressionNode
     {
@@ -403,9 +401,13 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
-            foreach (var expression in body)
+            foreach (var card in target)
             {
-                return expression.Evaluate(context, target, value);
+                context.DefineVariable("target", card);
+                foreach (var expression in body)
+                {
+                    expression.Evaluate(context, target, value);
+                }
             }
             return null;
         }
@@ -429,9 +431,12 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
-            foreach (var expression in body)
+            while ((bool)condition.Evaluate(context, target, value))
             {
-                return expression.Evaluate(context, target, value);
+                foreach (var expression in body)
+                {
+                    return expression.Evaluate(context, target, value);
+                }
             }
             return null;
         }
