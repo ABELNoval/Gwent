@@ -316,6 +316,10 @@ namespace Console
             {
                 context.DefineVariable(Name, value);
             }
+            if (context.LookupVariable(Name) is ExpressionNode)
+            {
+                return ((ExpressionNode)context.LookupVariable(Name)).Evaluate(context, target, value);
+            }
             return context.LookupVariable(Name);
         }
     }

@@ -51,7 +51,10 @@ namespace Console
                 List<Cards> targets = selector.GetTargets();
                 ActiveEffect(effectNode.Item1, effectNode.Item2, targets);
             }
-            ActiveEffect(effectNode.Item1, effectNode.Item2);
+            else
+            {
+                ActiveEffect(effectNode.Item1, effectNode.Item2);
+            }
             if (posAction != null)
                 posAction.GenerateEffect();
         }
