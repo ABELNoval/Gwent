@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System;
@@ -299,11 +300,30 @@ namespace Console
 
         private ExpressionNode ParseAssignment()
         {
-            var left = ParseIncrementAndDecrement();
-            if (expPosition < expression.Count && MatchExp(TokenType.Assign))
+            List<TokenType> operatorsTypes = new List<TokenType>()
             {
+                TokenType.Assign,
+                TokenType.PlusAssign,
+                TokenType.MinusAssign
+            };
+            var left = ParseIncrementAndDecrement();
+            if (expPosition < expression.Count && MatchExp(operatorsTypes))
+            {
+                Token Operator = PreviousExp();
                 var right = ParseExpression();
-                left = new AssignamentNode(left, right);
+                switch (Operator.type)
+                {
+                    case TokenType.Assign:
+                        left = new AssignamentNode(left, right);
+                        break;
+                    case TokenType.PlusAssign:
+                        left = new AssignamentNode(left, new BinaryExpressionNode(left, new Token(TokenType.Plus, "+"), right));
+                        break;
+                    case TokenType.MinusAssign:
+                        left = new AssignamentNode(left, new BinaryExpressionNode(left, new Token(TokenType.Minus, "-"), right));
+                        break;
+                }
+
             }
             return left;
         }

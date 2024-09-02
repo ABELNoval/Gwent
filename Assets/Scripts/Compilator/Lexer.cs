@@ -75,6 +75,12 @@ namespace Console
                             Advance();
                             Advance();
                         }
+                        else if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.PlusAssign, "+="));
+                            Advance();
+                            Advance();
+                        }
                         else
                         {
                             tokens.Add(new Token(TokenType.Plus, "+"));
@@ -85,6 +91,12 @@ namespace Console
                         if (Peek() == '-')
                         {
                             tokens.Add(new Token(TokenType.Decrement, "--"));
+                            Advance();
+                            Advance();
+                        }
+                        else if (Peek() == '=')
+                        {
+                            tokens.Add(new Token(TokenType.MinusAssign, "-="));
                             Advance();
                             Advance();
                         }

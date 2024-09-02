@@ -55,13 +55,13 @@ public class Debuguer : MonoBehaviour
                  {
                      amount: Number
                  },
-                 Action: (targets, context) =>
+                 Action: (targets, context)
                  {
                     for target in targets =>
                     {
                         target.Power = target.Power - amount;
                         target.Power--;
-                    }
+                    };
                  }
              }
          ";

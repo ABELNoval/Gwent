@@ -13,7 +13,7 @@ namespace Console
 
         // Operators (Operadores)
         Plus, Minus, Multiply, Divide, Exponent, Assign, Equals, NotEquals, LessThan, GreaterThan, LessThanOrEqual,
-        GreaterThanOrEqual, LogicalAnd, LogicalOr, Not, Dot, Increment, Decrement, Arrow,
+        GreaterThanOrEqual, LogicalAnd, LogicalOr, Not, Dot, Increment, Decrement, Arrow, MinusAssign, PlusAssign,
 
         // Punctuation (Puntuacion)
         LeftParenthesis, RightParenthesis, LeftBrace, RightBrace, LeftBracket, RightBracket, Comma, Semicolon, Colon,
