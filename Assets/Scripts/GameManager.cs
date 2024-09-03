@@ -210,17 +210,18 @@ public class GameManager : MonoBehaviour
 
     public void CreateCard()
     {
-        BuildNode buildNode = new BuildNode();
+        BuildNode buildNode = new();
         Lexer lexer = new(input.text);
         List<Token> Tokens = lexer.Analyze();
         Parser parser = new(Tokens);
         ProgramNode node = parser.Parse();
+        SemanticAnalyzer semanticAnalyzer = new();
         if (node is EffectNode)
         {
-            Store.AddEffect(node as EffectNode);
+            Store.AddEffect(input.text);
+            Store.AddEffectNode(node as EffectNode);
             return;
         }
-        SemanticAnalyzer semanticAnalyzer = new();
         semanticAnalyzer.CheckCardNode(node as CardNode, new GlobalContext());
         Cards card = buildNode.BuildCard(node as CardNode);
         game.selectedDeck.Push(card);

@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Newtonsoft.Json;
 
 namespace Console
 {
-    [Serializable]
     public class ProgramNode
     {
         public Dictionary<string, object> properties = new Dictionary<string, object>();

@@ -11,7 +11,8 @@ namespace Console
     {
         public const string file = "dataGame.json";
         public static List<Deck> decks { get; private set; }
-        public static List<EffectNode> effects { get; private set; }
+        public static List<EffectNode> effectsNode { get; private set; }
+        public static List<string> effects { get; private set; }
         public delegate void ChangeDecks();
         public static event ChangeDecks changeDecks;
 
@@ -35,21 +36,26 @@ namespace Console
             changeDecks();
         }
 
-        public static void AddEffect(EffectNode effect)
+        public static void AddEffectNode(EffectNode effect)
+        {
+            effectsNode.Add(effect);
+        }
+
+        public static void AddEffect(string effect)
         {
             effects.Add(effect);
         }
 
         public static EffectNode GetEffectNode(string name)
         {
-            foreach (var effect in effects)
+            foreach (var effect in effectsNode)
             {
                 if ((string)effect.Name.Evaluate(null, null, null) == name)
                 {
                     return effect;
                 }
             }
-            return null;
+            throw new Exception($"{name} efecto no definido");
         }
 
         private static void LoadFromJSON()
@@ -66,13 +72,14 @@ namespace Console
                 StoreData storeData = JsonConvert.DeserializeObject<StoreData>(json, settings);
                 decks = storeData.decks;
                 effects = storeData.effects;
+                ParseEffect();
                 Debug.Log("Datos cargados correctamente desde el archivo JSON");
             }
             else
             {
                 Debug.LogWarning("El archivo JSON no existe. Inicializando datos vacíos");
                 decks = new List<Deck>();
-                effects = new List<EffectNode>();
+                effects = new List<string>();
             }
         }
 
@@ -97,12 +104,24 @@ namespace Console
         {
             return decks.Find(deck => deck.id == id);
         }
+
+        private static void ParseEffect()
+        {
+            effectsNode = new List<EffectNode>();
+            foreach (var effect in effects)
+            {
+                Lexer lexer = new Lexer(effect);
+                Parser parser = new Parser(lexer.Analyze());
+                EffectNode effectNode = parser.Parse() as EffectNode;
+                effectsNode.Add(effectNode);
+            }
+        }
     }
 
     [Serializable]
     class StoreData
     {
         public List<Deck> decks;
-        public List<EffectNode> effects;
+        public List<string> effects;
     }
 }
