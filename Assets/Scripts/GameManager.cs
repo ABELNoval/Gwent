@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour
         game.instantiateHands += InstantiateHands;
         game.passTurn += PassTurn;
         game.updatePoints += UpdatePoints;
-        game.draw += InstantiateHands;
         game.start += ChangesToGame;
         game.removeCard += RemoveCard;
         game.updateHand += UpdateHand;

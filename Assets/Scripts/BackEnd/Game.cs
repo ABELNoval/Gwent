@@ -285,7 +285,7 @@ public class Game
             }
 
         }
-        draw(player1Cards, player2Cards);
+        //draw(player1Cards, player2Cards);
     }
 
     private Player FindPlayer(Guid id)
