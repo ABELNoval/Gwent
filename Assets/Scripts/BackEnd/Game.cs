@@ -24,7 +24,7 @@ public class Game
     public event InvalidDeck invalidDeck;
     public event InstantiateHands instantiateHands;
     public event PassTurn passTurn;
-    public event Draw draw;
+    //public event Draw draw;
     public event Start start;
     public event UpdatePlayersPoints updatePoints;
     public Player player1;

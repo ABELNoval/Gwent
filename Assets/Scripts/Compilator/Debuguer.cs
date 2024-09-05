@@ -9,7 +9,7 @@ public class Debuguer : MonoBehaviour
 {
     //  void Start()
     //  {
-    string input = @"
+    readonly string input = @"
          card{
          Name: ""Hamil"",
              Type: ""Oro"",
@@ -36,7 +36,7 @@ public class Debuguer : MonoBehaviour
          ";
 
     // Ok, parsea propiedades sin OnActivation
-    string input3 = @"
+    readonly string input3 = @"
           card{
               Name: ""Prueba1"",
               Type: ""Oro"",
@@ -47,7 +47,7 @@ public class Debuguer : MonoBehaviour
               []
           }";
 
-    string input2 = @"
+    readonly string input2 = @"
         effect
              {
                  Name: ""DecrementPower"",

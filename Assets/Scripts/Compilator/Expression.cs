@@ -61,7 +61,6 @@ namespace Console
     [Serializable]
     public class MethodListNode : ExpressionNode
     {
-        public event FindPlayer findPlayer;
         [JsonProperty]
         public string name { get; }
         [JsonProperty]
