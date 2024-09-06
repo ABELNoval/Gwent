@@ -17,7 +17,7 @@ namespace Console
             { "Type", typeof(string) },
             { "Source", typeof(string) },
             {"Single", typeof(bool)},
-            {"Predicate", typeof(string)}
+            {"Predicate", typeof(Cards)}
         };
 
         public void CheckCardNode(CardNode node, GlobalContext context)
@@ -96,7 +96,8 @@ namespace Console
             {
                 if (property.Key == "Predicate")
                 {
-                    CheckExpressionType(node.GetProperty<ExpressionNode>(property.Key), context);
+                    context.DefineSymbol("unit", typeof(Cards));
+                    CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
                     return;
                 }
                 if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
@@ -112,7 +113,7 @@ namespace Console
                 {
                     foreach (var expression in property.Value as List<(string, ExpressionNode)>)
                     {
-                        CheckExpressionType(expression.Item2, context);
+                        CheckExpression(expression.Item2, context);
                     }
                     return;
                 }
@@ -139,71 +140,97 @@ namespace Console
         {
             foreach (var expression in node.expressions)
             {
-                CheckExpressionType(expression, context);
+                CheckExpression(expression, context);
             }
         }
 
-        public Type CheckExpressionType(ExpressionNode expression, GlobalContext context)
+        public Type CheckExpression(ExpressionNode expression, GlobalContext context)
         {
             Type leftExpression;
             Type rightExpression;
             switch (expression)
             {
                 case IdentifierNode:
-                    if ((expression as IdentifierNode).property == null)
+                    Type identifierType;
+                    if (context.ConteinsSymbol((expression as IdentifierNode).Name))
+                        identifierType = context.LookupSymbol((expression as IdentifierNode).Name);
+                    else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
+                        identifierType = context.parentContext.LookupSymbol((expression as IdentifierNode).Name);
+                    else
+                        throw new Exception("Indentifier not defined");
+                    switch ((expression as IdentifierNode).property)
                     {
-                        if ((expression as IdentifierNode).type != null)
-                        {
-                            if (context.ConteinsSymbol((expression as IdentifierNode).Name))
-                            {
-                                return context.LookupSymbol((expression as IdentifierNode).Name);
-                            }
-                            if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
-                            {
-                                return context.parentContext.LookupSymbol((expression as IdentifierNode).Name);
-                            }
-                            throw new Exception("Indentifier not defined");
-                        }
-                        return (expression as IdentifierNode).type.GetType();
+                        case null:
+                            return identifierType;
+
+                        case PropertyNode:
+                            if (identifierType != typeof(Cards))
+                                throw new Exception("Propiedad invalida");
+                            return CheckExpression((expression as IdentifierNode).property, context);
+
+                        case MethodCardNode:
+                            if (identifierType != typeof(List<Cards>))
+                                throw new Exception("Propiedad invalida");
+                            return CheckExpression((expression as IdentifierNode).property, context);
+
+                        default:
+                            throw new Exception("Propiedad invalida");
                     }
-                    return CheckExpressionType((expression as IdentifierNode).property, context);
 
                 case LiteralNode:
                     return (expression as LiteralNode).value.GetType();
 
                 case BinaryExpressionNode:
-                    leftExpression = CheckExpressionType((expression as BinaryExpressionNode).left, context);
-                    rightExpression = CheckExpressionType((expression as BinaryExpressionNode).right, context);
+                    leftExpression = CheckExpression((expression as BinaryExpressionNode).left, context);
+                    rightExpression = CheckExpression((expression as BinaryExpressionNode).right, context);
                     if (leftExpression != rightExpression)
                         throw new Exception("The two expressions aren't the same type");
                     return leftExpression;
 
                 case AssignamentNode:
-                    leftExpression = CheckExpressionType((expression as AssignamentNode).value, context);
-                    rightExpression = CheckExpressionType((expression as AssignamentNode).identifier, context);
+                    leftExpression = CheckExpression((expression as AssignamentNode).value, context);
+                    rightExpression = CheckExpression((expression as AssignamentNode).identifier, context);
                     if (leftExpression != rightExpression)
                         throw new Exception("The two expressions aren't the same type");
                     return leftExpression;
 
                 case MethodListNode:
-                    return typeof(List<Cards>);
+                    if ((expression as MethodListNode).property is null)
+                        return typeof(List<Cards>);
+                    if ((expression as MethodListNode).property is not MethodCardNode)
+                        throw new Exception("Propiedad invalida");
+                    return CheckExpression((expression as MethodListNode).property, context);
 
                 case MethodCardNode:
+                    if ((expression as MethodCardNode).property is null)
+                        return typeof(Cards);
+                    if ((expression as MethodCardNode).property is not PropertyNode)
+                        throw new Exception("Propiedad invalida");
+                    return CheckExpression((expression as MethodCardNode).property, context);
+
                 case ListNode:
-                    return typeof(Cards);
+                    if (CheckExpression((expression as ListNode).list, context) != typeof(List<Cards>) || CheckExpression((expression as ListNode).arg, context) != typeof(int))
+                        throw new Exception("Propiedad invalida");
+                    if ((expression as ListNode).property is null)
+                    {
+                        return typeof(Cards);
+                    }
+                    if ((expression as ListNode).property is not PropertyNode)
+                        throw new Exception("Propiedad invalida");
+                    return CheckExpression((expression as ListNode).property, context);
 
                 case ForNode:
                     foreach (var exp in (expression as ForNode).body)
                     {
-                        CheckExpressionType(exp, context);
+                        CheckExpression(exp, context);
                     }
                     return null;
 
                 case WhileNode:
-                    CheckExpressionType((expression as WhileNode).condition, context);
-                    foreach (var exp in (expression as ForNode).body)
+                    CheckExpression((expression as WhileNode).condition, context);
+                    foreach (var exp in (expression as WhileNode).body)
                     {
-                        CheckExpressionType(exp, context);
+                        CheckExpression(exp, context);
                     }
                     return null;
 
@@ -211,7 +238,8 @@ namespace Console
                     return GetExpectedTypeForProperty((expression as PropertyNode).Name);
 
                 case PredicateNode:
-                    return CheckExpressionType((expression as PredicateNode).condition, context);
+                    CheckExpression((expression as PredicateNode).condition, context);
+                    return typeof(Cards);
 
                 default: throw new Exception("Not handled expression types");
             }
@@ -232,7 +260,7 @@ namespace Console
         private bool CompareTypes(string propertyName, GlobalContext context, ExpressionNode expression)
         {
             Type exprectedType = GetExpectedTypeForProperty(propertyName);
-            Type expType = CheckExpressionType(expression, context);
+            Type expType = CheckExpression(expression, context);
             if (expType != exprectedType)
                 return false;
             return true;

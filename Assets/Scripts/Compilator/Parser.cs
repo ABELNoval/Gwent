@@ -445,8 +445,8 @@ namespace Console
                     case "Pop":
                     case "Shuffle":
                         left = new MethodCardNode(PreviousExp().value);
-                        Expect(TokenType.LeftParenthesis);
-                        Expect(TokenType.RightParenthesis);
+                        ExpectExp(TokenType.LeftParenthesis);
+                        ExpectExp(TokenType.RightParenthesis);
                         break;
                 }
             }
