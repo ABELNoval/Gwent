@@ -18,6 +18,8 @@ namespace Console
 
         public void DefineSymbol(string name, Type type)
         {
+            if (ConteinsSymbol(name) && symbols[name] != type)
+                throw new Exception("Variable ya definida con otro valor");
             symbols[name] = type;
         }
 

@@ -62,9 +62,15 @@ namespace Console
                 if (property.Key == "Action")
                 {
                     CheckActionNode(property.Value as ActionNode, new GlobalContext(context));
-                    return;
                 }
-                if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
+                else if (property.Key == "Parameters")
+                {
+                    foreach (var parameter in property.Value as List<(string, Type)>)
+                    {
+                        context.DefineSymbol(parameter.Item1, parameter.Item2);
+                    }
+                }
+                else if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
                     throw new Exception("No son del mismo tipo");
             }
         }
@@ -173,6 +179,11 @@ namespace Console
                                 throw new Exception("Propiedad invalida");
                             return CheckExpression((expression as IdentifierNode).property, context);
 
+                        case MethodListNode:
+                            if (identifierType != typeof(Context))
+                                throw new Exception("Propiedad invalid");
+                            return CheckExpression((expression as IdentifierNode).property, context);
+
                         default:
                             throw new Exception("Propiedad invalida");
                     }
@@ -181,15 +192,21 @@ namespace Console
                     return (expression as LiteralNode).value.GetType();
 
                 case BinaryExpressionNode:
-                    leftExpression = CheckExpression((expression as BinaryExpressionNode).left, context);
                     rightExpression = CheckExpression((expression as BinaryExpressionNode).right, context);
+                    leftExpression = CheckExpression((expression as BinaryExpressionNode).left, context);
                     if (leftExpression != rightExpression)
                         throw new Exception("The two expressions aren't the same type");
                     return leftExpression;
 
                 case AssignamentNode:
-                    leftExpression = CheckExpression((expression as AssignamentNode).value, context);
-                    rightExpression = CheckExpression((expression as AssignamentNode).identifier, context);
+                    AssignamentNode assignament = expression as AssignamentNode;
+                    rightExpression = CheckExpression(assignament.value, context);
+                    if (assignament.identifier is IdentifierNode && (assignament.identifier as IdentifierNode).property == null)
+                    {
+                        context.DefineSymbol((assignament.identifier as IdentifierNode).Name, rightExpression);
+                        return rightExpression;
+                    }
+                    leftExpression = CheckExpression(assignament.identifier, context);
                     if (leftExpression != rightExpression)
                         throw new Exception("The two expressions aren't the same type");
                     return leftExpression;
@@ -220,6 +237,8 @@ namespace Console
                     return CheckExpression((expression as ListNode).property, context);
 
                 case ForNode:
+                    context.DefineSymbol("target", typeof(Cards));
+                    context.DefineSymbol("context", typeof(Context));
                     foreach (var exp in (expression as ForNode).body)
                     {
                         CheckExpression(exp, context);

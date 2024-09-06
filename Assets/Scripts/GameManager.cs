@@ -217,6 +217,7 @@ public class GameManager : MonoBehaviour
         SemanticAnalyzer semanticAnalyzer = new();
         if (node is EffectNode)
         {
+            semanticAnalyzer.CheckEffectNode(node as EffectNode, new GlobalContext());
             Store.AddEffect(input.text);
             Store.AddEffectNode(node as EffectNode);
             return;
