@@ -207,6 +207,12 @@ namespace Console
                     }
                     return null;
 
+                case PropertyNode:
+                    return GetExpectedTypeForProperty((expression as PropertyNode).Name);
+
+                case PredicateNode:
+                    return CheckExpressionType((expression as PredicateNode).condition, context);
+
                 default: throw new Exception("Not handled expression types");
             }
         }
