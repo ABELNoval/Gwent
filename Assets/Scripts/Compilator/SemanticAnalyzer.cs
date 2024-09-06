@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Console
 {
@@ -25,29 +24,33 @@ namespace Console
         {
             foreach (var property in node.properties)
             {
-                if (property.Key == "OnActivation")
+                switch (property.Key)
                 {
-                    foreach (var onActValue in (property.Value as OnActivationNode).OnActValues)
-                    {
-                        CheckOnActValueNode(onActValue, new GlobalContext(context));
-                    }
-                }
-                else if (property.Key == "Range")
-                {
-                    foreach (var expression in property.Value as List<ExpressionNode>)
-                    {
-                        Type exprectedType = GetExpectedTypeForProperty((expression as LiteralNode).value.ToString());
-                        Type expType = CheckExpression(expression, context);
-                        if (expType != exprectedType)
+                    case "Name":
+                    case "Power":
+                    case "Faction":
+                    case "Type":
+                        if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
                             throw new Exception("No son del mismo tipo");
-                    }
-                }
-                else
-                {
-                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
-                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
-                    if (expType != exprectedType)
-                        throw new Exception("No son del mismo tipo");
+                        break;
+
+                    case "OnActivation":
+                        foreach (var onActValue in (property.Value as OnActivationNode).OnActValues)
+                        {
+                            CheckOnActValueNode(onActValue, new GlobalContext(context));
+                        }
+                        break;
+
+                    case "Range":
+                        foreach (var expression in property.Value as List<ExpressionNode>)
+                        {
+                            if (!CompareTypes((expression as LiteralNode).value.ToString(), context, expression))
+                                throw new Exception("No son del mismo tipo");
+                        }
+                        break;
+
+                    default:
+                        throw new Exception("Propiedad no valida");
                 }
             }
         }
@@ -58,11 +61,10 @@ namespace Console
             {
                 if (property.Key == "Action")
                 {
-                    node.SetProperty(property.Key, CheckActionNode(property.Value as ActionNode, new GlobalContext(context)));
+                    CheckActionNode(property.Value as ActionNode, new GlobalContext(context));
+                    return;
                 }
-                Type exprectedType = GetExpectedTypeForProperty(property.Key);
-                Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
-                if (expType != exprectedType)
+                if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
                     throw new Exception("No son del mismo tipo");
             }
         }
@@ -71,12 +73,20 @@ namespace Console
         {
             foreach (var property in node.properties)
             {
-                if (property.Key == "Selector")
-                    CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));
-                else if (property.Key == "EffectData")
-                    CheckEffectDataNode(property.Value as EffectDataNode, new GlobalContext(context));
-                else if (property.Key == "PosAction")
-                    CheckPosActionNode(property.Value as PosActionNode, new GlobalContext(context));
+                switch (property.Key)
+                {
+                    case "Selector":
+                        CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));
+                        break;
+                    case "EffectData":
+                        CheckEffectDataNode(property.Value as EffectDataNode, new GlobalContext(context));
+                        break;
+                    case "PosAction":
+                        CheckPosActionNode(property.Value as PosActionNode, new GlobalContext(context));
+                        break;
+                    default:
+                        throw new Exception("Propiedad no valida");
+                }
             }
         }
 
@@ -86,11 +96,10 @@ namespace Console
             {
                 if (property.Key == "Predicate")
                 {
+                    CheckExpressionType(node.GetProperty<ExpressionNode>(property.Key), context);
                     return;
                 }
-                Type exprectedType = GetExpectedTypeForProperty(property.Key);
-                Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
-                if (expType != exprectedType)
+                if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
                     throw new Exception("No son del mismo tipo");
             }
         }
@@ -103,16 +112,12 @@ namespace Console
                 {
                     foreach (var expression in property.Value as List<(string, ExpressionNode)>)
                     {
-                        CheckExpression(expression.Item2, context);
+                        CheckExpressionType(expression.Item2, context);
                     }
+                    return;
                 }
-                else
-                {
-                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
-                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
-                    if (expType != exprectedType)
-                        throw new Exception("No son del mismo tipo");
-                }
+                if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
+                    throw new Exception("No son del mismo tipo");
             }
         }
 
@@ -123,79 +128,85 @@ namespace Console
                 if (property.Key == "Selector")
                 {
                     CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));
+                    return;
                 }
-                else
-                {
-                    Type exprectedType = GetExpectedTypeForProperty(property.Key);
-                    Type expType = CheckExpression(node.GetProperty<ExpressionNode>(property.Key), context);
-                    if (expType != exprectedType)
-                        throw new Exception("No son del mismo tipo");
-                }
+                if (!CompareTypes(property.Key, context, node.GetProperty<ExpressionNode>(property.Key)))
+                    throw new Exception("No son del mismo tipo");
             }
         }
 
-        private ActionNode CheckActionNode(ActionNode node, GlobalContext context)
+        private void CheckActionNode(ActionNode node, GlobalContext context)
         {
             foreach (var expression in node.expressions)
             {
-                CheckExpression(expression, context);
+                CheckExpressionType(expression, context);
             }
-            return node;
         }
 
-        public Type CheckExpression(ExpressionNode expression, GlobalContext context)
+        public Type CheckExpressionType(ExpressionNode expression, GlobalContext context)
         {
+            Type leftExpression;
+            Type rightExpression;
             switch (expression)
             {
                 case IdentifierNode:
-                    if ((expression as IdentifierNode).type != null)
+                    if ((expression as IdentifierNode).property == null)
                     {
-                        if (context.ConteinsSymbol((expression as IdentifierNode).Name))
+                        if ((expression as IdentifierNode).type != null)
                         {
-                            return context.LookupSymbol((expression as IdentifierNode).Name);
-                        }
-                        else if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
-                        {
-                            return context.parentContext.LookupSymbol((expression as IdentifierNode).Name);
-                        }
-                        else
-                        {
+                            if (context.ConteinsSymbol((expression as IdentifierNode).Name))
+                            {
+                                return context.LookupSymbol((expression as IdentifierNode).Name);
+                            }
+                            if (context.parentContext.ConteinsSymbol((expression as IdentifierNode).Name))
+                            {
+                                return context.parentContext.LookupSymbol((expression as IdentifierNode).Name);
+                            }
                             throw new Exception("Indentifier not defined");
                         }
-                    }
-                    else
-                    {
                         return (expression as IdentifierNode).type.GetType();
                     }
+                    return CheckExpressionType((expression as IdentifierNode).property, context);
 
                 case LiteralNode:
                     return (expression as LiteralNode).value.GetType();
 
                 case BinaryExpressionNode:
-                    Type leftExpression = CheckExpression((expression as BinaryExpressionNode).left, context);
-                    Type rightExpression = CheckExpression((expression as BinaryExpressionNode).right, context);
+                    leftExpression = CheckExpressionType((expression as BinaryExpressionNode).left, context);
+                    rightExpression = CheckExpressionType((expression as BinaryExpressionNode).right, context);
                     if (leftExpression != rightExpression)
                         throw new Exception("The two expressions aren't the same type");
                     return leftExpression;
 
                 case AssignamentNode:
-                    string name = (string)(expression as AssignamentNode).identifier.Evaluate(null, null, null);
-                    Type right = CheckExpression((expression as AssignamentNode).value, context);
-                    if (context.ConteinsSymbol(name))
-                    {
-                        Type left = context.LookupSymbol(name);
-                        if (left != right)
-                            throw new Exception("The two expressions aren't the same type");
-                        context.DefineSymbol((string)(expression as AssignamentNode).identifier.Evaluate(null, null, null), right);
-                        return left;
-                    }
-                    context.DefineSymbol(name, right);
-                    return right;
+                    leftExpression = CheckExpressionType((expression as AssignamentNode).value, context);
+                    rightExpression = CheckExpressionType((expression as AssignamentNode).identifier, context);
+                    if (leftExpression != rightExpression)
+                        throw new Exception("The two expressions aren't the same type");
+                    return leftExpression;
+
                 case MethodListNode:
+                    return typeof(List<Cards>);
+
+                case MethodCardNode:
                 case ListNode:
+                    return typeof(Cards);
+
                 case ForNode:
-                case WhileNode:
+                    foreach (var exp in (expression as ForNode).body)
+                    {
+                        CheckExpressionType(exp, context);
+                    }
                     return null;
+
+                case WhileNode:
+                    CheckExpressionType((expression as WhileNode).condition, context);
+                    foreach (var exp in (expression as ForNode).body)
+                    {
+                        CheckExpressionType(exp, context);
+                    }
+                    return null;
+
                 default: throw new Exception("Not handled expression types");
             }
         }
@@ -210,6 +221,15 @@ namespace Console
             {
                 throw new ArgumentException($"Property '{propertyName}' not recognized.");
             }
+        }
+
+        private bool CompareTypes(string propertyName, GlobalContext context, ExpressionNode expression)
+        {
+            Type exprectedType = GetExpectedTypeForProperty(propertyName);
+            Type expType = CheckExpressionType(expression, context);
+            if (expType != exprectedType)
+                return false;
+            return true;
         }
     }
 }
