@@ -14,7 +14,7 @@
           "range": [
             "Melee",
             "Siege",
-            "Range"
+            "Rangedd"
           ],
           "power": 14,
           "img": "Art/Images/Nanami",
@@ -132,7 +132,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 7,
@@ -146,7 +146,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 9,
@@ -238,7 +238,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 5,
           "img": "Art/Images/Megumi",
@@ -251,7 +251,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 5,
           "img": "Art/Images/Megumi",
@@ -264,7 +264,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 5,
           "img": "Art/Images/Nobara",
@@ -278,7 +278,7 @@
           "faction": "Source",
           "range": [
             "Melee",
-            "Range"
+            "Ranged"
           ],
           "power": 8,
           "img": "Art/Images/Maki",
@@ -319,7 +319,7 @@
           "description": "...",
           "faction": "Source",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 5,
           "img": "Art/Images/Nobara",
@@ -413,7 +413,7 @@
           "faction": "Source",
           "range": [
             "Melee",
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 0,
@@ -428,7 +428,7 @@
           "faction": "Source",
           "range": [
             "Melee",
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 10,
@@ -464,7 +464,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 7,
           "img": "Art/Images/Jogo",
@@ -477,7 +477,7 @@
           "description": "...",
           "faction": "Curse",
           "range": [
-            "Range"
+            "Ranged"
           ],
           "power": 7,
           "img": "Art/Images/Jogo",
@@ -491,7 +491,7 @@
           "faction": "Curse",
           "range": [
             "Melee",
-            "Range"
+            "Ranged"
           ],
           "power": 6,
           "img": "Art/Images/Kenjaku",
@@ -640,7 +640,7 @@
           "faction": "Curse",
           "range": [
             "Melee",
-            "Range"
+            "Ranged"
           ],
           "power": 6,
           "img": "Art/Images/Kenjaku",
@@ -680,7 +680,7 @@
           "faction": "Curse",
           "range": [
             "Melee",
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 0,
@@ -695,7 +695,7 @@
           "faction": "Curse",
           "range": [
             "Melee",
-            "Range",
+            "Ranged",
             "Siege"
           ],
           "power": 10,

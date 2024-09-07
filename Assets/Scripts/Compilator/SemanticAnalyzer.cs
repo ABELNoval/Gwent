@@ -11,7 +11,7 @@ namespace Console
             { "Name", typeof(string) },
             { "Faction", typeof(string) },
             { "Power", typeof(int) },
-            { "Range", typeof(string) },
+            { "Ranged", typeof(string) },
             { "Melee", typeof(string) },
             { "Siege", typeof(string) },
             { "Type", typeof(string) },
@@ -261,6 +261,108 @@ namespace Console
                     return typeof(Cards);
 
                 default: throw new Exception("Not handled expression types");
+            }
+        }
+
+        public void CheckCard(Cards card)
+        {
+            CheckName(card.name);
+            CheckType(card.type, card.power, card.range);
+            CheckEffect(card.onActivation);
+        }
+
+        private void CheckName(string name)
+        {
+            if (Store.ConteinsCard(name))
+                throw new Exception("Ya existe una carta con el nombre " + name);
+        }
+
+        private void CheckType(string type, int power, List<string> range)
+        {
+            switch (type)
+            {
+                case "Normal":
+                case "Silver":
+                case "Plata":
+                case "Gold":
+                case "Oro":
+                    if (range.Count == 0)
+                        throw new Exception("Las cartas de unidad tienen que tener al menos una posicion");
+                    CheckRange(range);
+                    break;
+
+                case "Clima":
+                case "Climate":
+                case "Aumento":
+                case "Buff":
+                case "Lider":
+                case "Boss":
+                    if (range.Count != 0)
+                        throw new Exception("Las cartas que no son de unidad no tienen ninguna posicion");
+                    CheckRange(range);
+                    if (power != 0)
+                        throw new Exception("Las cartas que no son de unidad tienen poder 0");
+                    break;
+                default:
+                    throw new Exception("Tipo de carta no reconocido");
+            }
+        }
+
+        private void CheckEffect(List<OnActivation> onActivations)
+        {
+            bool haveParameter = false;
+            foreach (var onActivation in onActivations)
+            {
+                EffectNode effectNode = Store.FindEffect(onActivation.effect.name);
+                if (effectNode.Parameters != null && onActivation.effect.parameters != null)
+                {
+                    foreach (var parameter in onActivation.effect.parameters)
+                    {
+                        foreach (var parameterEffect in effectNode.Parameters)
+                        {
+                            if (parameterEffect.Item1 == parameter.Item1.ToLower())
+                                haveParameter = true;
+                        }
+                        if (!haveParameter)
+                            throw new Exception("La carta posee un parametro no definido en el efecto");
+                    }
+                }
+                if (!(effectNode.Parameters != null && onActivation.effect.parameters != null))
+                    throw new Exception("La carta y el efecto no poseen los mismos parametros");
+            }
+        }
+
+        private void CheckRange(List<string> range)
+        {
+            bool melee = false;
+            bool ranged = false;
+            bool siege = false;
+
+            foreach (var pos in range)
+            {
+                switch (pos)
+                {
+                    case "Melee":
+                        if (melee)
+                            throw new Exception("Esta carta ya posee Melee en sus posiciones");
+                        melee = true;
+                        break;
+
+                    case "Ranged":
+                        if (ranged)
+                            throw new Exception("Esta carta ya posee Ranged en sus posiciones");
+                        ranged = true;
+                        break;
+
+                    case "Siege":
+                        if (siege)
+                            throw new Exception("Esta carta ya posee Siege en sus posiciones");
+                        siege = true;
+                        break;
+
+                    default:
+                        throw new Exception("Posicion invalida");
+                }
             }
         }
 

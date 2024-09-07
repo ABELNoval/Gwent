@@ -218,12 +218,15 @@ public class GameManager : MonoBehaviour
         if (node is EffectNode)
         {
             semanticAnalyzer.CheckEffectNode(node as EffectNode, new GlobalContext());
+            if (Store.ConteinsEffect((string)(node as EffectNode).Name.Evaluate(null, null, null)))
+                throw new Exception("El efecto ya esta creado");
             Store.AddEffect(input.text);
             Store.AddEffectNode(node as EffectNode);
             return;
         }
         semanticAnalyzer.CheckCardNode(node as CardNode, new GlobalContext());
         Cards card = buildNode.BuildCard(node as CardNode);
+        semanticAnalyzer.CheckCard(card);
         game.selectedDeck.Push(card);
     }
 

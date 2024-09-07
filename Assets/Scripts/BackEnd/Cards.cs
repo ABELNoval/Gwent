@@ -71,20 +71,20 @@ namespace Console
     public class EffectData
     {
         public string name { get; }
-        public List<(string, object)> properties { get; }
-        public EffectData(string name, List<(string, object)> properties = null)
+        public List<(string, object)> parameters { get; }
+        public EffectData(string name, List<(string, object)> parameters = null)
         {
             this.name = name;
-            this.properties = properties;
+            this.parameters = parameters;
         }
 
         public (EffectNode, GlobalContext) GetEffect()
         {
             EffectNode effectNode = Store.GetEffectNode(name);
             GlobalContext globalContext = new GlobalContext();
-            if (properties != null)
+            if (parameters != null)
             {
-                foreach (var parameter in properties)
+                foreach (var parameter in parameters)
                 {
                     globalContext.DefineVariable(parameter.Item1.ToLower(), parameter.Item2);
                 }

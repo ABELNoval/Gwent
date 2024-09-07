@@ -58,6 +58,39 @@ namespace Console
             throw new Exception($"{name} efecto no definido");
         }
 
+        public static bool ConteinsCard(string name)
+        {
+            foreach (var deck in decks)
+            {
+                foreach (var card in deck.cards)
+                {
+                    if (card.name == name)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ConteinsEffect(string name)
+        {
+            foreach (var effect in effectsNode)
+            {
+                if ((string)effect.Name.Evaluate(null, null, null) == name)
+                    return true;
+            }
+            return false;
+        }
+
+        public static EffectNode FindEffect(string name)
+        {
+            foreach (var effect in effectsNode)
+            {
+                if ((string)effect.Name.Evaluate(null, null, null) == name)
+                    return effect;
+            }
+            throw new Exception($"El effecto de nombre {name} no esta creado");
+        }
+
         private static void LoadFromJSON()
         {
             var settings = new JsonSerializerSettings

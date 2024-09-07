@@ -15,7 +15,7 @@ public class Debuguer : MonoBehaviour
              Type: ""Oro"",
              Power: ((5+3)*2)-(4/2)^1,
              Faction: ""Source"",
-             Range: [""Melee"", ""Siege"", ""Range""],
+             Range: [""Melee"", ""Siege"", ""Ranged""],
              OnActivation:
              [
                  {
