@@ -132,6 +132,14 @@ namespace Console
         {
             foreach (var property in node.properties)
             {
+                if (property.Key == "Params")
+                {
+                    foreach (var expression in property.Value as List<(string, ExpressionNode)>)
+                    {
+                        CheckExpression(expression.Item2, context);
+                    }
+                    return;
+                }
                 if (property.Key == "Selector")
                 {
                     CheckSelectorNode(property.Value as SelectorNode, new GlobalContext(context));

@@ -246,6 +246,13 @@ namespace Console
             get => GetProperty<ExpressionNode>("Type");
             private set => SetProperty("Type", value);
         }
+
+        public List<(string, ExpressionNode)> Params
+        {
+            get => GetProperty<List<(string, ExpressionNode)>>("Params");
+            private set => SetProperty("Params", value);
+        }
+
         public SelectorNode Selector
         {
             get => GetProperty<SelectorNode>("Selector");

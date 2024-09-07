@@ -56,7 +56,7 @@ namespace Console
                 ActiveEffect(effectNode.Item1, effectNode.Item2);
             }
             if (posAction != null)
-                posAction.GenerateEffect();
+                posAction.GenerateEffect(selector);
         }
 
         private void ActiveEffect(EffectNode effectNode, GlobalContext globalContext, List<Cards> targets = null)
@@ -152,17 +152,49 @@ namespace Console
     {
         public string type { get; }
         public Selector selector { get; }
+        public List<(string, object)> parameters { get; }
 
-        public PosAction(string type, Selector selector = null)
+        public PosAction(string type, Selector selector = null, List<(string, object)> parameters = null)
         {
             this.type = type;
             this.selector = selector;
+            this.parameters = parameters;
         }
 
-        public void GenerateEffect()
+        public void GenerateEffect(Selector parent)
         {
-            selector?.GetTargets();
+            (EffectNode, GlobalContext) effectNode = GetEffect();
+            if (selector != null)
+            {
+                List<Cards> targets = selector.GetTargets();
+                ActiveEffect(effectNode.Item1, effectNode.Item2, targets);
+            }
+            else
+            {
+                ActiveEffect(effectNode.Item1, effectNode.Item2, parent.GetTargets());
+            }
+        }
+
+        public (EffectNode, GlobalContext) GetEffect()
+        {
             EffectNode effectNode = Store.GetEffectNode(type);
+            GlobalContext globalContext = new GlobalContext();
+            if (parameters != null)
+            {
+                foreach (var parameter in parameters)
+                {
+                    globalContext.DefineVariable(parameter.Item1.ToLower(), parameter.Item2);
+                }
+            }
+            return (effectNode, globalContext);
+        }
+
+        private void ActiveEffect(EffectNode effectNode, GlobalContext globalContext, List<Cards> targets = null)
+        {
+            foreach (var expression in effectNode.Action.expressions)
+            {
+                expression.Evaluate(globalContext, targets, null);
+            }
         }
     }
 }

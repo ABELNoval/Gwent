@@ -60,19 +60,24 @@ namespace Console
         private EffectData BuildEffectData(EffectDataNode effectData)
         {
             string name = (string)effectData.Name.Evaluate(null, null, null);
-            List<(string, object)> parameter = new();
+            List<(string, object)> parameters = new();
             foreach (var param in effectData.Params)
             {
-                parameter.Add((param.Item1, param.Item2));
+                parameters.Add((param.Item1, param.Item2));
             }
-            return new EffectData(name, parameter);
+            return new EffectData(name, parameters);
         }
 
         private PosAction BuildPosAction(PosActionNode posAction)
         {
             string type = (string)posAction.Type.Evaluate(null, null, null);
+            List<(string, object)> parameters = new();
+            foreach (var param in posAction.Params)
+            {
+                parameters.Add((param.Item1, param.Item2));
+            }
             Selector selector = BuildSelector(posAction.Selector);
-            return new PosAction(type, selector);
+            return new PosAction(type, selector, parameters);
         }
     }
 }
