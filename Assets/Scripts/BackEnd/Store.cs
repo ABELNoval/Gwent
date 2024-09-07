@@ -81,16 +81,6 @@ namespace Console
             return false;
         }
 
-        public static EffectNode FindEffect(string name)
-        {
-            foreach (var effect in effectsNode)
-            {
-                if ((string)effect.Name.Evaluate(null, null, null) == name)
-                    return effect;
-            }
-            throw new Exception($"El effecto de nombre {name} no esta creado");
-        }
-
         private static void LoadFromJSON()
         {
             var settings = new JsonSerializerSettings

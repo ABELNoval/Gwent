@@ -313,7 +313,7 @@ namespace Console
             bool haveParameter = false;
             foreach (var onActivation in onActivations)
             {
-                EffectNode effectNode = Store.FindEffect(onActivation.effect.name);
+                EffectNode effectNode = Store.GetEffectNode(onActivation.effect.name);
                 if (effectNode.Parameters != null && onActivation.effect.parameters != null)
                 {
                     foreach (var parameter in onActivation.effect.parameters)
