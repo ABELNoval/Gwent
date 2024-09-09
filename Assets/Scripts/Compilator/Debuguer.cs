@@ -11,9 +11,9 @@ public class Debuguer : MonoBehaviour
     //  {
     readonly string input = @"
          card{
-         Name: ""Hamil"",
-             Type: ""Oro"",
-             Power: ((5+3)*2)-(4/2)^1,
+         Name: ""Para"",
+             Type: ""Silver"",
+             Power: 7,
              Faction: ""Source"",
              Range: [""Melee"", ""Siege"", ""Ranged""],
              OnActivation:
@@ -21,7 +21,7 @@ public class Debuguer : MonoBehaviour
                  {
                     Effect:
                        {
-                         Name: ""DecrementPower"",
+                         Name: ""Damage"",
                          Amount: 3
                         },
                     Selector:
@@ -30,7 +30,20 @@ public class Debuguer : MonoBehaviour
                          Single: true,
                          Predicate: (unit) => unit.Power > 5
                         },
+                    PosAction:
+                    {
+                        Type: ""ReturnToDeck"",
+                        Selector:
+                        {
+                            Source: ""parent"",
+                            Single: false,
+                            Predicate:(unit) => unit.Power < 1
+                        }
+                    }
                  },
+                 {
+                    Effect: ""Draw""
+                 }
               ]
             }
          ";
@@ -50,17 +63,18 @@ public class Debuguer : MonoBehaviour
     readonly string input2 = @"
         effect
              {
-                 Name: ""DecrementPower"",
+                 Name: ""Damage"",
                  Params:
                  {
                      amount: Number
                  },
-                 Action: (targets, context)
+                 Action: (targets, context) =>
                  {
-                    for target in targets =>
+                    for target in targets
                     {
-                        target.Power = target.Power - amount;
-                        target.Power--;
+                        i = 0;
+                        while(i-- < amount)
+                            target.Power -= 1;
                     };
                  }
              }

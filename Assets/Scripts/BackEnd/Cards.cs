@@ -48,7 +48,7 @@ namespace Console
             (EffectNode, GlobalContext) effectNode = effect.GetEffect();
             if (selector != null)
             {
-                List<Cards> targets = selector.GetTargets();
+                List<Cards> targets = selector.GetTargets(null);
                 ActiveEffect(effectNode.Item1, effectNode.Item2, targets);
             }
             else
@@ -106,7 +106,7 @@ namespace Console
             this.predicate = predicate;
         }
 
-        public List<Cards> GetTargets()
+        public List<Cards> GetTargets(Selector parent)
         {
             List<Cards> cards = new();
             switch (source)
@@ -138,6 +138,9 @@ namespace Console
                 case "othergraveyard":
                     cards = Context.GraveyardOfPlayer(Context.secondPlayer).cards;
                     break;
+                case "parent":
+                    cards = parent.GetTargets(null);
+                    break;
             }
             cards = (List<Cards>)predicate.Evaluate(new GlobalContext(), cards, null);
             if (single)
@@ -166,12 +169,12 @@ namespace Console
             (EffectNode, GlobalContext) effectNode = GetEffect();
             if (selector != null)
             {
-                List<Cards> targets = selector.GetTargets();
+                List<Cards> targets = selector.GetTargets(parent);
                 ActiveEffect(effectNode.Item1, effectNode.Item2, targets);
             }
             else
             {
-                ActiveEffect(effectNode.Item1, effectNode.Item2, parent.GetTargets());
+                ActiveEffect(effectNode.Item1, effectNode.Item2, parent.GetTargets(null));
             }
         }
 

@@ -547,8 +547,8 @@ namespace Console
                         body.Add(ParseExpression());
                     }
                 }
+                Expect(TokenType.Semicolon);
             }
-            Expect(TokenType.Semicolon);
             return new WhileNode(condition, body);
         }
 
