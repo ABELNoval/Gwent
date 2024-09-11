@@ -223,6 +223,12 @@ namespace Console
                         tokens.Add(new Token(TokenType.StringLiteral, str));
                         Advance();
                         break;
+                    case '@':
+                        if (Peek() == '@')
+                            tokens.Add(new Token(TokenType.ConcatWithEspace, "@@"));
+                        else
+                            tokens.Add(new Token(TokenType.Concat, "@"));
+                        break;
 
                     default:
                         if (char.IsWhiteSpace(currentCharacter))
@@ -393,10 +399,6 @@ namespace Console
                 case "Shuffle":
                     return new Token(TokenType.Shuffle, identifier);
 
-                case "@":
-                    return new Token(TokenType.Concat, identifier);
-                case "@@":
-                    return new Token(TokenType.ConcatWithEspace, identifier);
                 case "for":
                     return new Token(TokenType.for_Token, identifier);
                 case "while":

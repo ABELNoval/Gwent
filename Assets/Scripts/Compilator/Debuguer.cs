@@ -26,9 +26,9 @@ public class Debuguer : MonoBehaviour
                         },
                     Selector:
                         {
-                        Source: ""field"",
-                         Single: true,
-                         Predicate: (unit) => unit.Power > 5
+                        Source: ""board"",
+                         Single: false,
+                         Predicate: (unit) => unit.Faction == ""S"" @ ""ource""
                         },
                     PosAction:
                     {

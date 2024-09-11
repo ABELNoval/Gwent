@@ -9,8 +9,6 @@ namespace Console
 {
     public abstract class ExpressionNode
     {
-        public delegate Player FindPlayer(string name);
-
         public abstract void SetProperty(ExpressionNode property);
         public abstract object Evaluate(GlobalContext context, List<Cards> target, object value);
     }
