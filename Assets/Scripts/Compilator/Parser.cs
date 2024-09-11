@@ -884,6 +884,10 @@ namespace Console
                 expPosition++;
                 currentExpression = expression[expPosition];
             }
+            else
+            {
+                expPosition++;
+            }
         }
 
         private void Expect(TokenType expect)

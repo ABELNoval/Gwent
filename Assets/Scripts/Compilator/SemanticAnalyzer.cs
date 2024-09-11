@@ -11,6 +11,7 @@ namespace Console
             { "Name", typeof(string) },
             { "Faction", typeof(string) },
             { "Power", typeof(int) },
+            { "Owner", typeof(Guid) },
             { "Ranged", typeof(string) },
             { "Melee", typeof(string) },
             { "Siege", typeof(string) },
@@ -152,6 +153,8 @@ namespace Console
 
         private void CheckActionNode(ActionNode node, GlobalContext context)
         {
+            context.DefineSymbol("context", typeof(Context));
+            context.DefineSymbol("targets", typeof(List<Cards>));
             foreach (var expression in node.expressions)
             {
                 CheckExpression(expression, context);
@@ -246,7 +249,6 @@ namespace Console
 
                 case ForNode:
                     context.DefineSymbol("target", typeof(Cards));
-                    context.DefineSymbol("context", typeof(Context));
                     foreach (var exp in (expression as ForNode).body)
                     {
                         CheckExpression(exp, context);

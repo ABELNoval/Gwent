@@ -348,6 +348,8 @@ namespace Console
                     return new Token(TokenType.Faction, identifier);
                 case "Range":
                     return new Token(TokenType.Range, identifier);
+                case "Owner":
+                    return new Token(TokenType.Owner, identifier);
                 case "OnActivation":
                     return new Token(TokenType.OnActivation, identifier);
                 case "Effect":
@@ -385,6 +387,8 @@ namespace Console
                     return new Token(TokenType.Graveyard, identifier);
                 case "GraveyardOfPlayer":
                     return new Token(TokenType.GraveyardOfPlayer, identifier);
+                case "Board":
+                    return new Token(TokenType.Board, identifier);
 
                 case "Pop":
                     return new Token(TokenType.Pop, identifier);

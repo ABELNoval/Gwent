@@ -15,7 +15,7 @@ public class Debuguer : MonoBehaviour
              Type: ""Silver"",
              Power: 7,
              Faction: ""Source"",
-             Range: [""Melee"", ""Siege"", ""Ranged""],
+             Range: [""Melee""],
              OnActivation:
              [
                  {
@@ -63,18 +63,16 @@ public class Debuguer : MonoBehaviour
     readonly string input2 = @"
         effect
              {
-                 Name: ""Damage"",
-                 Params:
-                 {
-                     amount: Number
-                 },
+                 Name: ""ReturnToDeck"",
                  Action: (targets, context) =>
                  {
                     for target in targets
                     {
-                        i = 0;
-                        while(i-- < amount)
-                            target.Power -= 1;
+                        owner = cards.Owner;
+                        deck = DeckOfPlayer(owner);
+                        deck.Push(target);
+                        deck.Shuffle();
+                        context.Board.Remove(target);
                     };
                  }
              }
