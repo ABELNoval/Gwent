@@ -337,8 +337,11 @@ namespace Console
                             throw new Exception("La carta posee un parametro no definido en el efecto");
                     }
                 }
-                if (!(effectNode.Parameters != null && onActivation.effect.parameters != null))
-                    throw new Exception("La carta y el efecto no poseen los mismos parametros");
+                else
+                {
+                    if ((effectNode.Parameters != null && onActivation.effect.parameters == null) || (effectNode.Parameters == null && onActivation.effect.parameters != null))
+                        throw new Exception("La carta y el efecto no poseen los mismos parametros");
+                }
             }
         }
 

@@ -268,15 +268,15 @@ namespace Console
                             {
                                 AdvanceExp();
                                 AdvanceExp();
-                                Expect(TokenType.StringLiteral);
-                                name += Previous().value;
+                                ExpectExp(TokenType.StringLiteral);
+                                name += PreviousExp().value;
                             }
                             if (PeekNextExp().type == TokenType.ConcatWithEspace)
                             {
                                 AdvanceExp();
                                 AdvanceExp();
-                                Expect(TokenType.StringLiteral);
-                                name += " " + Previous().value;
+                                ExpectExp(TokenType.StringLiteral);
+                                name += " " + PreviousExp().value;
                             }
                         }
                         LiteralNode text = new LiteralNode(name);
@@ -843,6 +843,10 @@ namespace Console
                 if (expPosition < expression.Count - 1)
                 {
                     AdvanceExp();
+                }
+                else
+                {
+                    expPosition++;
                 }
                 return true;
             }

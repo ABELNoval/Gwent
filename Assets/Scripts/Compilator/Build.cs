@@ -42,12 +42,13 @@ namespace Console
             {
                 effectData = new EffectData((string)onActValue.EffectData.Name.Evaluate(null, null, null));
             }
-            PosAction posAction = null;
+
             if (onActValue.PosAction != null)
             {
-                posAction = BuildPosAction(onActValue.PosAction);
+                PosAction posAction = BuildPosAction(onActValue.PosAction);
+                return new OnActivation(effectData, selector, posAction);
             }
-            return new OnActivation(effectData, selector, posAction);
+            return new OnActivation(effectData, selector, null);
         }
 
         private Selector BuildSelector(SelectorNode selector)
@@ -72,9 +73,12 @@ namespace Console
         {
             string type = (string)posAction.Type.Evaluate(null, null, null);
             List<(string, object)> parameters = new();
-            foreach (var param in posAction.Params)
+            if (posAction.Params != null)
             {
-                parameters.Add((param.Item1, param.Item2));
+                foreach (var param in posAction.Params)
+                {
+                    parameters.Add((param.Item1, param.Item2));
+                }
             }
             Selector selector = BuildSelector(posAction.Selector);
             return new PosAction(type, selector, parameters);

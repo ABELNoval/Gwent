@@ -225,9 +225,17 @@ namespace Console
                         break;
                     case '@':
                         if (Peek() == '@')
+                        {
+
                             tokens.Add(new Token(TokenType.ConcatWithEspace, "@@"));
+                            Advance();
+                            Advance();
+                        }
                         else
+                        {
                             tokens.Add(new Token(TokenType.Concat, "@"));
+                            Advance();
+                        }
                         break;
 
                     default:
