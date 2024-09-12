@@ -32,6 +32,7 @@ public class Game
     public Player activePlayer;
     public int player1Wins;
     public int player2Wins;
+    Board board;
     public Deck selectedDeck { get; private set; }
 
 
@@ -51,6 +52,7 @@ public class Game
             GeneratePlayers();
             activePlayer = player1;
             Context.board = new Board();
+            Context.board.removeCard += RemoveCards;
             Context.triggerPlayer = activePlayer.id;
             Context.findPlayer += FindPlayer;
             Context.findPlayerWithString += FindPlayerWithString;
@@ -68,7 +70,7 @@ public class Game
     {
         if (deck != null)
         {
-            if (deck.cards.Count >= 25 && GoldCardCant(deck) == 1 && SilverCardCant(deck) <= 8)
+            if (deck.cards.Count >= 25 && GoldCardCant(deck) >= 1 && SilverCardCant(deck) >= 3)
             {
                 return true;
             }

@@ -84,7 +84,6 @@ namespace Console
 
         public override object Evaluate(GlobalContext context, List<Cards> target, object value)
         {
-
             if (property != null)
             {
                 ExpressionNode newProperty = property;
@@ -307,6 +306,8 @@ namespace Console
             {
                 if (property is PropertyNode)
                     ((PropertyNode)property).SetCard((Cards)context.LookupVariable(Name));
+                if (property is MethodCardNode)
+                    ((MethodCardNode)property).SetList((GameComponent)context.LookupVariable(Name));
                 return property.Evaluate(context, target, value);
             }
             if (value != null)
@@ -437,7 +438,7 @@ namespace Console
             {
                 foreach (var expression in body)
                 {
-                    return expression.Evaluate(context, target, value);
+                    expression.Evaluate(context, target, value);
                 }
             }
             return null;

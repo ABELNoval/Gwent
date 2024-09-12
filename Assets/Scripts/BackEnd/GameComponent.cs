@@ -8,6 +8,7 @@ namespace Console
     {
 
         public delegate void RemoveCard(Player player, Cards card);
+        public delegate void RemoveCardOnBoard(Cards card);
         public delegate void UpdateInterface(Player player);
         public System.Random random = new System.Random();
         public Player owner;

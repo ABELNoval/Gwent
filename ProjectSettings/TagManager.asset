@@ -13,6 +13,9 @@ TagManager:
   - player1Buff
   - player2Buff
   - Climate
+  - cementery
+  - player1Ranged
+  - player2Ranged
   layers:
   - Default
   - TransparentFX

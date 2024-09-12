@@ -9,6 +9,9 @@ using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
 using UnityEngine.Audio;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class GameManager : MonoBehaviour
 {
@@ -333,14 +336,41 @@ public class GameManager : MonoBehaviour
 
     private void RemoveCard(Player player, Cards card)
     {
+        string playerText;
+        if (player == game.player1)
+        {
+            playerText = "player1";
+        }
+        else
+        {
+            playerText = "player2";
+        }
         foreach (var panels in boardPanels)
         {
-            for (int i = 0; i < panels.transform.childCount; i++)
+            if (player != null)
             {
-                if (panels.transform.GetChild(i).GetComponent<CardUi>().card.Equals(card))
+                for (int i = 0; i < panels.transform.childCount; i++)
                 {
-                    Destroy(panels.transform.GetChild(i).gameObject);
-                    return;
+                    if (panels.tag == playerText + "Melee" || panels.tag == playerText + "Ranged" || panels.tag == playerText + "Siege")
+                    {
+                        if (panels.transform.GetChild(i).GetComponent<CardUi>().card.Equals(card))
+                        {
+                            Destroy(panels.transform.GetChild(i).gameObject);
+                            return;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                for (int i = 0; i < panels.transform.childCount; i++)
+                {
+                    if (panels.transform.GetChild(i).GetComponent<CardUi>().card.Equals(card))
+                    {
+                        Destroy(panels.transform.GetChild(i).gameObject);
+                        return;
+                    }
                 }
             }
         }

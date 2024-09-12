@@ -3301,7 +3301,7 @@ GameObject:
   - component: {fileID: 214382829}
   m_Layer: 5
   m_Name: PanelRangoPlayer1
-  m_TagString: player1Range
+  m_TagString: player1Ranged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25861,7 +25861,7 @@ GameObject:
   - component: {fileID: 1713323652}
   m_Layer: 5
   m_Name: PanelRangoPlayer2
-  m_TagString: player2Range
+  m_TagString: player2Ranged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

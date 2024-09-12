@@ -81,7 +81,7 @@
                       },
                       "right": {
                         "$type": "Console.LiteralNode, Assembly-CSharp",
-                        "value": 1
+                        "value": 4
                       }
                     }
                   }
@@ -808,7 +808,7 @@
   ],
   "effects": [
     "effect\r\n             {\r\n                 Name: \"DecrementPower\",\r\n                 Params:\r\n                 {\r\n                     amount: Number\r\n                 },\r\n                 Action: (targets, context) =>\r\n                 {\r\n                    for target in targets\r\n                    {\r\n                        target.Power = target.Power - amount;\r\n                        target.Power--;\r\n                    };\r\n                 }\r\n             }​",
-    " effect\r\n             {\r\n                 Name: \"Damage\",\r\n                 Params:\r\n                 {\r\n                     amount: Number\r\n                 },\r\n                 Action: (targets, context) =>\r\n                 {\r\n                    for target in targets\r\n                    {\r\n                        i = 0;\r\n                        while(i-- < amount)\r\n                            target.Power -= 1;\r\n                    };\r\n                 }\r\n             }​",
+    " effect\r\n             {\r\n                 Name: \"Damage\",\r\n                 Params:\r\n                 {\r\n                     amount: Number\r\n                 },\r\n                 Action: (targets, context) =>\r\n                 {\r\n                    for target in targets\r\n                    {\r\n                        i = 0;\r\n                        while(i++ < amount)\r\n                            target.Power -= 1;\r\n                    };\r\n                 }\r\n             }​",
     "        effect\r\n             {\r\n                 Name: \"Draw\",\r\n                 Action: (targets, context) =>\r\n                 {\r\n                    topCard = context.Deck.Pop();\r\n                    context.Hand.SendBottom(topCard);\r\n                    context.Hand.Shuffle();\r\n                 }\r\n             }​",
     "effect\r\n             {\r\n                 Name: \"ReturnToDeck\",\r\n                 Action: (targets, context) =>\r\n                 {\r\n                    for target in targets\r\n                    {\r\n                        owner = target.Owner;\r\n                        deck = context.DeckOfPlayer(owner);\r\n                        deck.Push(target);\r\n                        deck.Shuffle();\r\n                        context.Board.Remove(target);\r\n                    };\r\n                 }\r\n             }​"
   ]
