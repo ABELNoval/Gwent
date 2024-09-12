@@ -89,6 +89,7 @@ namespace Console
                 ExpressionNode newProperty = property;
                 property = null;
                 ((MethodCardNode)newProperty).SetList((GameComponent)Evaluate(context, target, value));
+                property = newProperty;
                 return newProperty.Evaluate(context, target, value);
             }
             else if (player != null)
@@ -158,6 +159,7 @@ namespace Console
                 ExpressionNode newProperty = property;
                 property = null;
                 ((PropertyNode)newProperty).SetCard((Cards)Evaluate(context, target, value));
+                property = (PropertyNode)newProperty;
                 return newProperty.Evaluate(context, target, value);
             }
             switch (name)
