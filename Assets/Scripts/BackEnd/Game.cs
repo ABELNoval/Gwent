@@ -117,11 +117,19 @@ public class Game
             player2Deck.SendBottom(cards);
         }
         player1 = new Player(player1Deck);
+        foreach (Cards cards in player1.deck.cards)
+        {
+            cards.owner = player1.id;
+        }
         player1.deck.owner = player1;
         player1.graveyard.owner = player1;
         player1.field.owner = player1;
 
         player2 = new Player(player2Deck);
+        foreach (Cards cards in player2.deck.cards)
+        {
+            cards.owner = player2.id;
+        }
         player2.deck.owner = player2;
         player2.graveyard.owner = player2;
         player2.field.owner = player2;
@@ -142,7 +150,7 @@ public class Game
         instantiateHands(player1.hand.cards, player2.hand.cards);
     }
 
-    public void PlayCard(Cards card, GameObject panel)
+    public void PlayCard(Cards card)
     {
         activePlayer.hand.cards.Remove(card);
         activePlayer.field.SendBottom(card);
@@ -159,6 +167,17 @@ public class Game
 
     private void RemoveCards(Player player, Cards card)
     {
+        if (player == null)
+        {
+            if (player1.id == card.owner)
+            {
+                player1.field.Remove(card);
+            }
+            else if (player2.id == card.owner)
+            {
+                player2.field.Remove(card);
+            }
+        }
         removeCard(player, card);
     }
 
@@ -224,7 +243,6 @@ public class Game
     private void ClearCards(Predicate<Cards> predicate)
     {
         int i = 0;
-        int j = 0;
         if (predicate == null)
         {
             while (i < player1.field.cards.Count)
@@ -234,7 +252,7 @@ public class Game
                 player1.graveyard.Push(card);
             }
 
-            while (j < player2.field.cards.Count)
+            while (i < player2.field.cards.Count)
             {
                 Cards card = player2.field.Pop();
                 player2.graveyard.Push(card);
@@ -255,6 +273,10 @@ public class Game
                 player2.field.Remove(card);
                 player2.graveyard.Push(card);
             }
+        }
+        while (i < Context.board.cards.Count)
+        {
+            Context.board.Remove(Context.board.cards[0]);
         }
     }
 

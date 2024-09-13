@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
     public void PlayCard(GameObject panel)
     {
         RemoveEmptyCard();
-        game.PlayCard(selectedCard.GetComponent<CardUi>().card, panel);
+        game.PlayCard(selectedCard.GetComponent<CardUi>().card);
         ChangesCardsConfig(panel);
         selectedCard.transform.SetParent(panel.transform, false);
         DeselectPanels();
