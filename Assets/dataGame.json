@@ -14,7 +14,7 @@
           "range": [
             "Melee"
           ],
-          "power": 7,
+          "power": 5,
           "img": "Art/Images/Nanami",
           "onActivation": [
             {
@@ -116,7 +116,15 @@
             {
               "effect": {
                 "name": "DecrementPower",
-                "parameters": null
+                "parameters": [
+                  {
+                    "Item1": "Amount",
+                    "Item2": {
+                      "$type": "Console.LiteralNode, Assembly-CSharp",
+                      "value": 1
+                    }
+                  }
+                ]
               },
               "selector": {
                 "source": "field",
@@ -141,55 +149,6 @@
                     "right": {
                       "$type": "Console.LiteralNode, Assembly-CSharp",
                       "value": 5
-                    }
-                  }
-                }
-              },
-              "posAction": null
-            }
-          ]
-        },
-        {
-          "owner": "00000000-0000-0000-0000-000000000000",
-          "name": "Prueba1",
-          "type": "Oro",
-          "description": "...",
-          "faction": "Source",
-          "range": [
-            "Melee",
-            "Siege"
-          ],
-          "power": 7,
-          "img": "Art/Images/Nanami",
-          "onActivation": [
-            {
-              "effect": {
-                "name": "Damage",
-                "parameters": null
-              },
-              "selector": {
-                "source": "board",
-                "single": false,
-                "predicate": {
-                  "condition": {
-                    "$type": "Console.BinaryExpressionNode, Assembly-CSharp",
-                    "Operator": {
-                      "type": 49,
-                      "value": "=="
-                    },
-                    "left": {
-                      "$type": "Console.IdentifierNode, Assembly-CSharp",
-                      "Name": "unit",
-                      "type": null,
-                      "property": {
-                        "$type": "Console.PropertyNode, Assembly-CSharp",
-                        "card": null,
-                        "Name": "Faction"
-                      }
-                    },
-                    "right": {
-                      "$type": "Console.LiteralNode, Assembly-CSharp",
-                      "value": "Source"
                     }
                   }
                 }

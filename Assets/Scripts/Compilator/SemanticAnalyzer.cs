@@ -13,6 +13,7 @@ namespace Console
             { "Power", typeof(int) },
             { "Owner", typeof(Guid) },
             { "Ranged", typeof(string) },
+            {"Climate", typeof(string)},
             { "Melee", typeof(string) },
             { "Siege", typeof(string) },
             { "Type", typeof(string) },
