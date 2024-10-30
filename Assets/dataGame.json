@@ -495,7 +495,7 @@
           "onActivation": null
         }
       ],
-      "Name": "Source"
+      "Name": "JJJJJ"
     },
     {
       "id": "26157bfb-f071-46fb-89ca-35a0dd3a1ab3",
@@ -763,6 +763,13 @@
         }
       ],
       "Name": "Curse"
+    },
+    {
+      "id": "79c2ea1e-6ba8-4a6c-8db9-1736aa943ef8",
+      "random": {},
+      "owner": null,
+      "cards": [],
+      "Name": "New Deck"
     }
   ],
   "effects": [
